@@ -1,0 +1,17 @@
+.navbar{
+    background-color: #FEF9E7;
+    padding: 12px;
+}
+
+.navbar-light .navbar-nav .nav-link{
+    color: #212F3C;
+    font-size: 16px;
+}
+
+.navbar-light .navbar-nav .nav-link:hover{
+    color: #F39C12;
+}
+/* .footer{
+    background-color: #F39C12;
+    height: 60px;
+} */
