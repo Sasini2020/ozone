@@ -1,0 +1,279 @@
+
+.home{
+  top:3rem;
+    min-height: 100vh;
+ 
+    background: linear-gradient(0deg,rgba(40, 165, 159, 0.473),rgba(0,0,0,.6));
+    
+}
+
+.home .content {
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    text-align: center;
+
+}
+.home .content h1{
+    font-size: 4rem;
+    margin-top: 10rem;
+    color: rgb(243, 210, 20);
+    padding:0 1rem;
+    text-shadow: 0 .3rem .5rem rgba(0,0,0,0.5);
+}
+.home .content p{
+    font-size: 1.2rem;
+    color: ivory;
+    padding: 20px 100px
+}
+
+.home .content a button{
+    margin-bottom: 60px;
+    border: none;
+    border-radius: 30px;
+    padding: 8px 30px;
+    background: rgb(243, 210, 20);
+    color: rgb(16, 83, 83);
+    font-size: 1.5rem;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.315);
+}
+
+.home .content a button:hover{
+     color: rgba(255, 230, 0, 0.979);
+     background: rgba(19, 133, 127, 0.979);
+     transform: scale(1.1);
+     transition: .4s;
+}
+
+.vedio-container{
+    position: absolute;
+    top: 0;left: 0;
+    height: 110vh;
+    width: 100%;
+    z-index: -1;
+}
+.vedio-container .vid{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: none;
+}
+.vedio-container .vid1{
+    display: block;
+}
+
+/*.home .content .box-container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 10rem;
+}
+
+
+.box-container .box{
+    height: 12rem;
+    width: 12rem;
+    background: rgba(255, 255, 255, 0.658);
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.438);
+    margin: 3rem;
+    cursor: pointer;
+
+}
+.box-container .box img{
+    height: 6rem;
+    width: 6rem;
+    line-height: 3rem;
+    border-radius: 50%;
+    margin-top: 10px;
+    transition: .4s;
+
+}
+.box-container .box h3{
+    color: rgb(27, 68, 66);
+}
+.box-container .box a button{
+    padding: 3px 7px;
+    border-radius: 30px;
+    border: none;
+    background: rgb(243, 210, 20);
+    color: rgb(4, 12, 12);
+    margin: 5px 0;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.253);
+    cursor: pointer;
+    font-size: 1rem;
+}
+.box-container .box a button:hover{
+    color: rgba(255, 230, 0, 0.979);
+     background: rgba(19, 133, 127, 0.979);
+     transform: scale(1.1);
+     transition: .4s;
+}
+*/
+
+/*about*/
+
+.about{
+    background: rgb(224, 238, 238);
+
+}
+
+.about .slider{
+    top:3rem;
+    min-height: 100vh;
+    position: relative;
+}
+.about .about-ab .row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.about .about-ab .row .content{
+    padding-left: 5rem;
+    
+}
+.about .about-ab .row .content p{
+
+    font-size: 1rem;
+    color: rgb(32, 32, 32);
+    line-height: 2.5rem;
+    
+}
+.about .about-ab .row .content a button{
+    padding: 10px 30px;
+    border-radius: 30px;
+    border: none;
+    background: rgb(243, 210, 20);
+    color: rgb(4, 12, 12);
+    margin: 5px 0;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.253);
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-left: 40%;
+    
+}
+.about .about-ab .row .content a button:hover{
+    color: rgba(255, 230, 0, 0.979);
+    background: rgba(19, 133, 127, 0.979);
+    transform: scale(1.1);
+    transition: .4s;
+}
+
+.about .about-ab .row .image img{
+height: 70vh;
+width: 60vw;
+margin-right:5rem;
+}
+
+/*courses*/
+
+.course .container{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    padding-top: 3rem;
+    flex-wrap: wrap;
+    
+}
+
+.course .container .box{
+    width: 250px;
+    height: 387px;
+    margin: 3.5rem 2rem;
+    background: rgb(224, 238, 238);
+    text-align: center;
+    box-shadow: 5px 5px 3px 3px rgba(81, 83, 83, 0.5);
+    
+    
+    
+}
+.course .container .box:hover{
+    transform: scale(1.1);
+    transition: 1s;
+  
+}
+.course .container .box .box-content{
+    width: 220px;
+    height:360px;
+    background: rgb(240, 236, 36);
+    margin: 15px;
+    border-radius: 20px;
+    
+}
+.course .container .box .box-content i{
+margin: 10px 0;
+font-size: 2.5rem;
+color:rgb(26, 145, 145);
+}
+
+.course .container .box .box-content h3{
+    margin: 5px 0;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.course .container .box .box-content h4{
+    margin-bottom: 10px;
+    color: rgb(255, 0, 0);
+    font-size: 1rem;
+}
+.course .container .box .box-content p{
+    font-size: 0.9rem;
+}
+.course .container .box .box-content a button{
+    padding: 8px 25px;
+    background: rgb(26, 143, 143);
+    margin: 25px 0;
+    border-radius: 20px;
+    border: none;
+    color: oldlace;
+    font-size: 1rem;
+}
+
+/*staff*/
+.staff .row .content{
+    padding-top: 3rem;
+    padding-left: 5rem;
+}
+.staff .row .content p{
+
+    font-size: 1rem;
+    color: rgb(32, 32, 32);
+    line-height: 2.5rem;
+    padding-left: 1rem;
+    
+}
+.staff .row .content a button{
+    padding: 10px 30px;
+    border-radius: 30px;
+    border: none;
+    background: rgb(243, 210, 20);
+    color: rgb(4, 12, 12);
+    margin: 5px 0;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.253);
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-left: 40%;
+    
+}
+.staff .row .content a button:hover{
+    color: rgba(255, 230, 0, 0.979);
+    background: rgba(19, 133, 127, 0.979);
+    transform: scale(1.1);
+    transition: .4s;
+}
+
+.staff .row .image img{
+height: 80vh;
+width: 35vw;
+margin-left: 6rem;
+
+}

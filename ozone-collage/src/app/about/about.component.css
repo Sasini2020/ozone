@@ -1,0 +1,47 @@
+.about{
+    background: rgb(224, 238, 238);
+
+}
+
+
+.about .about-ab .row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.about .about-ab .row .content p{
+
+    font-size: 1rem;
+    color: rgb(32, 32, 32);
+    line-height: 2.5rem;
+    
+}
+.about .about-ab .row .content a button{
+    padding: 10px 30px;
+    border-radius: 30px;
+    border: none;
+    background: rgb(243, 210, 20);
+    color: rgb(4, 12, 12);
+    margin: 5px 0;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.253);
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-left: 40%;
+    
+}
+.about .about-ab .row .content a button:hover{
+    color: rgba(255, 230, 0, 0.979);
+    background: rgba(19, 133, 127, 0.979);
+    transform: scale(1.1);
+    transition: .4s;
+}
+
+.about .about-ab .row .image img{
+height: 80vh;
+width: 50vw;
+padding-right:2rem;
+}
+
+
+/*galary*/
