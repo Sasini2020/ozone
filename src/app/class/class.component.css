@@ -1,0 +1,86 @@
+header {
+    height: 220px;
+    width: 100%;
+    background:#05245D;
+    overflow: hidden;
+}
+
+.class img{
+    width: 100%;
+    height: 220px;
+    object-position: center;
+    object-fit: cover;
+    opacity: 0.2;
+}
+.classcontent{
+    position: absolute;
+    font-family: 'Poppins';
+    top: 22%;
+    left: 17%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+}
+.classcontent h1{
+    color:#ffffff;
+    font-weight: 500;
+    font-size: 35px;
+}
+.classcontent p{
+    color:#ffffff;
+    font-size: 13px;
+    left: 21%;
+}
+.classcontent a{
+    margin-top: 10px;
+}
+
+.yellowtext{
+    color: #F1C40F;
+}
+@media screen and (max-width:600px) {
+    .classcontent h1{
+        padding-top: 70px;
+        padding-left: 10%;
+    }
+  
+    .class img{
+        height: 700px;
+    }
+}
+.searchsection{
+     padding-left:160px; 
+     padding-right:160px; 
+}
+.subjects{
+    background-color: #F4ECF7 ;
+    padding: 50px 100px;
+    font-family: 'Poppins';
+}
+.box{
+    background-color: #ffffff ;
+    padding: 10px 20px 30px;
+    font-family: 'Poppins';
+    text-align: center;
+}
+.box h4{
+    font-weight: 550;
+}
+.box p{
+    font-size: 14px;
+}
+.box button{
+    border: none;
+    text-align: center;
+   
+}
+.box button:hover{
+    background-color: #05245D;
+    color: #ffffff;
+    transition: .5s ease;
+}
+/* @media screen and (max-width:600px){
+    .sujbets{
+        background-color: #F4ECF7 ;
+        padding: 50px 10px;
+    }
+} */
