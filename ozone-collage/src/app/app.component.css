@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,300;1,400;1,500&display=swap');
+
+.container-fluid{
+    top: 0;
+    background: rgb(100, 202, 202);;
+    height: 4rem;
+    position: fixed;
+}
+
+.container-fluid ul li a{
+    margin: 20px;
+    font-weight: 500;
+    font-size: 18px;
+    color: black;
+}
+.d-flex button{
+    margin-right: 10px;
+    padding:5px 20px;
+    color: white;
+    border: none;
+    border-radius: 6rem;
+    background: rgb(26, 143, 143);
+    font-size: 16px;
+}
+.d-flex button:hover{
+    background: transparent;
+    border: 2px solid rgb(26, 143, 143);
+    color: black;
+}
+
+/*footer*/
+
+/*ontact css*/
+
+footer{
+    background: rgb(35, 37, 37) url('../../src/assets/images/footer.jpg');
+   background-size: cover;
+   
+    
+}
+footer .wrapper{
+    /*background: rgba(0, 0, 0, 0.685);*/
+   
+    background: linear-gradient(180deg,rgba(7, 8, 8, 0.733),rgba(12, 53, 70, 0.76));
+}

@@ -1,0 +1,105 @@
+.course  .row .content{
+    padding-top: 4rem;
+    padding-left: 5rem;
+    
+}
+.course .row .content p{
+
+    font-size: 1rem;
+    color: rgb(32, 32, 32);
+    line-height: 2.5rem;
+    
+}
+.course .row .content a button{
+    padding: 10px 30px;
+    border-radius: 30px;
+    border: none;
+    background: rgb(243, 210, 20);
+    color: rgb(4, 12, 12);
+    margin: 5px 0;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.253);
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-left: 40%;
+    
+}
+.course .row .content a button:hover{
+    color: rgba(255, 230, 0, 0.979);
+    background: rgba(19, 133, 127, 0.979);
+    transform: scale(1.1);
+    transition: .4s;
+}
+
+.course .row .image img{
+height: 80vh;
+width:55vw;
+margin-right:7rem;
+}
+
+
+
+.course .container{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    padding-top: 3rem;
+    flex-wrap: wrap;
+    
+}
+
+.course .container .box{
+    width: 250px;
+    height: 387px;
+    margin: 3.5rem 2rem;
+    background: rgb(224, 238, 238);
+    text-align: center;
+    box-shadow: 5px 5px 3px 3px rgba(81, 83, 83, 0.5);
+    
+    
+    
+}
+.course .container .box:hover{
+    transform: scale(1.1);
+    transition: 1s;
+  
+}
+.course .container .box .box-content{
+    width: 220px;
+    height:360px;
+    background: rgb(240, 236, 36);;
+    margin: 15px;
+    border-radius: 20px;
+    
+}
+.course .container .box .box-content i{
+margin: 10px 0;
+font-size: 2.5rem;
+color:rgb(26, 145, 145);
+}
+
+.course .container .box .box-content h3{
+    margin: 5px 0;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.course .container .box .box-content h4{
+    margin-bottom: 10px;
+    color: rgb(255, 0, 0);
+    font-size: 1rem;
+}
+.course .container .box .box-content p{
+    font-size: 0.9rem;
+}
+.course .container .box .box-content a button{
+    padding: 8px 25px;
+    background: rgb(26, 143, 143);
+    margin: 25px 0;
+    border-radius: 20px;
+    border: none;
+    color: oldlace;
+    font-size: 1rem;
+}
