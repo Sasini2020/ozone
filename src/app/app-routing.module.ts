@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { ClassregistrationComponent } from './classregistration/classregistration.component';
 import { TeachersComponent } from './teachers/teachers.component';
 
+
 const routes: Routes = [
   {path:'',component:HomeComponent},
   {path:'class',component:ClassComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path:'contactus',component:ContactusComponent},
   {path:'register',component:RegisterComponent},
   {path:'classregistration',component:ClassregistrationComponent},
-  {path:'teachers',component:TeachersComponent}
+  {path:'teachers',component:TeachersComponent},
+  
 ];
 
 @NgModule({

@@ -24,8 +24,11 @@
     color:#F1C40F ;
 }
 .logo{
-    height:40px;
+     width:17rem;
     padding-left: 35px;
+}
+.navbar-light .navbar-nav .active{
+    color:#F1C40F ; 
 }
 
 /* footer */
