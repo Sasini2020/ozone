@@ -15,6 +15,8 @@ import { TeachersComponent } from './teachers/teachers.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +28,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     LoginComponent,
     RegisterComponent,
     TeachersComponent,
+    
+   
   ],
   imports: [
     BrowserModule,
