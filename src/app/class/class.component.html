@@ -39,12 +39,15 @@
         </select>
       </div>
       <button class="btn btn-warning col-md-3">Search</button>
-  </div>
+      <!-- <div class="form-group">
+        <input type="text" class="form-control" placeholder="Type to search" [(ngModel)]="data">
+      </div>
+    </div> -->
   <br>
 <section class="subjects">
     <div class="subjeccontent">        
         <div class="row mt-5">
-            <div class="col-lg-3 mb-5" *ngFor="let cl of class">
+            <div class="col-lg-3 mb-5" *ngFor="let cl of class | filter:data">
                 <div class="box shadow-lg">
                     <!-- <img src="{{cl.image}}" width="100%"> -->
                     <h4 class="mt-2">{{cl.name}}</h4>

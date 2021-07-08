@@ -11,6 +11,8 @@ export class ClassComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  data!: string;
+
   class= [
     {'id':1,'name':'Agricultural Science - 2022 Theory','description':'Agriculture 2022 Theory'},
     {'id':2,'name':'Accounting - 2022 A/L (Theory/ Revision)','description':'Accounting 2022'},
