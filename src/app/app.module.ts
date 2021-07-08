@@ -14,6 +14,7 @@ import { RegisterComponent } from './register/register.component';
 import { TeachersComponent } from './teachers/teachers.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AchievementsComponent } from './achievements/achievements.component';
 
 
 
@@ -28,6 +29,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     LoginComponent,
     RegisterComponent,
     TeachersComponent,
+    AchievementsComponent,
     
    
   ],

@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ClassregistrationComponent } from './classregistration/classregistration.component';
 import { TeachersComponent } from './teachers/teachers.component';
+import { AchievementsComponent } from './achievements/achievements.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,7 @@ const routes: Routes = [
   {path:'register',component:RegisterComponent},
   {path:'classregistration',component:ClassregistrationComponent},
   {path:'teachers',component:TeachersComponent},
-  
+  {path:'achievements', component: AchievementsComponent},
 ];
 
 @NgModule({
