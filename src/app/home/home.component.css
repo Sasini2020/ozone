@@ -164,7 +164,7 @@ header {
   text-align: center;
 }
 .contactcontent h1{
-  padding-top: 50px;
+  padding-top: 90px;
   color:#ffffff;
   font-weight: 500;
   font-size: 35px;
@@ -189,6 +189,73 @@ header {
   position: absolute;
   border-radius: 100px 100px 100px 100px;
   border: 5px solid #F1C40F;
+}
+.readmore {
+  --color: #0f2f69;
+  position: relative;
+  text-decoration: none;
+  color: var(--color);
+  padding: 0.2rem 0;
+}
+.readmore::before {
+  --line-width: 115%;
+  --line-height: 1px;
+  --line-easing: ease;
+  --line-transition-duration: 300ms;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: var(--line-width);
+  height: var(--line-height);
+  transform-origin: right;
+  transform: scaleX(0);
+  background: var(--color);
+  transition: transform var(--line-transition-duration) var(--line-easing);
+  z-index: 1;
+}
+.readmore:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+.readmore:hover span {
+  --deg: -45deg;
+}
+.readmore:hover span::before {
+  transform: rotate(var(--deg));
+}
+.readmore:hover span::after {
+  transform: translateX(-1px) rotate(var(--deg));
+}
+.readmore span {
+  color: #F1C40F;
+  --line-arrow-width: 1px;
+  --line-arrow-height: 6px;
+  --line-arrow-easing: cubic-bezier(0.3, 1.5, 0.5, 1);
+  --line-arrow-transition-duration: 200ms;
+  --line-arrow-transition-delay: 240ms;
+}
+.readmore span::before, .readmore span::after {
+  content: "";
+  position: absolute;
+  right: -18%;
+  bottom: 0px;
+  background: var(--color);
+  transition: transform var(--line-arrow-transition-duration) var(--line-arrow-easing);
+  transition-delay: var(--line-arrow-transition-delay);
+  z-index: 2;
+}
+.readmore span::before {
+  width: var(--line-arrow-width);
+  height: var(--line-arrow-height);
+  transform-origin: 0% 100%;
+  transform: rotate(-90deg);
+}
+.readmore span::after {
+  height: var(--line-arrow-width);
+  width: var(--line-arrow-height);
+  transform-origin: 100% 0%;
+  transform: translateX(-1px) rotate(0deg);
 }
 @media screen and (max-width:600px) {
   .homecontent h1{
