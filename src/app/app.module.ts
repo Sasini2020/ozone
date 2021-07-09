@@ -16,7 +16,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AchievementsComponent } from './achievements/achievements.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-
+import { ReactiveFormsModule } from '@angular/forms'; 
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -42,6 +43,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FontAwesomeModule,
     Ng2SearchPipeModule,
     FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
 
   ],
   providers: [],

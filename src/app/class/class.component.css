@@ -37,6 +37,10 @@ header {
 .yellowtext{
     color: #F1C40F;
 }
+.form{
+    width: 500px;
+    padding-left: 100px;
+}
 @media screen and (max-width:600px) {
     .classcontent h1{
         padding-top: 70px;
@@ -45,6 +49,10 @@ header {
   
     .class img{
         height: 700px;
+    }
+    .form{
+        width: 460px;
+        padding-left: 23px;
     }
 }
 .searchsection{
@@ -71,10 +79,11 @@ header {
 .box button{
     border: none;
     text-align: center;
-   
+    background-color: #05245D;
+    color: white;
 }
 .box button:hover{
-    background-color: #05245D;
+    background-color: #F1C40F;
     color: #ffffff;
     transition: .5s ease;
 }
