@@ -1,0 +1,31 @@
+<button mat-icon-button class="close-button" (click)="onNoClick()">
+  <mat-icon>close</mat-icon>
+</button>
+
+<h1 mat-dialog-title>Delete Module</h1>
+
+<mat-dialog-content>
+  <mat-list>
+    <p>Are you sure you want to delete this module?</p>
+    <mat-list-item>
+      <div mat-line>Module Code: </div>
+      <div mat-line><b>{{ data.moduleCode }}</b></div>
+    </mat-list-item>
+    <mat-list-item>
+      <div mat-line>Module Name: </div>
+      <div mat-line><b>{{ data.moduleName }}</b></div>
+    </mat-list-item>
+  </mat-list>
+  <div mat-subheader class="text-danger">Lecture hours, attendance associated with this module will also be deleted.</div>
+
+  <div *ngIf="error" class="alert alert-danger mt-3 mb-0">Error saving data. {{ error }}.</div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions style="padding-bottom: 25px">
+  <button mat-raised-button color="warn" (click)="deleteModule()">
+    <span *ngIf="progress" class="spinner-border spinner-border-sm mr-1"></span>
+    Delete
+  </button>
+  <button mat-flat-button color="primary" (click)="onNoClick()">Cancel</button>
+</mat-dialog-actions>

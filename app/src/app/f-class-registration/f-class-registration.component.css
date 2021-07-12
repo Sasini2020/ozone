@@ -1,0 +1,98 @@
+header {
+    height: 220px;
+    width: 100%;
+    background:#05245D;
+    overflow: hidden;
+}
+
+.classregistration img{
+    width: 100%;
+    height: 220px;
+    object-position: center;
+    object-fit: cover;
+    opacity: 0.2;
+}
+.classregistrationcontent{
+    position: absolute;
+    font-family: 'Poppins';
+    top: 22%;
+    left: 17%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+}
+.classregistrationcontent h1{
+    color:#ffffff;
+    font-weight: 500;
+    font-size: 35px;
+}
+.classregistrationcontent p{
+    color:#ffffff;
+    font-size: 13px;
+    left: 21%;
+}
+.classregistrationcontent a{
+    margin-top: 10px;
+}
+
+.yellowtext{
+    color: #F1C40F;
+}
+/* .subjects .box{
+    padding-left: 30px;
+} */
+
+.container{
+    width: 100%;
+    padding: 50px 50px;
+}
+.container p{
+    font-size:14px;
+}
+.container .row .card1{
+    width: 480px;
+    background-color: #FBFCFC;
+    border-radius: 5px;
+}
+.container .row .card1 h4{
+    padding-top: 22px;
+    text-align: center;
+    font-weight: 600;
+}
+.container .row .card1 img{
+    height: 220px;
+    width: 220px;
+    margin: 20px 110px 30px;
+}
+.container .row .card1 .text1{
+    padding-left: 60px;
+    top: 340px;
+    font-size: 19px;
+    color:#05245D;
+    font-weight:500;
+}
+.container .row .card2{
+    width: 500px;
+    background-image: linear-gradient(to top, #141e30 20%, #243b55 80%);    border-radius: 5px;
+    color: #ffffff;
+    padding: 6px 30px 40px;
+}
+.container .row .card2 .card-body .card-text2{
+    padding-top: 6px;
+    font-size: 12px;
+}
+@media screen and (max-width:600px) {
+    .classregistrationcontent h1{
+        padding-top: 170px;
+        padding-left: 20%;
+    }
+  
+    .classregistration img{
+        height: 700px;
+    }
+    .container .row .card1,.container .row .card2{
+        width: 420px;
+    }
+    .container .row .card1 img{
+        margin: 20px 80px 30px;
+    }
+}

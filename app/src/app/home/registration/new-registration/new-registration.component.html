@@ -1,0 +1,301 @@
+<div class="container-md mb-4 px-0">
+
+  <div class="card">
+
+    <div class="card-header">
+      <h5>Registration form for post graduate course</h5>
+      <p class="mb-1">Fill out the details to register students</p>
+    </div>
+
+    <div class="card-body mx-0 px-2">
+
+      <form [formGroup]="registrationForm">
+
+        <h6>Personal Details</h6>
+        <mat-divider class="mat-divider"></mat-divider>
+        <br/>
+
+        <div class="row px-0">
+
+          <mat-form-field class="col-8 pr-1" appearance="outline" id="course-name">
+            <mat-label>Course Name</mat-label>
+            <mat-select formControlName="courseName" required>
+              <mat-option *ngFor="let course of courses" [value]="course.courseID">{{course.courseName}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="courseName.touched && courseName.errors?.required">This field is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-4" appearance="outline" id="academicYear">
+            <mat-label>Academic Year</mat-label>
+            <mat-select formControlName="academicYear" [(ngModel)]='defaultYear' required>
+              <mat-option *ngFor="let year of academicYears" [value]="year">{{ year }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+
+        <div formGroupName="name">
+          <div class="row px-0">
+            <mat-form-field class="col" appearance="outline">
+              <mat-label>Title</mat-label>
+              <mat-select formControlName="title" required>
+                <mat-option *ngFor="let title of titles" [value]="title.name">{{title.name}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="title.touched && title.errors?.requied">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row px-0">
+            <mat-form-field class="col" appearance="outline">
+              <mat-label>Full Name</mat-label>
+              <input type="text" matInput formControlName="fullName" placeholder="full name" required>
+              <mat-error *ngIf="fullName.touched && fullName.errors?.required">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row px-0">
+            <mat-form-field class="col" appearance="outline">
+              <mat-label>Name with Initials</mat-label>
+              <input type="text" matInput formControlName="nameWithInitials" placeholder="Ex: A.B.C Micheal" required>
+              <mat-error *ngIf="nameWithInitials.touched && nameWithInitials.errors?.required">This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div formGroupName="address">
+
+          <div class="row px-0">
+            <mat-form-field class="col" appearance="outline">
+              <mat-label>Permanent Address</mat-label>
+              <input type="text" matInput formControlName="permanentAddress" placeholder="Ex: No.15, Galle Face, Colombo Rd, Colombo" required>
+              <mat-error *ngIf="permanentAddress.touched && permanentAddress.errors?.required">This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row px-0">
+            <mat-form-field class="col pr-1" appearance="outline">
+              <mat-label>District</mat-label>
+              <mat-select formControlName="district" required>
+                <mat-option *ngFor="let district of districts" [value]="district.code">{{district.name}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="district.touched && district.errors?.required">This field is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col" appearance="outline">
+              <mat-label>Province</mat-label>
+              <mat-select formControlName="province" required>
+                <mat-option *ngFor="let province of provinces" [value]="province.code">{{province.name}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="province.touched && province.errors?.requied">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="row px-0">
+
+          <mat-form-field appearance="outline" class="col pl-3 pr-1">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput formControlName="dateOfBirth" [matDatepicker]="date_of_birth" [max]="maxDate" required/>
+            <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
+            <mat-datepicker #date_of_birth></mat-datepicker>
+            <mat-error *ngIf="dateOfBirth.touched && dateOfBirth.errors?.required">This field required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col pr-1">
+            <mat-label>Race</mat-label>
+            <input type="text" matInput formControlName="race" required>
+            <mat-error *ngIf="race.touched && race.errors?.required">This field is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col pr-3">
+            <mat-label>Religion</mat-label>
+            <input type="text" matInput formControlName="religion" required>
+            <mat-error *ngIf="religion.touched && religion.errors?.required">This field is required</mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div class="row px-0">
+
+          <div class="row ml-4 mr-0 mt-4 justify-content-start">
+            <label>Gender:</label>
+            <mat-radio-group formControlName="gender" color="primary" aria-label="Select an option">
+              <mat-radio-button value="M" class="col-4">Male</mat-radio-button>
+              <mat-radio-button value="F" class="col-4">Female</mat-radio-button>
+              <mat-radio-button value="O" class="col-4">Other</mat-radio-button>
+            </mat-radio-group>
+            <mat-error *ngIf="gender.touched && gender.errors?.required">This field is required</mat-error>
+          </div>
+
+          <mat-form-field appearance="outline" class="col pr-3">
+            <mat-label>NIC Number</mat-label>
+            <input #input type="text" matInput formControlName="nic" placeholder="Ex: 954340594V" required>
+            <mat-error *ngIf="nic.touched && nic.errors?.required">This field is required</mat-error>
+            <mat-error *ngIf="nic.touched && !nic.errors?.required && nic.errors?.pattern">Invalid NIC Number</mat-error>
+            <mat-hint align="end">{{input.value?.length || 0}}/12</mat-hint>
+          </mat-form-field>
+
+        </div>
+
+        <div formGroupName="contactDetails">
+
+          <h6>Contact Details</h6>
+          <mat-divider class="mat-divider"></mat-divider>
+          <br/>
+
+          <div class="row px-0">
+            <mat-form-field appearance="outline" class="col">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" placeholder="Ex. pat@example.com" required>
+              <mat-error *ngIf="email.touched && email.errors?.required">This field is required</mat-error>
+              <mat-error *ngIf="email.touched && !email.errors?.required && email.errors?.pattern">Invalid Email Address
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row px-0">
+
+            <mat-form-field appearance="outline" class="col pr-2">
+              <mat-label>Mobile</mat-label>
+              <input type="text" matInput formControlName="mobile" placeholder="Mobile" required>
+              <mat-error *ngIf="mobile.touched && mobile.errors?.required">This field is required</mat-error>
+              <mat-error *ngIf="mobile.touched && !mobile.errors?.required && mobile.errors?.pattern">Invalid input
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col pl-2">
+              <mat-label>Home</mat-label>
+              <input type="text" matInput formControlName="home" placeholder="Home" required>
+              <mat-error *ngIf="home.touched && home.errors?.required">This field is required</mat-error>
+              <mat-error *ngIf="home.touched && !home.errors?.required && home.errors?.pattern">Invalid input</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div formGroupName="employment">
+
+          <h6>Particulars of Employment</h6>
+          <mat-divider class="mat-divider"></mat-divider>
+          <br/>
+
+          <div class="row px-0">
+
+            <mat-form-field appearance="outline" class="col pr-2">
+              <mat-label>Designation</mat-label>
+              <input type="text" formControlName="designation" matInput required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col px-2">
+              <mat-label>Employer</mat-label>
+              <input type="text" formControlName="employer" matInput required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col pl-2">
+              <mat-label>Company</mat-label>
+              <input type="text" formControlName="company" matInput required>
+            </mat-form-field>
+
+          </div>
+
+        </div>
+
+        <div>
+
+          <h6>Education</h6>
+          <mat-divider class="mat-divider"></mat-divider>
+          <br/>
+
+          <div formArrayName="educationQualifications" *ngFor="let educationQualification of educationQualifications.controls; let i = index">
+
+            <div class="row px-0" [formGroupName]="i">
+
+              <mat-form-field appearance="outline" class="col pr-1">
+                <mat-label>Degree/Diploma</mat-label>
+                <input type="text" matInput formControlName="degree" placeholder="BSc. Eng" required/>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col px-1">
+                <mat-label>Institute</mat-label>
+                <input type="text" matInput formControlName="institute" placeholder="University of Moratuwa" required/>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col px-1">
+                <mat-label>Date</mat-label>
+                <input matInput formControlName="graduationDate" [matDatepicker]="graduation_date" [max]="maxDate" required/>
+                <mat-datepicker-toggle matSuffix [for]="graduation_date"></mat-datepicker-toggle>
+                <mat-datepicker #graduation_date></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-2 px-1">
+                <mat-label>Grade</mat-label>
+                <input type="text" matInput formControlName="grade" placeholder="Ex: Second Upper" required/>
+              </mat-form-field>
+
+              <div class="col-1 pl-1 pr-2">
+                <button (click)="removeQualification(i)" [disabled]="educationQualifications.controls.length <= 1" type="button" mat-mini-fab color="warn" class="mt-2">
+                  <mat-icon>remove</mat-icon>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="row px-0 mb-4">
+            <button mat-raised-button color="primary" (click)="addQualification()" type="button" class="ml-3">Add</button>
+          </div>
+
+        </div>
+
+        <div>
+
+          <h6>Registration Details</h6>
+          <mat-divider class="mat-divider"></mat-divider>
+          <br/>
+
+          <div class="row px-0" formGroupName="registration">
+
+            <mat-form-field appearance="outline" class="col pr-2">
+              <mat-label>Registration Fees (Rs.)</mat-label>
+              <input matInput type="number" class="example-right-align" formControlName="registrationFees" placeholder="Ex: 200" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col px-2">
+              <mat-label>Date of Payment</mat-label>
+              <input matInput formControlName="dateOfPayment" [matDatepicker]="payment_date" [max]="maxDate" required/>
+              <mat-datepicker-toggle matSuffix [for]="payment_date"></mat-datepicker-toggle>
+              <mat-datepicker #payment_date></mat-datepicker>
+              <mat-error *ngIf="dateOfPayment.touched && dateOfPayment.errors?.required">This field required</mat-error>
+            </mat-form-field>
+
+            <div class="col pl-2 mt-4">
+              <mat-checkbox (change)="toggleRegistrationFeesPaid()" class="col-md-4">Registration fees paid</mat-checkbox>
+            </div>
+
+          </div>
+
+          <div class="row px-0">
+            <p *ngIf="error" class="alert alert danger">{{ error }}</p>
+          </div>
+
+          <div class="d-flex flex-row-reverse my-0">
+            <button (click)="submitForm()" type="submit" mat-raised-button color="primary" class="ml-1">
+              <span *ngIf="registerStudentProgress" class="spinner-border spinner-border-sm mr-1"></span>
+              Register Student
+            </button>
+            <button (click)="resetForm()" type="button" mat-button class="mr-1">Reset Form</button>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

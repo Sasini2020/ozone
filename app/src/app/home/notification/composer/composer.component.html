@@ -1,0 +1,51 @@
+<div class="card composer h-100">
+
+  <div class="card-header bg-primary text-white pb-0 px-2 d-flex justify-content-between">
+    <h6 class="mb-0">Write your message</h6>
+    <a (click)="userData.toggleComposer()" style="cursor: pointer"><mat-icon class="mb-0 mr-0">close</mat-icon></a>
+  </div>
+
+  <div class="card-body p-0">
+
+    <div class="row mx-0 p-0">
+      <mat-progress-bar [hidden]="!composerProgress" mode="query"></mat-progress-bar>
+    </div>
+
+    <form>
+
+      <div class="col-12 m-0 p-1">
+
+        <mat-chip-list #recipientsList aria-label="Recipients">
+          <mat-chip *ngFor="let recipient of recipients" [selectable]="true" [removable]="true" (removed)="remove(recipient.username)" class="mat-chip-recipient" [style.color]="(recipient.nameWithInitials ? 'black' : 'red')">
+            <span style="font-size: 12px">{{ recipient.nameWithInitials ? recipient.nameWithInitials : recipient.username}}</span>
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input #recipientInput [formControl]="recipient" [matAutocomplete]="auto" [matChipInputFor]="recipientsList" [matChipInputSeparatorKeyCodes]="separatorCodes" (matChipInputTokenEnd)="add($event)" class="composer-input"  placeholder="Recipients">
+        </mat-chip-list>
+
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let recipient of filteredRecipients | async" [value]="recipient.username">
+            {{ recipient.username}} | {{ recipient.nameWithInitials }}
+          </mat-option>
+        </mat-autocomplete>
+
+      </div>
+
+      <div class="col-12 m-0 p-1">
+        <input [formControl]="subject" class="composer-input w-100" placeholder="Subject">
+      </div>
+
+      <div class="col-12 m-0 p-1 w-100" style="height: 230px">
+        <textarea [formControl]="messageText" class="composer-message h-100 w-100" placeholder="Type your message"></textarea>
+      </div>
+
+      <div class="col-12" style="position: absolute; bottom: 10px; left: 0">
+        <button (click)="sendNotification()" [disabled]="!messageText.value || recipients.length === 0" type="button" mat-raised-button color="primary">Send</button>
+      </div>
+
+    </form>
+
+
+  </div>
+
+</div>

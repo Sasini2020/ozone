@@ -1,0 +1,18 @@
+#view_results {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  transition: box-shadow 2s;
+}
+
+#view_results > p {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+#view_results > div {
+  overflow-y: scroll;
+}
+
+#view_results > div > ul > li > span {
+  color: rgb(104, 108, 112)
+}

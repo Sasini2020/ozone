@@ -1,0 +1,110 @@
+<mat-toolbar class="toolbar" color="primary" (window:resize)="onResize($event)">
+
+  <button mat-icon-button [hidden]="!widthSidenav" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <div class="logo"></div>
+
+  <span class="toolbar-spacer"></span>
+
+  <span style="font-weight: 500" [hidden]="widthSidenav">Welcome to the Ozone School</span>
+
+  <span class="toolbar-spacer"></span>
+
+  <a [matMenuTriggerFor]="settings" style="cursor: pointer">
+    <span class="mr-3 h6 text-white">{{ user.firstName + ' ' + user.lastName }}</span>
+    <img [src]="userData.profilePicture || '../../assets/images/default_profile_picture.png'" class="avatar" />
+  </a>
+
+  <button mat-icon-button [hidden]="!widthNotification" (click)="notifications.toggle()">
+    <mat-icon>notifications</mat-icon>
+  </button>
+
+</mat-toolbar>
+
+<!--*ngIf="userData.openComposer"-->
+<div *ngIf="getRole !== 'Student' && userData.openComposer" [style.right]="!widthSidenav || notifications.opened ? '370px' : '20px'" class="composer" >
+  <app-composer></app-composer>
+</div>
+
+<mat-sidenav-container class="sidenav-container">
+
+  <mat-sidenav #sidenav [mode]="widthSidenav ? 'over' : 'side'" [opened]="!widthSidenav" class="sidenav">
+
+    <mat-selection-list [multiple]="false" class="accordion" id="accordionCourseModule" style="cursor: pointer">
+
+      <div *ngFor="let route of ROUTS[getRole]">
+
+        <mat-list-option [routerLink]="['/' + route.route]" [selected]="activeRoute === route.component" [class.selected]="activeRoute === route.component">
+          <mat-icon mat-list-icon>{{ route.icon }}</mat-icon>
+          <div mat-line>{{ route.label }}</div>
+        </mat-list-option>
+
+        <div class="list-group list-group-flush rounded-0 ml-4 sub-menu" [class.sub-menu-hidden]="activeRoute !== route.component" [style.height]="activeRoute === route.component ? (50 * route.children.length) + 'px' : 0">
+          <a *ngFor="let child of route.children" [routerLink]="['/' + route.route + '/' + child.route]" [ngClass]="childRoute !== child.route ? ['list-group-item', 'list-group-item-action'] : ['list-group-item', 'list-group-item-action', 'active']">{{ child.label }}</a>
+        </div>
+
+      </div>
+
+    </mat-selection-list>
+
+    <div class="row p-2 m-0 d-flex justify-content-center bg-dark text-white" style="z-index: 3; width: 100%; position: absolute; bottom: 0; height: fit-content">
+      <p style="text-align: center; font-size: 13px" class="mb-0">Copyright © 2020 University of Moratuwa.  All rights Reserved.</p>
+    </div>
+
+  </mat-sidenav>
+
+  <mat-sidenav #notifications position="end" [mode]="widthNotification ? 'over' : 'side'" [opened]="!widthSidenav && !widthNotification" class="notification-bar">
+    <app-notification (newNotifications)="newNotifications = $event"></app-notification>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+      <router-outlet (activate)="getRoute($event)"></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+<mat-menu #settings="matMenu">
+
+  <div style="width: 230px">
+
+    <div class="d-flex justify-content-center m-auto" style="height: 180px; width: 180px; position: relative">
+
+      <div>
+        <img [src]="userData.profilePicture || '../../assets/images/default_profile_picture.png'" class="rounded-circle img-thumbnail" />
+      </div>
+
+      <div style="position: absolute; right: 0; bottom: 0">
+        <a mat-mini-fab color="warn" (click)="openDialog()">
+          <mat-icon>photo</mat-icon>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="row m-2">
+      <div class="col-12 h5 mb-0 d-flex justify-content-center">{{ user.firstName }} {{ user.lastName }}</div>
+      <div class="col-12 text-secondary d-flex justify-content-center">{{ user.email }}</div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <button mat-menu-item [routerLink]="['/' + 'profile']" class="w-100">
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+
+    <button mat-menu-item [routerLink]="['/' + 'edit-profile']" class="w-100">
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button>
+
+    <button mat-menu-item (click)="logout()" class="w-100">
+      <mat-icon>login</mat-icon>
+      <span>Logout</span>
+    </button>
+
+  </div>
+
+</mat-menu>

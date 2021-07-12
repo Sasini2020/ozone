@@ -1,0 +1,61 @@
+<mat-card class="authentication">
+
+  <mat-card-header>
+    <mat-card-title>Change Recovery Email</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+
+  <mat-card-content *ngIf="token; else elseBlock">
+
+    <div class="w-100 d-flex justify-content-center">
+      <mat-spinner [hidden]="!progress"  class="m-3"></mat-spinner>
+    </div>
+
+    <div *ngIf="!progress">
+
+      <div *ngIf="success" class="alert alert-success my-3">
+        Recovery email changed successfully. Redirecting to home page in {{ wait }}s.
+      </div>
+
+      <div class="row mx-1 d-flex justify-content-end">
+        <button class="mb-3" mat-raised-button routerLink="/">Home Page</button>
+      </div>
+
+      <div *ngIf="error" class="alert alert-danger my-3">
+        {{ error }}
+      </div>
+
+      <button mat-flat-button [hidden]="!error" routerLink="./../../edit-profile">Try again</button>
+
+    </div>
+
+  </mat-card-content>
+
+  <ng-template #elseBlock>
+
+    <mat-card-content class="pt-2">
+
+      <mat-card-subtitle>
+        In case you forget your password, we'll send an email to this email address that contains instructions to reset the password.
+      </mat-card-subtitle>
+
+      <mat-form-field appearance="outline" class="input-field">
+        <mat-label>Recovery Email</mat-label>
+        <input type="email" matInput [formControl]="recoveryEmail" placeholder="someone@example.com" />
+        <mat-error *ngIf="recoveryEmail.touched && recoveryEmail.errors?.required">This field is required</mat-error>
+        <mat-error *ngIf="recoveryEmail.touched && !recoveryEmail.errors?.required && recoveryEmail.errors?.email">Please enter a valid email</mat-error>
+      </mat-form-field>
+
+      <div *ngIf="emailSent" class="alert alert-success mt-0 mb-3">Verification email sent. Please check your email to further instruction. {{ wait !== 0 ? 'Send again in ' + wait + 's.' : '' }}</div>
+      <div *ngIf="error" class="alert alert-danger mt-0 mb-3">{{ error }}</div>
+
+      <button mat-button [disabled]="recoveryEmail.invalid || wait !== 0" (click)="sendVerificationEmail()" style="margin-right: 10px">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" [hidden]="!progress"></span>
+        {{ wait === 0 && !emailSent ? "Send" : "Resend" }}
+      </button>
+
+    </mat-card-content>
+
+  </ng-template>
+
+</mat-card>

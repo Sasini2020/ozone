@@ -1,0 +1,130 @@
+<app-navbar></app-navbar>
+
+<header>
+    <section class="aboutsec"> 
+        <img src="../../assets/group-cheerful-happy-students-sitting-lecture-hall-before-lesson.jpg" class="d-block w-100" alt="...">
+        <div class="aboutcontent">
+            <h1>About<span class="yellowtext"> Us</span></h1>
+        </div>
+    </section> 
+</header>
+
+<!-- middle text and image section -->
+<section class="middle">
+    <div class="container">
+      <h2>About Our Institution</h2>
+      <div class="row">
+          <div class="col-md-12">
+            <img src="../../assets/happy-young-female-student-with-books-hands-university-background_8119-1502.jpg" />
+            <p class="p-text">With the four tiers of grids available you're bound to run into issues where, at certain breakpoints, your columns don't clear quite right as one is taller than the other. To fix that, use a combination of a .clearfix.</p>
+          
+            <p class="p-point"><!--<fa-icon  [icon]="faAngleRight" class="check-odd"></fa-icon>-->&nbsp;&nbsp;&nbsp;Inspiring educational techniques</p>
+            <p class="p-point"><!--<fa-icon  [icon]="faAngleRight" class="check-even"></fa-icon>-->&nbsp;&nbsp;&nbsp;Safe environment</p>
+            <p class="p-point"><!--<fa-icon  [icon]="faAngleRight" class="check-odd"></fa-icon>-->&nbsp;&nbsp;&nbsp;High-quality professional development</p>
+            <p class="p-point"><!--<fa-icon  [icon]="faAngleRight" class="check-even"></fa-icon>-->&nbsp;&nbsp;&nbsp;Guide and direct individuals</p>
+            <p class="p-point"><!--<fa-icon  [icon]="faAngleRight" class="check-odd"></fa-icon>-->&nbsp;&nbsp;&nbsp;Atmosphere of trust and respect</p>
+        </div>
+      </div>
+    </div> 
+  </section>
+
+<!-- mid section -->
+<div id="cards">
+    <div class="container bootstrap snippets bootdey">
+      <div class="row">
+         <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="block product">
+                  <h2 class="product-title">Our History 2002</h2>
+                  <p>
+                  Lorem ipsum dolor sit amet consectetur adipisg elitm Ut tincidunt purus iaculis ipsum dolor sit amet consectetur adipisg elitm Ut tincidunt
+                  </p>
+              </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="block product">
+                  <h2 class="product-title">Over 25 Classes</h2>
+                  <p>
+                  Lorem ipsum dolor sit amet consectetur adipisg elitm Ut tincidunt purus ipsum dolor sit amet consectetur adipisg elitm Ut tincidunt iaculis
+                  </p>
+              </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="block product">    
+                  <h2 class="product-title">About 3000 Students</h2>
+                  <p>
+                  Lorem ipsum dolor sit amet consectetur adipisg elitm Ut tincidunt ipsum dolor sit amet consectetur adipisg elitm Ut tincidunt purus iaculis
+                  </p>
+              </div>
+          </div>
+    </div>
+    </div> 
+    </div>    
+<!-- bottom section -->
+<section class="bottom">
+    <h2>Why Choose Our Institution</h2>
+    <p class="bottom-first-p">Lorem ipsum dolor sit amet consectetur adipisg elitm Ut consectetur adipisg elitm Ut tincidunt adipisg elitm Ut tincidunt purus iaculis ipsum dolor sit amet consectetur adipisg elitm Ut tincidunt</p>
+    <div id="cards">
+        <div class="container bootstrap snippets bootdey">
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="block2 product">
+                    <!--<fa-icon  [icon]="faBookReader" class="icon1"></fa-icon>-->
+                      <h5>Inspiring Education</h5>
+                      <p>Consectetur adipisg elitm Ut consectetur adipisg elitm Ut tincidunt</p>
+                  </div>
+              </div>
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="block2 product">
+                    <!--<fa-icon  [icon]="faSchool" class="icon2"></fa-icon>-->
+                    <h5>Safe Environment</h5>
+                    <p>Consectetur adipisg elitm Ut consectetur adipisg elitm Ut tincidunt</p>
+                  </div>
+              </div>
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="block2 product">
+                    <!--<fa-icon  [icon]="faChalkboardTeacher" class="icon3"></fa-icon>-->
+                    <h5>Skilled Teachers</h5>
+                    <p>Consectetur adipisg elitm Ut consectetur adipisg elitm Ut tincidunt</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="block2 product">
+                  <!--  <fa-icon  [icon]="faAward" class="icon4"></fa-icon>   --> 
+                    <h5>Right Guidance</h5>
+                    <p>Consectetur adipisg elitm Ut consectetur adipisg elitm Ut tincidunt</p>
+                  </div>
+              </div>
+        </div>
+        </div> 
+        </div>    
+        
+</section>
+<!-- bottommost section -->
+<section class="bottommost">
+    <h2>Our Skilled Teachers</h2>
+    <p class="bottommost-first-p">Lorem ipsum dolor sit amet consectetur adipisg elitm Ut consectetur adipisg elitm Ut tincidunt adipisg elitm Ut tincidunt purus iaculis ipsum dolor sit amet consectetur adipisg elitm Ut tincidunt</p>
+    <div class="container">
+	    <div class="row">
+            <div class="col-md-4" *ngFor="let tc of teachers">
+                <hr>
+            <div class="profile-card-6"><img src="{{tc.img}}" class="img img-responsive">
+                    <div class="profile-name">{{tc.fname}}<br>{{tc.lname}}</div>
+                    <!-- <div class="profile-position">Lorem Ipsum Donor</div> -->
+                    <div class="profile-overview">
+                        <div class="profile-overview">
+                            <div class="row text-center">
+                                <div class="col-xs-4">
+                                    <!-- <h3>35</h3> -->
+                                    <h3>{{tc.subject}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+	</div>
+</div>
+</section>
+
+<app-footer></app-footer>

@@ -1,0 +1,159 @@
+<div class="card">
+
+  <div class="card-header">
+    <h5>Edit Attendance</h5>
+    <p class="sub-header">Edit attendance related to any session</p>
+  </div>
+
+  <div class="card-body">
+
+    <div class="row" style="margin: -20px -20px 10px -20px; height: 5px">
+      <mat-progress-bar [hidden]="!editAttendanceProgress" mode="query"></mat-progress-bar>
+    </div>
+
+    <form [formGroup]="editAttendanceForm">
+
+      <div class="row mb-1">
+
+        <mat-form-field appearance="outline" class="col-4 mx-0 px-1">
+          <mat-label>Module Code</mat-label>
+          <input (keyup)="term$.next($event.target.value)" (ngModelChange)="toggleProgress()" id="moduleCode"
+                 type="text" matInput formControlName="moduleCode" placeholder="Ex: CM1100"/>
+          <mat-error *ngIf="moduleCode.touched && moduleCode.errors?.required">This field is required</mat-error>
+          <mat-error *ngIf="moduleCode.touched && !moduleCode.errors?.required && moduleCode.errors?.pattern">Invalid
+            module code
+          </mat-error>
+          <mat-error
+            *ngIf="moduleCode.touched && !moduleCode.errors?.required && !moduleCode.errors?.pattern && !moduleName">
+            Module does not exist
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-8 mx-0 px-1">
+          <mat-label>Module Name</mat-label>
+          <input matInput type="text" formControlName="moduleName" readonly/>
+        </mat-form-field>
+
+      </div>
+
+      <div class="row mb-1">
+
+        <mat-form-field appearance="outline" class="col-4 mx-0 px-1">
+          <mat-label>Lecture Hour</mat-label>
+          <mat-select (selectionChange)="getBatch()" id="lectureHour" formControlName="lectureHour">
+            <mat-option *ngFor="let lectureHour of lectureHours"
+                        [value]="lectureHour.lectureHourID">{{ lectureHour.type }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="lectureHour.touched && lectureHour.errors?.required">This field is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-4 mx-0 px-1">
+          <mat-label>Batch</mat-label>
+          <mat-select (selectionChange)="getSession()" id="batch" formControlName="batch">
+            <mat-option *ngFor="let year of academicYears" [value]="year">{{ year }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="batch.touched && batch.errors?.required">This field is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-4 mx-0 px-1">
+          <mat-label>Session</mat-label>
+          <mat-select id="session" formControlName="session">
+            <mat-option *ngFor="let session of sessions"
+                        [value]="session.sessionID">{{ session.date | date: 'MMM d, y, h:mm a' }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="session.touched && session.errors?.required">This field is required</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="row px-1 mb-4">
+        <button [disabled]="moduleCode.invalid" (click)="getAttendance()" mat-raised-button type="button" class="mx-2">
+          Add
+        </button>
+      </div>
+
+      <div *ngIf="!lectureHoursFound" class="row px-1">
+        <div class="alert alert-warning col">No lecture hours found for this module!</div>
+      </div>
+
+      <div *ngIf="!sessionsFound" class="row px-1">
+        <div class="alert alert-warning col">No sessions found for this lecture hour!</div>
+      </div>
+
+      <div id="attendance_preview" style="margin: 15px -10px 0 -10px">
+
+        <p>Preview of the attendance</p>
+
+        <p *ngIf="attendance.length === 0; else attendanceBlock" style="color: #888888"><i>Attendance will appear here once selected the required inputs</i></p>
+
+        <ng-template #attendanceBlock>
+
+          <mat-form-field class="filter">
+            <mat-label>Filter</mat-label>
+            <input (keyup)="applyFilter($event)" matInput placeholder="Enter keyword" #input/>
+          </mat-form-field>
+
+          <div *ngIf="filteredAttendance.length === 0; else attendanceTable" style="color: darkgray"><i>No records
+            found!</i></div>
+
+          <ng-template #attendanceTable>
+
+            <table class="table table-sm">
+
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Index Number</th>
+                <th scope="col">Status</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr *ngFor="let record of filteredAttendance; let i = index" [attr.id]="'tr' + (i + 1)"
+                  [class.changed]="record.modified">
+                <td>{{ i + 1 }}</td>
+                <td>{{ record.studentID }}</td>
+                <td>
+                  <select [attr.id]="'sel' + (i + 1)" (change)="updateAttendanceRecord($event)">
+                    <option [selected]="record.status" value="0">Absent</option>
+                    <option [selected]="record.status" value="1">Present</option>
+                  </select>
+                </td>
+              </tr>
+              </tbody>
+
+            </table>
+
+          </ng-template>
+
+        </ng-template>
+
+        <div class="row mx-1 my-2 d-flex justify-content-end" style="overflow: hidden">
+          <button [disabled]="!updated" (click)="resetAttendance()" mat-flat-button type="button" class="mx-1">Reset Changes</button>
+        </div>
+
+      </div>
+
+      <div *ngIf="successfullySaved" class="row px-1 mt-2 mb-0">
+        <div class="alert alert-success col">Attendance saved successfully!</div>
+      </div>
+
+      <div *ngIf="error" class="row px-1 mt-2 mb-0">
+        <div class="alert alert-warning col">{{ error }}</div>
+      </div>
+
+      <div class="d-flex flex-row-reverse my-3 mx-0">
+        <button [disabled]="!updated" (click)="saveChanges()" mat-raised-button color="primary" type="button" class="ml-1">
+          <span *ngIf="buttonProgress" class="spinner-border spinner-border-sm mr-1"></span>
+          Save
+        </button>
+        <button mat-button color="worn" (click)="resetForm()">
+          Reset
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

@@ -1,0 +1,52 @@
+<header>
+    <section class="classregistration"> 
+        <img src="../../assets/online-communication.jpg" class="d-block w-100" alt="...">
+        <div class="classregistrationcontent">
+            <h1>Class<span class="yellowtext"> Registration</span></h1>
+        </div>
+    </section> 
+</header>
+ 
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card1 shadow-sm" *ngFor="let cr of classregistration">
+                <div class="card-body">
+                    <h4 class="card-title">{{cr.name}}</h4>
+                    
+                        <img class="t-image"src={{cr.image}}>
+                        <p class="text1">Conducted by : <b>{{cr.teacher}}</b> </p>
+                   
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">A second item</li>
+                    <li class="list-group-item">A third item</li>
+                  </ul>
+                
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card2 shadow-sm" *ngFor="let cr of classregistration">
+                <img class="card-img-top" src="" alt="">
+
+                <div class="card-body">
+                    <h4 class="card-title">Join the class now!</h4><br>
+                    <p class="card-text">
+                       You can join the classroom with your phone or the computer.
+                    </p>
+                    <h6><b>Total Fee</b></h6>
+                    <h5 class="yellowtext"> <!--<fa-icon  [icon]="faCoins" ></fa-icon>-->&nbsp;&nbsp;<b>Rs. {{cr.fee}}</b></h5>
+                    <br>
+                    <a routerLink="#" class="btn btn-danger">Register Now</a>
+                    &nbsp;
+                    <a href="https://zoom.us/" class="btn btn-primary">Download Zoom</a>
+                    <p class="card-text2">
+                        *You need to have Zoom installed to join classes.
+                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

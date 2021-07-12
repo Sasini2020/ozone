@@ -1,0 +1,43 @@
+
+<app-navbar></app-navbar>
+
+<header>
+    <section class="aboutsec"> 
+        <img src="../../assets/group-cheerful-happy-students-sitting-lecture-hall-before-lesson.jpg" class="d-block w-100" alt="...">
+        <div class="aboutcontent">
+            <h1>Our<span class="yellowtext"> Teachers</span></h1>
+        </div>
+    </section> 
+</header>
+
+<!-- bottommost section -->
+<section class="bottommost">
+    <!-- <h2>Our Skilled Teachers</h2>
+    <p class="bottommost-first-p">Lorem ipsum dolor sit amet consectetur adipisg elitm Ut consectetur adipisg elitm Ut tincidunt adipisg elitm Ut tincidunt purus iaculis ipsum dolor sit amet consectetur adipisg elitm Ut tincidunt</p> -->
+    <br><br><br>
+    <div class="container">
+	    <div class="row">
+            <div class="col-md-4" *ngFor="let tc of teachers">
+                <hr>
+            <div class="profile-card-6"><img src="{{tc.img}}" class="img img-responsive">
+                    <div class="profile-name">{{tc.fname}}<br>{{tc.lname}}</div>
+                    <!-- <div class="profile-position">Lorem Ipsum Donor</div> -->
+                    <div class="profile-overview">
+                        <div class="profile-overview">
+                            <div class="row text-center">
+                                <div class="col-xs-4">
+                                    <!-- <h3>35</h3> -->
+                                    <h3>{{tc.subject}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+	</div>
+</div>
+</section>
+<br><br><br>
+
+<app-footer></app-footer>

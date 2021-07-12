@@ -1,0 +1,114 @@
+<div class="row px-3">
+  <div *ngIf="requestError" class="alert alert-danger mt-1 col">{{ requestError }}</div>
+</div>
+
+<div *ngIf="!progress; else progressBlock">
+
+      <div id="accordion">
+
+        <div *ngFor="let request of requests; let i = index" [attr.id]="'request' + request.requestID" class="card mb-2" style="transition: box-shadow 2s">
+
+          <h5 [attr.id]="'heading' + request.requestID"
+              [attr.data-target]="'#collapse' + request.requestID"
+              [attr.aria-controls]="'collapse' + request.requestID"
+              aria-expanded="false"
+              data-toggle="collapse"
+              class="card-header d-flex justify-content-between"
+              style="cursor: pointer"
+          >
+            <span>{{ request.date | date: 'MMM d, y' }}</span>
+          </h5>
+
+          <div [attr.id]="'collapse' + request.requestID"
+               [attr.aria-labelledby]="'heading' + request.requestID"
+               [class.show]="request.requestID == requestID"
+               data-parent="#accordion"
+               class="collapse">
+
+            <div class="card-body p-0">
+
+              <ul class="list-group">
+
+                <li class="list-group-item list-group-item-action d-flex justify-content-start">
+                  <div style="width: 20%">REQUESTS</div>
+                  <ul style="padding-left: 15px">
+                    <li *ngFor="let requestType of request.requestTypes" style="font-weight: 550; list-style-type: disc">{{ requestType.request }}<br/></li>
+                  </ul>
+                </li>
+
+                <li class="list-group-item list-group-item-action d-flex justify-content-start">
+                  <div style="width: 20%">REASONS</div>
+                  <div>
+                    <ul style="padding-left: 15px">
+                      <li *ngFor="let reason of request.reasons" style="font-weight: 550; list-style-type: disc">{{ reason.reason }}</li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li class="list-group-item list-group-item-action d-flex justify-content-start">
+                  <div style="width: 20%">REMARKS</div>
+                  <div><p style="font-weight: 550">{{ request.remarks }}</p></div>
+                </li>
+
+                <li class="list-group-item list-group-item-action d-flex justify-content-start">
+                  <div style="width: 20%">PROGRESS</div>
+                  <div *ngIf="request.reviewedBy.length !== 0; else elseBlock" style="width: 100%; margin: -20px -21px -13px 0">
+                    <mat-list>
+                      <mat-list-item *ngFor="let step of request.reviewedBy"
+                                     [ngClass]="{
+                                       'border': true,
+                                       'bg-danger': step.status === 0,
+                                       'bg-success': step.status === 1,
+                                       'bg-light': step.status === 2,
+                                       'text-white': step.status === 0 || step.status === 1
+                                     }"
+                      >
+                        <mat-icon mat-list-icon>{{ step.status === 2 ? 'pending_actions' : step.status === 1 ? 'check' : 'clear' }}</mat-icon>
+                        <div mat-line style="font-weight: 550">{{ step.reviewer }}</div>
+                        <div mat-line>{{ step.status === 2 ? 'Pending' : step.status === 1 ? 'Accepted' : 'Denied' }} {{ step.reason ? ' : ' + step.reason : '' }}</div>
+                      </mat-list-item>
+                    </mat-list>
+                  </div>
+                  <ng-template #elseBlock>
+                    <div><p class="text-secondary"><i>No progress for this request yet.</i></p></div>
+                  </ng-template>
+                </li>
+
+                <li class="list-group-item list-group-item-action d-flex justify-content-start">
+                  <div style="width: 20%">FINAL DECISION</div>
+                  <div>
+                    <p *ngIf="request.finalDecision === 0" style="font-weight: 550" class="text-danger">Denied</p>
+                    <p *ngIf="request.finalDecision === 1" style="font-weight: 550" class="text-success">Approved</p>
+                    <p *ngIf="request.finalDecision === 2" style="font-weight: 550" class="text-secondary">Pending</p>
+                  </div>
+                </li>
+
+              </ul>
+
+              <div *ngIf="request.reviewedBy.length === 0" class="row px-4 my-2 d-flex justify-content-end">
+                <button mat-button color="warn" class="mx-1" (click)="confirmDelete(request.requestID, i)">
+                  <span *ngIf="deleteProgress" class="spinner-border spinner-border-sm"></span>
+                  Delete
+                </button>
+                <button mat-raised-button color="primary" class="mx-1" (click)="editRequest(request.requestID)">Edit</button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+  <div *ngIf="requests.length === 0" class="alert alert-dark mt-3 mb-0">
+    No requests found..!
+  </div>
+
+</div>
+
+<ng-template #progressBlock>
+  <div class="row my-5">
+    <mat-spinner class="m-auto"></mat-spinner>
+  </div>
+</ng-template>

@@ -1,0 +1,151 @@
+<app-navbar></app-navbar>
+
+<div class="container login-container">
+
+  <div class="row">
+
+    <div class="col-md-6 login-form-1">
+      <img src="../../assets/high-view-woman-writing-notepad.jpg" alt="">
+    </div>
+
+    <div class="col-md-6 login-form-2 py-5">
+
+      <h3>Create Account</h3>
+
+      <form [formGroup]="registrationForm" class="py-3" *ngIf="!success; else redirect">
+
+        <div class="input-group">
+          <input type="text" formControlName="firstName" class="form-control" [class.is-invalid]="firstName.touched && firstName.errors?.required" placeholder="First Name *" value="" required/>
+          <div class="invalid-feedback">This field is required.</div>
+        </div>
+
+        <div class="input-group">
+          <input type="text" formControlName="lastName" class="form-control" [class.is-invalid]="lastName.touched && lastName.errors?.required" placeholder="Last Name *" value="" required/>
+          <div class="invalid-feedback">This field is required.</div>
+        </div>
+
+        <div class="input-group">
+          <input type="text" formControlName="email" class="form-control" [class.is-invalid]="email.touched && email.invalid" placeholder="Email *" required/>
+          <div class="invalid-feedback" *ngIf="email.errors?.required">This field is required.</div>
+          <div class="invalid-feedback" *ngIf="!email.errors?.touched && email.errors?.email">Invalid email address.</div>
+          <div class="invalid-feedback" *ngIf="!email.errors?.touched && !email.errors?.email && emailExistsError">This email is already registered.</div>
+        </div>
+
+        <ejs-tooltip id='tooltip_1' content="tooltip content" target="#password-group" position="RightBottom">
+          <ng-template #content>
+            <ul style="padding: 0; margin: 5px 10px 5px 10px; list-style-type: none">
+              <li>
+                <i *ngIf="passwordConstraints.capitalLetters" class="fa fa-check text-success"></i>
+                <i *ngIf="!passwordConstraints.capitalLetters" class="fa fa-times text-danger"></i> At least one capital
+                letter
+              </li>
+              <li>
+                <i *ngIf="passwordConstraints.numbers" class="fa fa-check text-success"></i>
+                <i *ngIf="!passwordConstraints.numbers" class="fa fa-times text-danger"></i> At leas one number
+              </li>
+              <li>
+                <i *ngIf="passwordConstraints.symbols" class="fa fa-check text-success"></i>
+                <i *ngIf="!passwordConstraints.symbols" class="fa fa-times text-danger"></i> At least one symbol
+              </li>
+              <li>
+                <i *ngIf="passwordConstraints.length" class="fa fa-check text-success"></i>
+                <i *ngIf="!passwordConstraints.length" class="fa fa-times text-danger"></i> More than 8 characters
+              </li>
+            </ul>
+          </ng-template>
+          <div class="input-group">
+            <input type="password" formControlName="password" id="password-group" class="form-control" [class.is-invalid]="password.touched && password.invalid" [class.is-valid]="password.valid" placeholder="Password *" required/>
+            <div class="invalid-feedback" *ngIf="password.errors?.required">This field is require.</div>
+          </div>
+        </ejs-tooltip>
+
+        <div class="input-group">
+          <input type="password" formControlName="confirmPassword" class="form-control" [class.is-invalid]="confirmPassword.touched && confirmPassword.invalid" [class.is-valid]="confirmPassword.touched && confirmPassword.valid" placeholder="Confirm Password *" required/>
+          <div class="invalid-feedback" *ngIf="confirmPassword.errors?.required">This field is required.</div>
+          <div class="invalid-feedback" *ngIf="confirmPassword.errors?.incorrect">Passwords do not match.</div>
+        </div>
+
+        <div class="input-group">
+        <input type="text" formControlName="phone" class="form-control" [class.is-invalid]="phone.touched && phone.invalid" placeholder="Mobile No *" required/>
+          <div class="invalid-feedback" *ngIf="phone.errors?.required">This field is required.</div>
+          <div class="invalid-feedback" *ngIf="phone.errors?.pattern">Invalid phone number.</div>
+        </div>
+
+        <div class="input-group">
+          <input type="text" formControlName="school" class="form-control" [class.is-invalid]="school.touched && school.errors?.required" placeholder="School *" required/>
+          <div class="invalid-feedback">This field is required.</div>
+        </div>
+
+        <div class="input-group">
+          <select formControlName="stream" class="form-select" [class.is-invalid]="stream.touched && stream.errors?.required" required>
+            <option selected disabled value="">Select Your Stream</option>
+            <option>Combined Maths</option>
+            <option>Bio-Science</option>
+            <option>Commerce</option>
+            <option>Arts</option>
+            <option>Technology</option>
+            <option>Professional Courses</option>
+          </select>
+          <div class="invalid-feedback">This field is required.</div>
+        </div>
+
+        <div class="input-group">
+          <select formControlName="year" class="form-select" [class.is-invalid]="year.touched && year.errors?.required" required>
+            <option selected disabled value="">Select Your Exam Year</option>
+            <option>2021</option>
+            <option>2022</option>
+            <option>2023</option>
+            <option>2024</option>
+          </select>
+          <div class="invalid-feedback">This field is required.</div>
+        </div>
+
+        <div class="input-group">
+          <select formControlName="district" class="form-select" [class.is-invalid]="district.touched && district.errors?.required" required>
+            <option selected disabled value="">Select Your District</option>
+            <option>Matara</option>
+            <option>Galle</option>
+            <option>Hambantota</option>
+            <option>Kalutara</option>
+            <option>Colombo</option>
+            <option>Gampaha</option>
+          </select>
+          <div class="invalid-feedback">This field is required.</div>
+        </div>
+
+        <div *ngIf="registrationError" class="alert alert-danger mt-3 mb-0">{{ registrationError }}</div>
+
+        <button type="button" (click)="register()" [disabled]="registrationForm.invalid || registrationProgress" class="btn btn-warning mt-3">
+          <span *ngIf="registrationProgress" class="spinner-border spinner-border-sm mr-1" role="status"></span>
+          Register Now
+        </button>
+
+        <!-- <a href="#" class="ForgetPwd" value="Login">Forget Password?</a> -->
+
+      </form>
+
+      <ng-template #redirect>
+
+        <div class="d-flex justify-content-center">
+
+          <img class="m-auto w-75" src="../../assets/icons/check.svg" alt="Check"/>
+
+        </div>
+
+        <h3>Your account was successfully created.</h3>
+
+        <p class="d-flex justify-content-center">You will be redirected to login page in {{ timeout }}s.</p>
+
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-warning mt-3" routerLink="/login">Login</button>
+        </div>
+
+      </ng-template>
+
+    </div>
+
+  </div>
+
+</div>
+
+<app-footer></app-footer>

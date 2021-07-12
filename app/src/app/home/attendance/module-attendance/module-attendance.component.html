@@ -1,0 +1,56 @@
+<div class="row px-3">
+  <div *ngIf="attendanceError" class="alert alert-danger mt-1 col">{{ attendanceError }}</div>
+</div>
+
+<div class="d-flex flex-row-reverse">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input type="search" matInput [formControl]="filter"/>
+    <button mat-button *ngIf="filter.value" matSuffix mat-icon-button aria-labelledby="Clear" (click)="filter.setValue('')">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div *ngIf="!progress; else progressBlock">
+
+  <div *ngFor="let module of filteredAttendance" [attr.id]="module.moduleCode" class="card" style="margin-bottom: 15px; transition: box-shadow 2s">
+
+    <h5 class="card-header">
+      <span style="float: left">{{ module.moduleName }}</span>
+      <span style="float: right">{{ module.moduleCode }}</span>
+    </h5>
+
+    <div class="card-body" style="padding: 0">
+
+      <div class="list-group list-group-flush">
+        <a *ngFor="let lectureHour of module.attendance" (click)="openDialog(module.moduleCode, module.moduleName, lectureHour.type, lectureHour.batch)" class="list-group-item list-group-item-action d-flex">
+          <div class="container">{{ lectureHour.type | uppercase }}</div>
+          <div class="container" style="text-align: center">
+            <mat-chip-list aria-label="attendance">
+              <mat-chip class="attendance-success" [class.attendance-danger]="lectureHour.percentage < 80">{{ lectureHour.percentage + '%' }}</mat-chip>
+            </mat-chip-list>
+          </div>
+          <div class="container" style="text-align: center">
+            {{ lectureHour.batch }}
+          </div>
+          <div class="container" style="text-align: right">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </div>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="filteredAttendance.length === 0 && getRole !== 'Admin'" class="alert alert-dark mt-3 mb-0">
+    No modules found..!
+  </div>
+
+</div>
+
+<ng-template #progressBlock>
+  <mat-spinner></mat-spinner>
+</ng-template>
+

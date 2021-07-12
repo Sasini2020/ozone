@@ -1,0 +1,47 @@
+<div style="height: 100%; overflow-x: hidden">
+
+  <div *ngIf="!notification.connected && notification.timeout > 0"  (click)="reconnect()" class="row bg-danger d-flex justify-content-center mx-0" style="font-size: 13px; cursor: pointer">
+    <p class="text-white my-0">Connection failure.{{ notification.timeout !== 30 ? ' Reconnecting in ' + notification.timeout + 's.' : '' }} <u>Reconnect</u></p>
+  </div>
+
+  <div *ngIf="!notification.connected && notification.timeout === 0" class="row bg-light d-flex justify-content-center" style="font-size: 13px">
+    <p class="border-light my-0"><span class="spinner-border spinner-border-sm"></span> Reconnecting...</p>
+  </div>
+
+  <div *ngIf="notification.connected && notification.displayConnectedMessage > 0" class="row bg-success d-flex justify-content-center mx-0" style="font-size: 13px">
+    <p class="text-white my-0">Connected.</p>
+  </div>
+
+
+  <div class="list-group" style="margin-bottom: 70px">
+    <div *ngFor="let message of notification.messages; let i = index"
+         class="message list-group-item list-group-item-action flex-column align-items-start"
+         [ngClass]="{'bg-primary': !message.received && message.status === 'sent', 'text-white': (!message.received && message.status === 'sent') || message.status === 'failed', 'bg-danger': message.status === 'failed'}"
+    >
+<!--      <pre>{{ message | json}}</pre>-->
+      <button *ngIf="username === message.username || fullName === message.username" (click)="deleteMessage(i)" class="delete-button" style="position: absolute; top: 2px; right: 2px" mat-icon-button>
+        <mat-icon [style.color]="message.status === 'sent' ? 'red': 'white'">
+          delete_outline
+        </mat-icon>
+      </button>
+      <h5 class="mb-1" style="cursor: pointer" (click)="openNotificationDialog(message)">{{ message.subject }}</h5>
+      <p class="mb-1">{{ message.message }}</p>
+      <div class="d-flex w-100 justify-content-between">
+        <small>Sent by: {{ username === message.username || fullName === message.username ? 'You' : message.username }}</small>
+        <span>
+          <small>{{ message.timeSent | date: 'h:mm a, M/d/yy' }}</small>
+          <span *ngIf="message.status === 'sending'" class="spinner-border spinner-border-sm ml-2"></span>
+        </span>
+      </div>
+      <div *ngIf="message.status === 'failed'">
+        <a (click)="sendAgain(i)" style="font-size: 13px; cursor: pointer"><i><b>Message not sent. Click here to try again</b></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="getRole === 'Teacher' || getRole === 'Admin'" class="row p-0 pb-3 m-0" style="z-index: 3; width: 100%; position: absolute; bottom: 0; height: fit-content">
+    <button (click)="userData.toggleComposer()" mat-raised-button class="rounded-pill w-75 mx-auto mt-3 mb-2"><mat-icon>add</mat-icon> Send a message</button>
+  </div>
+
+</div>
+

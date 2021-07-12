@@ -1,0 +1,12 @@
+<button mat-icon-button class="close-button" (click)="onNoClick()">
+  <mat-icon>close</mat-icon>
+</button>
+
+<h1 mat-dialog-title style="margin-bottom: 0">{{ data.studentID + ' - ' + data.fullName }}</h1>
+
+<mat-spinner *ngIf="progress" style="margin: 50px auto 50px;"></mat-spinner>
+
+<app-profile style="margin-left: -20px; margin-right: -20px" [studentID]="data.studentID" *ngIf="!progress && !error"></app-profile>
+
+<div *ngIf="error" class="alert alert-danger mt-3 mb-0">Error retrieving the data..!</div>
+

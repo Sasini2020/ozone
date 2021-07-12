@@ -1,0 +1,147 @@
+  <mat-spinner [hidden]="!progress" style="  margin: 100px auto auto"></mat-spinner>
+
+  <div *ngIf="!error" [hidden]="progress">
+
+    <h1 *ngIf="getRole === 'Student'" class="mat-h2">{{ courseName }}</h1>
+
+    <div class="d-flex flex-row-reverse">
+      <mat-form-field class="col-4">
+        <mat-label>Filter</mat-label>
+        <input type="search" matInput [formControl]="filter">
+        <button mat-button *ngIf="filter.value" matSuffix mat-icon-button aria-labelledby="Clear" (click)="filter.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <div *ngFor="let semester of filteredSemesters | keyvalue">
+
+      <div *ngIf="semester.value.length !== 0" class="mb-4">
+
+        <p class="h6">{{ semester.key }}</p>
+
+        <div [attr.id]="'accordion' + semester.value[0].moduleCode">
+
+          <div *ngFor="let module of semester.value" [attr.id]="module.moduleCode" class="card mb-2" style="transition: box-shadow 2s;">
+
+            <h5 [attr.id]="'heading' + module.moduleCode"
+                [attr.data-target]="'#collapse' + module.moduleCode"
+                [attr.aria-controls]="'collapse' + module.moduleCode"
+                aria-expanded="false"
+                data-toggle="collapse"
+                class="card-header d-flex justify-content-between"
+                style="cursor: pointer"
+            >
+              <span style="float: left">{{ module.moduleName }}</span>
+              <span style="float: right">{{ module.moduleCode }}</span>
+            </h5>
+
+            <div [attr.id]="'collapse' + module.moduleCode"
+                 [class.show]="module.moduleCode === moduleCode"
+                 [attr.aria-labelledby]="'heading' + module.moduleCode"
+                 [attr.data-parent]="'#accordion' + semester.value[0].moduleCode"
+                 class="collapse">
+
+              <div class="card-body p-0">
+
+                <ul class="list-group list-group-flush">
+
+                  <li class="list-group-item list-group-item-action d-flex">
+                    {{ module.description }}
+                  </li>
+
+                  <li class="list-group-item list-group-item-action d-flex">
+                    <div class="text-secondary w-25">TEACHERS</div>
+                    <div class="w-75">
+                      <span *ngIf="module.teachers.length === 0; else teachersBlock"><i> Not Available</i></span>
+                      <ng-template #teachersBlock>
+                        <span *ngFor="let teacher of module.teachers">{{ teacher.firstName }} {{ teacher.lastName }}
+                          <br/></span>
+                      </ng-template>
+                    </div>
+                  </li>
+
+                  <li class="list-group-item list-group-item-action d-flex">
+                    <div class="text-secondary w-25">CREDITS</div>
+                    <div class="w-75">
+                      <span *ngIf="!module.credits; else creditsBlock"><i>Not Available</i></span>
+                      <ng-template #creditsBlock>{{ module.credits }}</ng-template>
+                    </div>
+                  </li>
+
+                  <li class="list-group-item list-group-item-action d-flex">
+                    <div class="text-secondary w-25">
+                      TIME
+                    </div>
+                    <div class="w-75">
+                      <span *ngIf="module.lectureHours.length === 0; else lectureHourBlock"><i>Not Available</i></span>
+                      <ng-template #lectureHourBlock>
+                        <span *ngFor="let lectureHour of module.lectureHours">
+                          <span class="highlight">{{ lectureHour.type }}</span>:
+                          <span class="highlight">{{ daysOfWeek[lectureHour.day - 1] }}</span> from <span
+                          class="highlight">{{ lectureHour.startingTime}}</span> to
+                          <span class="highlight">{{ lectureHour.endingTime}}</span> at <span
+                          class="highlight">{{ lectureHour.lectureHall }}</span><br/>
+                        </span>
+                      </ng-template>
+                    </div>
+                  </li>
+
+                  <li (click)="getRole === 'Student' ? router.navigate(['../results/exam-results', {moduleCode: module.moduleCode}]) : router.navigate(['../results/upload-results', {moduleCode: module.moduleCode}])"
+                      class="list-group-item list-group-item-action d-flex result">
+                    <div class="text-secondary w-25">
+                      RESULTS
+                    </div>
+                    <div class="w-75">
+                      <div *ngIf="getRole !== 'Admin'; else addResultBlock" style="float: left"><i>Click Here to view Results</i></div>
+                      <ng-template #addResultBlock>
+                        <div style="float: left"><i>Click here to add results to this module</i></div>
+                      </ng-template>
+                      <div style="float: right">
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li (click)="getRole === 'Student' ? router.navigate(['../attendance/module-attendance', {moduleCode: module.moduleCode}]) : router.navigate(['../attendance/upload-attendance', {moduleCode: module.moduleCode}])"
+                      class="list-group-item list-group-item-action d-flex result">
+                    <div class="text-secondary w-25">
+                      ATTENDANCE
+                    </div>
+                    <div class="w-75">
+                      <div *ngIf="getRole !== 'Admin'; else addResultBlock" style="float: left"><i>Click Here to view attendance</i></div>
+                      <ng-template #addResultBlock>
+                        <div style="float: left"><i>Click here to add attendance to this module</i></div>
+                      </ng-template>
+                      <div style="float: right">
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                      </div>
+                    </div>
+                  </li>
+
+                </ul>
+
+                <mat-divider></mat-divider>
+
+                <div class="row mx-0 d-flex justify-content-end" *ngIf="getRole === 'Admin'">
+                  <button [routerLink]="['../new-module', {moduleCode: module.moduleCode}]" mat-stroked-button color="primary" class="mx-2 my-2">Edit</button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!error && getRole !== 'Student' && filteredSemesters['Modules'] && filteredSemesters['Modules'].length === 0" class="alert alert-warning">
+    No modules found!
+  </div>

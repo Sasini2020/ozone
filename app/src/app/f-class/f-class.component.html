@@ -1,0 +1,66 @@
+<app-navbar></app-navbar>
+
+
+<header>
+    <section class="class"> 
+        <img src="../../assets/studentstable.jpg" class="d-block w-100" alt="...">
+        <div class="classcontent">
+            <h1>Our<span class="yellowtext"> Classes</span></h1>
+        </div>
+    </section> 
+</header>
+<br>
+<div class="searchsection row g-3">
+    <div class="col-md-3">
+        <label class="visually-hidden" for="autoSizingSelect">Subject</label>
+        <select class="form-select" id="autoSizingSelect">
+          <option selected>Subject</option>
+          <option value="1">Biology</option>
+          <option value="2">Business Studies</option>
+          <option value="3">SFT</option>
+          <option value="3">Pure Mathematics</option>
+          <option value="3">Applied Mathematics</option>
+          <option value="3">Logic</option>
+          <option value="3">Chemistry</option>
+          <option value="3">Physics</option>
+          <option value="3">Political Science</option>
+          <option value="3">ICT</option>
+          <option value="3">BC</option>
+          <option value="3">Economics</option>
+          <option value="3">Java/ Python</option>
+
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="visually-hidden" for="autoSizingSelect">A/L YEAR</label>
+        <select class="form-select" id="autoSizingSelect">
+          <option selected>A/L YEAR</option>
+          <option value="1">2020 A/L</option>
+          <option value="1">2021 A/L</option>
+          <option value="1">2022 A/L</option>
+          <option value="1">2023 A/L</option>
+        </select>
+      </div>
+      <button class="btn btn-warning col-md-3">Search</button>
+  </div>
+  <br>
+<section class="subjects">
+    <div class="subjeccontent">        
+        <div class="row mt-5">
+            <div class="col-lg-3 mb-5" *ngFor="let cl of class">
+                <div class="box shadow-lg">
+                    <!-- <img src="{{cl.image}}" width="100%"> -->
+                    <h4 class="mt-2">{{cl.name}}</h4>
+                    <p class="mt-2">{{cl.description}}</p>
+                  <a routerLink="classregistration"><button class="btn btn-warning mt-2 ">View Class</button></a>  
+                    <!-- <a routerLink="classregistration"> View Class</a> -->
+
+                </div>
+            </div>
+        </div>
+    
+    </div>
+   
+</section>
+
+<app-footer></app-footer>

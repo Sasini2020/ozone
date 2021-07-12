@@ -1,0 +1,169 @@
+<div class="card">
+
+  <div class="card-header">
+    <h5>Upload Payment Details</h5>
+    <p class="sub-header">Upload payment details related to any student</p>
+  </div>
+
+  <div class="card-body">
+
+    <div class="row" style="margin: -20px -20px 10px -20px; height: 5px">
+      <mat-progress-bar [hidden]="!uploadAPaymentProgress" mode="query"></mat-progress-bar>
+    </div>
+
+    <form [formGroup]="paymentForm" #paymentFormRef="ngForm">
+
+      <h6>Depositor Details</h6>
+      <mat-divider style="margin-left: -20px; margin-right: -20px"></mat-divider>
+      <br />
+      <div formGroupName="depositor">
+        <div class="row mb-2">
+          <mat-form-field  class="col-md-4 mx-0 px-1" appearance="outline">
+            <mat-label>Registration Number</mat-label>
+            <input *ngIf="getRole == 'Student'; "type="text" matInput
+                   formControlName="registrationNumber" placeholder="Ex: 184183R" [readonly]="true">
+            <input *ngIf="getRole == 'Admin';" (keyup)="term$.next($event.target.value)" (ngModelChange)="toggleProgress()" type="text" matInput
+                   formControlName="registrationNumber" placeholder="Ex: 184183R" required>
+            <mat-error *ngIf="registrationNumber.touched && registrationNumber.errors?.required">This field is required
+            </mat-error>
+            <mat-error
+              *ngIf="registrationNumber.touched && !registrationNumber.errors?.required && registrationNumber.errors?.pattern">
+              Invalid input</mat-error>
+            <mat-error
+              *ngIf="registrationNumber.touched && !registrationNumber.errors?.required && !registrationNumber.errors?.pattern && studentIDNotFound">
+              Student ID not found</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col mx-0 px-1" appearance="outline">
+            <mat-label>Full Name</mat-label>
+            <input type="text" matInput formControlName="fullName" placeholder="Full Name" [readonly]="true" />
+          </mat-form-field>
+
+        </div>
+
+        <div class="row mb-2">
+
+          <mat-form-field class="col mx-0 px-1" appearance="outline">
+            <mat-label>Course Name</mat-label>
+            <input type="text" matInput formControlName="course" placeholder="Course Name" [readonly]="true" />
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4 mx-0 px-1" appearance="outline">
+            <mat-label>Academic Year</mat-label>
+            <input type="text" matInput formControlName="academicYear" placeholder="Academic Year" [readonly]="true" />
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <div class="row px-1">
+        <div *ngIf="studentIDNotFound" class="alert alert-warning col">No student found with this ID</div>
+      </div>
+
+      <h6>Payment Details</h6>
+      <mat-divider style="margin-left: -20px; margin-right: -20px"></mat-divider>
+      <br />
+
+      <div formGroupName="deposit">
+
+
+        <div class="row mb-2">
+
+          <mat-form-field class="col mx-0 px-1" appearance="outline">
+            <mat-label>Bank</mat-label>
+            <mat-select formControlName="bankName" required>
+              <mat-option *ngFor="let bank of banks" [value]="bank.bankName">{{bank.bankName}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="bankName.touched && bankName.errors?.required">This field is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col mx-0 px-1" appearance="outline">
+            <mat-label>Slip Number</mat-label>
+            <input type="number" matInput formControlName="slipNumber" placeholder="slip number" required>
+            <mat-error *ngIf="bankName.touched && bankName.errors?.required">This field is required</mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div class="row mb-0">
+
+          <mat-form-field class="col mx-0 px-1" appearance="outline">
+            <mat-label>Amount Paid (Rs.)</mat-label>
+            <input matInput type="number" class="example-right-align" formControlName="totalPaid"
+                   placeholder="Ex: 456,500.00" required>
+            <mat-error *ngIf="bankName.touched && bankName.errors?.required">This field is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col mx-0 px-1">
+            <mat-label>Date</mat-label>
+            <input matInput formControlName="paymentDate" [matDatepicker]="myDatePicker" [max]="maxDate"/>
+            <mat-datepicker-toggle matSuffix [for]="myDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #myDatePicker></mat-datepicker>
+            <mat-error *ngIf="paymentDate.touched && paymentDate.errors?.required">This field required
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+
+        <div class="row mb-2">
+          <mat-form-field class="col mx-0 px-1" appearance="outline">
+            <mat-label>External Note</mat-label>
+            <textarea type="text" matInput formControlName="externalNote" placeholder="External Note"></textarea>
+          </mat-form-field>
+
+        </div>
+
+
+        <div class="mt-3 px-1">
+
+          <h6>Upload Relevant Documents</h6>
+          <mat-divider style="margin-left: -20px; margin-right: -20px"></mat-divider>
+          <br />
+
+          <p>Upload a copy of the payment slip.</p>
+
+          <input #fileUpload type="file" multiple style="display: none" (change)="onFileUpload($event)" />
+
+          <div id="slip" class="row p-2 border rounded" style="transition: box-shadow 2s; box-shadow: 0 0 0 2px white; overflow: hidden">
+            <div class="m-1 image-container" (click)="openImagePreview()" *ngIf="slip">
+              <button (click)="removeImage()" type="button" class="close" aria-label="Close" style="position: absolute; top: 5px; right: 5px; z-index: 2">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <img class="image" [attr.src]="slip" alt="Image" />
+            </div>
+            <p class="text-secondary mt-3" *ngIf="!slip && !slipDownloadError && slipDownloadProgress === 0">Not selected.</p>
+            <p class="text-danger mt-3" *ngIf="slipDownloadError">Could not load documents. {{ slipDownloadError }} <u><a style="cursor: pointer" (click)="downloadSlip()">Try again</a></u></p>
+            <p class="text-secondary mt-3" *ngIf="slipDownloadProgress > 0 && slipDownloadProgress < 100">Please wait while the documents are being downloaded...</p>
+          </div>
+
+          <div class="row mx-0 px-0" *ngIf="slipDownloadProgress > 0 && slipDownloadProgress < 100">
+            <mat-progress-bar style="width: calc(100% + 30px); margin: 0 -15px 0 -15px" mode="determinate" [value]="slipDownloadProgress"></mat-progress-bar>
+          </div>
+
+          <div class="row mx-0 px-0" *ngIf="slipUploadProgress">
+            <mat-progress-bar style="width: calc(100% + 30px); margin: 0 -15px 0 -15px" mode="determinate" [value]="slipUploadProgress"></mat-progress-bar>
+          </div>
+
+          <div class="row mt-3">
+            <button (click)="clickFileUpload()" type="button" mat-raised-button color="primary">Add</button>
+          </div>
+
+        </div>
+
+        <div class="row px-1">
+          <div *ngIf="error" class="alert alert-warning col">{{ error }}</div>
+        </div>
+
+        <div class="d-flex flex-row-reverse my-0">
+          <button (click)="submitForm()" type="button" mat-raised-button color="primary" class="mx-1">{{ new ? 'Submit' : 'Update'}}</button>
+          <button (click)="resetForm()" type="button" mat-button class="mr-1">Reset Form</button>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
