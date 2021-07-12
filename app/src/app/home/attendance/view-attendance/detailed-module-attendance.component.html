@@ -1,0 +1,38 @@
+<button mat-icon-button class="close-button" (click)="onNoClick()">
+  <mat-icon>close</mat-icon>
+</button>
+
+<h1 mat-dialog-title style="margin-bottom: 0">{{data.moduleCode + ' - ' + data.moduleName + ' (' + data.batch + ')' }}</h1>
+<p>{{ data.type }} - {{ data.dateHeld | date: 'MMM dd, yyyy' }}</p>
+
+<mat-spinner *ngIf="progress" style="margin: 50px auto 50px;"></mat-spinner>
+
+
+
+<table *ngIf="!progress && !error" class="table table-hover">
+
+  <thead class="thead-light">
+  <tr>
+    <th scope="col">Student Index</th>
+    <th scope="col">Status</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let record of data.attendance">
+    <td>{{ record.studentID }}</td>
+    <td>
+      <mat-chip-list aria-label="attendance">
+        <mat-chip *ngIf="record.status; else elseBlock" class="success"><mat-icon>check</mat-icon></mat-chip>
+        <ng-template #elseBlock>
+          <mat-chip class="danger"><mat-icon>close</mat-icon></mat-chip>
+        </ng-template>
+      </mat-chip-list>
+    </td>
+  </tr>
+  </tbody>
+
+</table>
+
+<div *ngIf="data.attendance.length <= 0" class="alert alert-danger mt-3 mb-0">Error retrieving the data..!</div>
+

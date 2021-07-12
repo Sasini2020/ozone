@@ -1,0 +1,294 @@
+<div class="card">
+
+  <div class="card-header">
+    <h5>{{ data.new ? 'Add new module' : 'Edit module details' }}</h5>
+    <p class="mb-1">Edit required fields and click save</p>
+  </div>
+
+  <div class="card-body p-0">
+
+    <div class="row mx-0">
+      <mat-progress-bar [hidden]="!editModuleProgress" mode="query"></mat-progress-bar>
+    </div>
+
+    <form [formGroup]="editModuleForm">
+
+      <div class="row mx-0 px-1 mt-4">
+
+        <mat-form-field appearance="outline" class="col-4 mx-0 px-1" id="form">
+          <mat-label>Module Code</mat-label>
+          <input [readonly]="!data.new" (keyup)="term$.next($event.target.value)" (ngModelChange)="toggleProgress()" type="text" matInput formControlName="moduleCode" placeholder="Ex: CM1100">
+          <mat-error *ngIf="moduleCode.touched && moduleCode.errors?.required">Required</mat-error>
+          <mat-error *ngIf="moduleCode.touched && moduleCode.errors?.pattern">Invalid format</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-8 mx-0 px-1">
+          <mat-label>Module Name</mat-label>
+          <input type="text" matInput formControlName="moduleName" placeholder="Ex: Information Technology">
+          <mat-error *ngIf="moduleName.touched && moduleName.errors?.required">This field is required</mat-error>
+          <mat-error *ngIf="moduleName.touched && moduleName.errors?.minLength">Module name must be more than six
+            characters long
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div *ngIf="data.new && moduleExists" class="row mx-2 px-1">
+        <div class="alert alert-warning col">
+          <a (click)="getModule(moduleCode.value)" class="btn btn-link mx-0 px-1">Module already exists. Click here to <u>load details</u></a>
+        </div>
+      </div>
+
+      <div class="row mx-0 px-1">
+
+        <div class="col-4 mx-0 px-1">
+          <mat-form-field appearance="outline" class="col-12 mx-0 px-0">
+            <mat-label>Credits</mat-label>
+            <input matInput formControlName="credits" placeholder="Ex: 2">
+            <mat-error *ngIf="credits.touched && credits.errors?.required">Required</mat-error>
+            <mat-error *ngIf="credits.touched && credits.errors?.pattern">Invalid input</mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="col-8 mx-0 px-1">
+          <mat-label>Module Description</mat-label>
+          <textarea style="overflow: hidden !important; resize: none !important; height: 105px" matInput formControlName="description" placeholder="Add a description to this module"></textarea>
+          <mat-error *ngIf="description.touched && description.errors?.required">This field is required</mat-error>
+          <mat-error *ngIf="description.touched && description.errors?.minLength">Module description must be more than six characters long</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="input-box mx-2 mb-3 p-2" id="teachers">
+
+        <div class="row mx-0">
+
+          <div style="width: 100%">
+            <p class="input-group-header">Add Teachers</p>
+          </div>
+
+          <p *ngIf="teachers.length === 0">
+            Enter teachers ID number or name to assign the to this module <br/>
+            <span class="text-danger">You must add at least one teacher</span>
+          </p>
+
+          <mat-chip-list style="margin-bottom: 15px" #teacherList aria-label="Teacher Selection">
+            <mat-chip *ngFor="let teacher of teachers" [selectable]="selectable" [removable]="removable" (removed)="removeTeacher(teacher)" class="mat-chip-edit-details">
+              {{ teacher.username }} | {{ teacher.firstName + ' ' + teacher.lastName }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+
+        </div>
+
+        <div class="row mx-0">
+
+          <div class="col-11 mx-0 px-0">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Teacher ID</mat-label>
+              <input id="selectTeacher" matInput placeholder="Ex: 184061R" type="text" formControlName="teacher" [matAutocomplete]="auto"/>
+              <mat-error *ngIf="teacher.errors?.incorrect">Invalid teacher id</mat-error>
+              <mat-autocomplete #auto='matAutocomplete'>
+                <mat-option *ngFor="let teacher of filteredTeachers | async"
+                            [value]="teacher.username">
+                  <span>{{ teacher.username }}</span> |
+                  <small>{{ teacher.firstName + ' ' + teacher.lastName }}</small>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-1 d-flex justify-content-center">
+            <button mat-icon-button mat-stroked-button type="button" color="primary" style="margin-top: 12px" (click)="addTeacher()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="input-box mx-2 mb-3 p-2" id="lectureHours">
+
+        <div class="row mx-0">
+
+          <div style="width: 100%">
+            <p class="input-group-header">Existing Lecture Hours</p>
+          </div>
+
+          <p>
+            If you remove existing lecture hours, attendance will be entered to the new ones.
+          </p>
+
+        </div>
+
+        <div formArrayName="lectureHours" *ngFor="let lectureHour of lectureHours.controls; let i = index">
+
+          <div [formGroupName]="i" class="row mx-0 pb-3">
+
+            <mat-form-field [hidden]="true">
+              <input matInput formControlName="lectureHourID">
+            </mat-form-field>
+
+            <div class="col-2 ml-1 px-0">
+              <mat-form-field class="w-100">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="type">
+                  <mat-option *ngFor="let type of LECTURE_TYPES" [value]="type">
+                    {{ type }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-2 ml-1 px-0">
+              <mat-form-field class="w-100">
+                <mat-label>Day</mat-label>
+                <mat-select formControlName="day">
+                    <mat-option value="6">Saturday</mat-option>
+                    <mat-option value="0">Sunday</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-3 ml-1 px-0">
+              <mat-form-field class="w-100">
+                <mat-label>Lecture Hall</mat-label>
+                <mat-select formControlName="lectureHall">
+                  <mat-option *ngFor="let lectureHall of LECTURE_HALLS" [value]="lectureHall">
+                    {{ lectureHall }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-2 ml-1 px-0">
+              <mat-form-field class="w-100">
+                <mat-label>Starting Time</mat-label>
+                <input matInput type="time" formControlName="startingTime">
+              </mat-form-field>
+            </div>
+
+            <div class="col-2 ml-1 px-0">
+              <mat-form-field class="w-100">
+                <mat-label>Ending Time</mat-label>
+                <input matInput type="time" formControlName="endingTime">
+              </mat-form-field>
+            </div>
+
+            <div style="width: 5%">
+              <button class="fab-button btn btn-danger btn-sm mt-2 ml-2" type="button" (click)="removeLectureHour(i)">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="input-box mx-2 mb-3 p-2" id="newLectureHours">
+
+        <div class="row mx-0">
+
+          <div style="width: 100%">
+            <p class="input-group-header">Add New Lecture Hours</p>
+          </div>
+
+          <p *ngIf="newLectureHours.length === 0" style="width: 100%">
+            Click add button to add new lecture hours. <br/>
+            <span *ngIf="lectureHours.length === 0" class="text-danger">You must add at least one lecture hour</span>
+          </p>
+
+        </div>
+
+        <div formArrayName="newLectureHours" *ngFor="let lectureHour of newLectureHours.controls; let i = index">
+
+          <div [formGroupName]="i" class="row mx-0 pb-3">
+
+            <mat-form-field [hidden]="true">
+              <input matInput formControlName="lectureHourID">
+            </mat-form-field>
+
+            <div class="col-2 ml-1 px-0">
+              <mat-form-field class="w-100">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="type">
+                  <mat-option *ngFor="let type of LECTURE_TYPES" [value]="type">
+                    {{ type }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-2 ml-1 px-0">
+              <mat-form-field class="w-100">
+                <mat-label>Day</mat-label>
+                <mat-select formControlName="day">
+                  <mat-option value="6">Saturday</mat-option>
+                  <mat-option value="0">Sunday</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-3 ml-1 px-0">
+              <mat-form-field class="w-100">
+                <mat-label>Lecture Hall</mat-label>
+                <mat-select formControlName="lectureHall">
+                  <mat-option *ngFor="let lectureHall of LECTURE_HALLS" [value]="lectureHall">
+                    {{ lectureHall }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-2 ml-1 px-0">
+              <mat-form-field class="w-100">
+                <mat-label>Starting Time</mat-label>
+                <input matInput type="time" formControlName="startingTime">
+              </mat-form-field>
+            </div>
+
+            <div class="col-2 ml-1 px-0">
+              <mat-form-field class="w-100">
+                <mat-label>Ending Time</mat-label>
+                <input matInput type="time" formControlName="endingTime">
+              </mat-form-field>
+            </div>
+
+            <div style="width: 5%">
+              <button type="button" class="fab-button btn btn-danger btn-sm mt-2 ml-2" (click)="removeNewLectureHour(i)">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col mx-0 px-0">
+          <button type="button" mat-stroked-button color="primary" (click)="addNewLectureHour()">Add</button>
+        </div>
+
+      </div>
+
+      <div *ngIf="savingError" class="row px-1 mt-3 mb-0 ">
+        <div class="alert alert-danger col">Error saving data. {{ savingError }}.</div>
+      </div>
+
+      <div class="row mx-0 px-1 mb-3 d-flex flex-row-reverse mt-0">
+        <button [disabled]="editModuleProgress" mat-raised-button color="primary" class="mx-1" (click)="submitForm()">
+          <span *ngIf="editModuleProgress" class="spinner-border spinner-border-sm mr-1"></span>
+          Save
+        </button>
+        <button [disabled]="editModuleProgress" mat-flat-button routerLink="../module-details" class="mx-1">
+          Cancel
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

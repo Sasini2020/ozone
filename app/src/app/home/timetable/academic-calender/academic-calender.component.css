@@ -1,0 +1,7 @@
+#ganttDefault_dialog {
+  max-height: 400px !important;
+}
+
+.e-chart-scroll-container::-webkit-scrollbar {
+  width: 10px !important;
+}

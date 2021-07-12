@@ -1,0 +1,140 @@
+header {
+    height: 220px;
+    width: 100%;
+    background:#05245D;
+    overflow: hidden;
+}
+
+.aboutsec img{
+    width: 100%;
+    height: 280px;
+    object-position: center;
+    object-fit: cover;
+    opacity: 0.2;
+}
+.aboutcontent{
+    position: absolute;
+    font-family: 'Poppins';
+    top: 22%;
+    left: 17%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+}
+.aboutcontent h1{
+    color:#ffffff;
+    font-weight: 500;
+    font-size: 35px;
+}
+.aboutcontent p{
+    color:#ffffff;
+    font-size: 13px;
+    left: 21%;
+}
+.aboutcontent a{
+    margin-top: 10px;
+}
+
+.yellowtext{
+    color: #F1C40F;
+    border-radius: 20px;
+}
+/* bottommost section */
+.bottommost{
+    background: #ffffff;
+}
+  .bottommost h2{
+      text-align: center;
+      font-weight: 600;
+      padding-top: 85px;
+  }
+  .bottommost p{
+    font-size: 14px;
+    padding-top: 25px;
+    text-align: center;
+  }
+  .bottommost .bottommost-first-p{
+    font-size: 14px;
+    padding: 25px 137px 30px;
+    text-align: center;
+   
+  }
+  
+.profile-card-6 {
+    max-width: 300px;
+    background-color: #FFF;
+    border-radius: 5px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    margin: 10px auto;
+    cursor: pointer;
+    height: 400px;
+}
+
+.profile-card-6 img {
+    transition: all 0.15s linear;
+    width: 300px;
+    height: 400px;
+}
+
+.profile-card-6 .profile-name {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #FFF;
+    padding: 15px 20px;
+    background: linear-gradient(140deg, rgba(0, 0, 0, 0.4) 50%, rgba(255, 255, 0, 0) 50%);
+    transition: all 0.15s linear;
+}
+
+.profile-card-6 .profile-position {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.4);
+    left: 30px;
+    top: 100px;
+    transition: all 0.15s linear;
+}
+
+.profile-card-6 .profile-overview {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 50%, rgba(255, 255, 0, 0));
+    color: #FFF;
+    padding: 50px 0px 20px 0px;
+    transition: all 0.15s linear;
+}
+
+.profile-card-6 .profile-overview h2 {
+    font-weight: bold;
+}
+
+.profile-card-6 .profile-overview h3 {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.profile-card-6:hover img {
+    filter: brightness(80%);
+  
+}
+
+.profile-card-6:hover .profile-name {
+    padding-left: 25px;
+    padding-top: 20px;
+}
+
+.profile-card-6:hover .profile-position {
+    left: 40px;
+}
+
+.profile-card-6:hover .profile-overview {
+    padding-bottom: 25px;
+}
+
+/* @media screen and (max-width:600px) {  
+    
+  
+} */

@@ -1,0 +1,120 @@
+<div class="card">
+
+  <div class="card-header">
+    <h5>Edit Results</h5>
+    <p class="sub-header">Edit exam results related to any module</p>
+  </div>
+
+  <div class="card-body">
+
+    <div class="row" style="margin: -20px -20px 10px -20px; height: 5px">
+      <mat-progress-bar [hidden]="!editResultsProgress" mode="query"></mat-progress-bar>
+    </div>
+
+    <form [formGroup]="editResultsForm">
+
+      <div class="row">
+
+        <mat-form-field appearance="outline" class="col-3 mx-0 px-1">
+          <mat-label>Module Code</mat-label>
+          <input (keyup)="term$.next($event.target.value)" (ngModelChange)="toggleProgress()" id="edit_moduleCode" type="text" matInput formControlName="moduleCode" placeholder="Ex CM1100"/>
+          <mat-error *ngIf="moduleCode.touched && moduleCode.errors?.required">This field is required</mat-error>
+          <mat-error *ngIf="moduleCode.touched && !moduleCode.errors?.required && moduleCode.errors?.pattern">Invalid
+            module code
+          </mat-error>
+          <mat-error *ngIf="moduleExists">Module does not exist</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-6 mx-0 px1">
+          <mat-label>Module Name</mat-label>
+          <input type="text" readonly  matInput formControlName="moduleName" id="edit_moduleName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-3 mx-0 px-1">
+          <mat-label>Academic Year</mat-label>
+          <mat-select (selectionChange)="checkIfResultsExists()" id="edit_academicYear" formControlName="academicYear">
+            <mat-option *ngFor="let year of academicYears" [value]="year">{{ year }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="academicYear.touched && academicYear.errors?.required">This field is required</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="row px-1 mb-4">
+        <button [disabled]="!resultsFound" (click)="getResults()" mat-raised-button color="primary" class="mx-2" type="button">Add</button>
+      </div>
+
+      <div class="row">
+
+        <mat-form-field appearance="outline" class="col-4 mx-0 px-1">
+          <mat-label>Date</mat-label>
+          <input matInput formControlName="dateHeld" [matDatepicker]="myDatePicker" [max]="maxDate"/>
+          <mat-datepicker-toggle matSuffix [for]="myDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #myDatePicker></mat-datepicker>
+          <mat-error *ngIf="dateHeld.touched && dateHeld.errors?.required">This field required</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div id="upload_preview" style="margin: 15px -10px 0 -10px">
+
+        <p>Preview of the Results</p>
+
+        <div>
+
+          <mat-form-field class="filter">
+            <mat-label>Filter</mat-label>
+            <input (keyup)="applyFilter($event)" matInput placeholder="Enter keyword" #input/>
+          </mat-form-field>
+
+          <table class="table table-sm">
+
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Index Number</th>
+              <th scope="col">Marks</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let result of filteredResults; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ result.studentID }}</td>
+              <td><input (keyup)="onChange(i, $event.target.value)" [value]="result.mark"  [attr.id]="'result_' + i" type="number" /></td>
+            </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+      <div class="row px-1 mt-2 mb-0" id="success_message">
+        <div *ngIf="success" class="alert alert-success col">Exam results successfully uploaded.</div>
+      </div>
+
+      <div class="row px-1 mt-2 mb-0" id="delete_message">
+        <div *ngIf="successfullyDeleted" class="alert alert-success col">Exam Deleted successfully.</div>
+      </div>
+
+      <div class="row px-1 mt-2 mb-0" id="error_message">
+        <div *ngIf="error" class="alert alert-danger col">{{ error }}</div>
+      </div>
+
+      <div class="d-flex flex-row-reverse my-0">
+        <button (click)="modifyResults()" type="button" mat-raised-button color="primary" class="mx-1" id="add-button">
+          <span *ngIf="buttonProgress" class="spinner-border spinner-border-sm mr-1"></span>
+          Save Changes
+        </button>
+        <button (click)="deleteExam()" type="button" mat-button color="warn" class="mx-1" id="delete-button">Delete</button>
+        <button (click)="getResults()" type="button" mat-button class="mx-1" id="reset-button">Reset</button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+

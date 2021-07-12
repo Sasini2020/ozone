@@ -1,0 +1,149 @@
+/* You can add global styles to this file, and also import other style files */
+
+/*@import '~bootstrap/dist/css/bootstrap.min.css';*/
+
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-layouts/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-grids/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-treegrid/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-gantt/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css';
+@import "../node_modules/@syncfusion/ej2-angular-popups/styles/material.css";
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+
+button {
+  outline: none !important;
+}
+
+button:focus {
+  outline: none !important;
+}
+
+a {
+  outline: none !important;
+}
+
+a:focus {
+  outline: none !important;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.tooltip {
+  background: black;
+  border-radius: 10px;
+  color: white;
+  padding: 9px;
+  font-size: 12px;
+  vertical-align: center;
+  text-align: center;
+  opacity: 0.8
+}
+
+.close-button {
+  float: right;
+  top: -20px;
+  right: -20px;
+}
+
+.input-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.authentication {
+  max-width: 400px;
+  margin: auto;
+  text-align: left;
+}
+
+.logo {
+  height: 100px;
+  width: 100px;
+}
+
+.heading {
+  font-size: 26px;
+  margin-bottom: 0;
+}
+
+.data-container {
+  padding: 0 40px 40px 40px;
+  height: 100%;
+  position: relative;
+}
+
+.details-button {
+  float: left;
+  text-align: center;
+  cursor: pointer;
+  padding-top: 4px;
+  height: 30px;
+  border-radius: 15px;
+  margin-left: 10px;
+  border: 1px solid rgb(224, 224, 224);
+  width: 100px !important;
+}
+
+.details-button:hover {
+  background-color: rgb(220, 220, 220);
+}
+
+.jumbotron {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  height: 100px;
+  padding-top: 15px;
+}
+
+.text-area {
+  resize: none;
+  overflow: hidden;
+}
+
+.input-group-header {
+  font-size: 12px;
+}
+
+.dialog-subtitle {
+  font-size: 15px;
+  color: rgb(120, 120, 120);
+  margin-top: -20px;
+}
+
+.fab-button {
+  border-radius: 50px;
+  height: 30px;
+  width: 30px;
+  padding: 2px 0 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e3e3e3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+

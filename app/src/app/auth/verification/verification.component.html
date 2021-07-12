@@ -1,0 +1,129 @@
+<mat-card class="authentication">
+
+  <mat-card-header>
+    <mat-card-title>Add recovery email</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+    <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
+
+      <mat-step [completed]="!!token" [editable]="!token">
+
+        <ng-template matStepLabel>Add recovery email</ng-template>
+
+        <mat-card-subtitle>
+          In case you forget your password, we'll send an email to this email address that contains instructions to reset the password.
+        </mat-card-subtitle>
+
+        <form [formGroup]="emailForm">
+
+          <mat-form-field appearance="outline" class="input-field">
+            <mat-label>Add a recovery email</mat-label>
+            <input type="email" matInput formControlName="email" placeholder="someone@example.com"/>
+            <mat-error *ngIf="email.touched && email.errors?.required">This field is required</mat-error>
+            <mat-error *ngIf="email.touched && email.errors?.email">Please enter a valid email address</mat-error>
+          </mat-form-field>
+
+          <div *ngIf="emailSent" class="alert alert-success mt-0 mb-3">Verification email sent. Please check your email to further instructions. {{ wait !== 0 ? "Send again in " + wait + "s." : "" }}</div>
+
+          <div *ngIf="error" class="alert alert-danger mt-0 mb-3">{{ error }}</div>
+
+          <div class="row d-flex justify-content-end">
+            <button mat-raised-button color="primary" [disabled]="emailForm.invalid || wait !== 0" (click)="sendVerificationEmail()" class="mx-3">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" [hidden]="!progress"></span>
+              {{ wait === 0 && !emailSent ? "Send" : "Resend" }}
+            </button>
+          </div>
+
+        </form>
+      </mat-step>
+
+      <mat-step>
+
+        <ng-template matStepLabel>Set up a new password</ng-template>
+
+        <mat-card-subtitle>
+          Please set up your new password.
+        </mat-card-subtitle>
+
+        <form *ngIf="!success; else elseBlock" [formGroup]="newPasswordForm">
+
+          <ejs-tooltip id='tooltip_1' content="tooltip content" target="#verification" position="RightBottom">
+            <ng-template #content>
+              <ul style="padding: 0; margin: 5px 10px 5px 10px; list-style-type: none">
+                <li>
+                  <i *ngIf="passwordConstraints.capitalLetters" class="fa fa-check text-success"></i>
+                  <i *ngIf="!passwordConstraints.capitalLetters" class="fa fa-times text-danger"></i> At least one capital letter
+                </li>
+                <li>
+                  <i *ngIf="passwordConstraints.numbers" class="fa fa-check text-success"></i>
+                  <i *ngIf="!passwordConstraints.numbers" class="fa fa-times text-danger"></i> At leas one number
+                </li>
+                <li>
+                  <i *ngIf="passwordConstraints.symbols" class="fa fa-check text-success"></i>
+                  <i *ngIf="!passwordConstraints.symbols" class="fa fa-times text-danger"></i> At least one symbol
+                </li>
+                <li>
+                  <i *ngIf="passwordConstraints.length" class="fa fa-check text-success"></i>
+                  <i *ngIf="!passwordConstraints.length" class="fa fa-times text-danger"></i> More than 8 characters
+                </li>
+              </ul>
+            </ng-template>
+            <mat-form-field id="verification" appearance="outline" class="col-12 mx-0 px-0" style="font-size: 15px">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="passwordVisible.password ? 'text' : 'password'" formControlName="password" />
+              <button type="button" mat-button matSuffix mat-icon-button (click)="passwordVisible.password = !passwordVisible.password">
+                <mat-icon *ngIf="!passwordVisible.password">visibility</mat-icon>
+                <mat-icon *ngIf="passwordVisible.password">visibility_off</mat-icon>
+              </button>
+              <mat-error *ngIf="password.touched && password.errors?.required">This field is required</mat-error>
+            </mat-form-field>
+          </ejs-tooltip>
+
+          <mat-form-field appearance="outline" class="col-12 mx-0 px-0" style="font-size: 15px">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput [type]="passwordVisible.confirmPassword ? 'text' : 'password'" formControlName="confirmPassword"/>
+            <button type="button" mat-button matSuffix mat-icon-button (click)="passwordVisible.confirmPassword = !passwordVisible.confirmPassword">
+              <mat-icon *ngIf="!passwordVisible.confirmPassword">visibility</mat-icon>
+              <mat-icon *ngIf="passwordVisible.confirmPassword">visibility_off</mat-icon>
+            </button>
+            <mat-error *ngIf="confirmPassword.touched && confirmPassword.errors?.required">This field is required</mat-error>
+            <mat-error *ngIf="confirmPassword.touched && !confirmPassword.errors?.required && confirmPassword.errors?.incorrect">Passwords do not match</mat-error>
+          </mat-form-field>
+
+          <div *ngIf="error" class="alert alert-danger mt-0 mb-3">{{ error }}</div>
+
+          <div class="row d-flex justify-content-end">
+            <button mat-raised-button color="primary" class="mx-3" matStepperNext [disabled]="emailForm.invalid" (click)="resetPassword()">
+              <span *ngIf="progress" class="spinner-border spinner-border-sm mr-1"></span>
+              Submit
+            </button>
+          </div>
+
+        </form>
+
+        <ng-template #elseBlock>
+
+          <mat-card-content>
+            <p class="alert alert-success">New password is set successfully. You'll be redirected to the home page in {{ wait }}s.</p>
+          </mat-card-content>
+
+          <mat-card-actions align="right">
+            <button class="mx-2" mat-raised-button matStepperNext (click)="progress = true" routerLink="['/']">
+              <span *ngIf="progress" class="spinner-border spinner-border-sm mr-1"></span>
+              Home Page
+            </button>
+          </mat-card-actions>
+
+          <img mat-card-image src="assets/images/success.png" alt="Successful">
+
+        </ng-template>
+
+      </mat-step>
+
+    </mat-horizontal-stepper>
+  </mat-card-content>
+
+</mat-card>
+

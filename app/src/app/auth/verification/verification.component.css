@@ -1,0 +1,7 @@
+.authentication {
+  overflow: hidden;
+}
+
+mat-horizontal-stepper {
+  margin: 0 -25px 0 -25px;
+}

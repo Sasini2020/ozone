@@ -1,0 +1,11 @@
+<div class="container-md">
+
+  <div class="jumbotron">
+    <h3>Attendance</h3>
+    <p *ngIf="getRole !== 'Admin'; else adminBlock">You can check your attendance for each module with dates</p>
+    <ng-template #adminBlock><p>You can perform any attendance related operations</p></ng-template>
+  </div>
+
+  <router-outlet></router-outlet>
+
+</div>

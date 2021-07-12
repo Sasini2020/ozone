@@ -1,0 +1,7 @@
+.changed {
+  background: rgb(200, 255, 200);
+}
+
+.changed:hover {
+  background: rgb(160, 255, 160);
+}

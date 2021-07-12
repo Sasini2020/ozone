@@ -1,0 +1,141 @@
+<div class="card">
+
+  <div class="card-header">
+    <h5>View Enrollment Details</h5>
+    <p class="mb-1">View enrollments details of any student registered.</p>
+  </div>
+
+  <div class="card-body p-0">
+
+    <div class="row" style="margin: 0 0 10px 0; height: 5px">
+      <mat-progress-bar [hidden]="!deleteEnrollmentProgress" mode="query"></mat-progress-bar>
+    </div>
+
+    <div class="row mx-0 px-1 mt-2">
+
+      <div class="col px-0">
+
+        <button class="mt-2" mat-button color="warn" [disabled]="selection.selected.length === 0 || this.deleteEnrollmentProgress" (click)="confirmDelete()">
+          <mat-icon>delete</mat-icon> Delete
+        </button>
+
+        <button class="mt-2" mat-button color="primary" routerLink="../enroll">
+          <mat-icon>edit</mat-icon> New Enrollment
+        </button>
+
+      </div>
+
+      <div class="col-4 px-0">
+        <mat-form-field class="w-100">
+          <mat-label>Filter</mat-label>
+          <input matInput [formControl]="filter" placeholder="Ex. 184061R">
+          <button type="button" matSuffix mat-icon-button (click)="filter.setValue('')"><mat-icon>close</mat-icon></button>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="mat-elevation-z8 w-100">
+
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef style="width: 65px">
+          <mat-checkbox color="primary"
+                        (change)="$event ? masterToggle(): null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row" (click)="selection.toggle(row)">
+          <mat-checkbox color="primary"
+                        (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)"
+          ></mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="studentID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px">Student ID</th>
+        <td mat-cell *matCellDef="let enrollment">{{ enrollment.studentID }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="semester">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Semester</th>
+        <td mat-cell *matCellDef="let enrollment">{{ enrollment.semester }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="academicYear">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Academic Year</th>
+        <td mat-cell *matCellDef="let enrollment">{{ enrollment.academicYear }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Enrollment Date</th>
+        <td mat-cell *matCellDef="let enrollment">{{ enrollment.date | date: 'MMM d, yyyy' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef>Details</th>
+        <td mat-cell *matCellDef="let enrollment; let i = index">
+          <button mat-icon-button color="primary" (click)="viewDetails(enrollment)">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let enrollment" [attr.colspan]="6">
+          <div class="enrollment-details" [@detailExpand]="enrollment == expandedEnrollment ? 'expanded' : 'collapsed'">
+            <ul class="list-group list-group-flush w-100">
+              <li class="list-group-item" *ngFor="let module of enrollment.modules">{{ module + ' - ' + getModuleName(module) }}</li>
+            </ul>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="loading">
+        <td mat-footer-cell *matFooterCellDef colspan="6" style="height: 200px">
+          <mat-spinner class="m-auto"></mat-spinner>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="noData">
+        <td mat-footer-cell *matFooterCellDef colspan="6">
+          <span class="text-secondary"><i>No data found.</i></span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="paginator">
+        <td mat-footer-cell *matFooterCellDef colspan="6">
+          <mat-paginator class="w-100"
+                         [length]="numRows"
+                         [pageSizeOptions]="[25, 50, 100]"
+                         (page)="pageChanged($event)"
+          ></mat-paginator>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row
+          *matRowDef="let enrollment; let i = index; columns: displayedColumns"
+          class="enrollment-row"
+          [class.example-expanded-row]="expandedEnrollment === enrollment"
+          (click)="expandedEnrollment = expandedEnrollment === enrollment ? null : enrollment"
+      >
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="enrollment-details-row"></tr>
+      <tr mat-footer-row [hidden]="!progress" *matFooterRowDef="['loading']"></tr>
+      <tr mat-footer-row [hidden]="dataSource.filteredData.length > 0 || progress" *matFooterRowDef="['noData']"></tr>
+      <tr mat-footer-row *matFooterRowDef="['paginator']"></tr>
+
+    </table>
+
+    <div class="row mx-0">
+      <div *ngIf="error" class="alert alert-danger w-100">{{ error }}</div>
+    </div>
+
+  </div>
+
+</div>

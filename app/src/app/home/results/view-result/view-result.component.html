@@ -1,0 +1,142 @@
+<div class="card">
+
+  <div class="card-header">
+    <h5>View Results</h5>
+    <p class="sub-header">View Exam results of any student or module</p>
+  </div>
+
+  <div class="card-body">
+
+    <div class="row" style="margin: -20px -20px 10px -20px; height: 5px">
+      <mat-progress-bar [hidden]="!viewResultsProgress" mode="query"></mat-progress-bar>
+    </div>
+
+    <form [formGroup]="viewResultsForm">
+
+      <div class="row">
+
+        <mat-form-field class="col-4 mx-0 px-1" appearance="outline">
+          <mat-label>Keyword</mat-label>
+          <input (keyup)="termModuleCode$.next($event.target.value)" (ngModelChange)="toggleProgress()" id="keyword" type="text" matInput formControlName="keyword" placeholder="Enter Student ID or Module Code" />
+          <mat-error *ngIf="keyword.touched && !keyword.errors?.required && keyword.errors?.pattern">Invalid entry</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col-8 mx-0 px-1" appearance="outline">
+          <mat-label>Student ID / Module Name</mat-label>
+          <input type="text" readonly matInput formControlName="moduleCodeStudentID" />
+        </mat-form-field>
+
+      </div>
+
+      <div class="row mb-2" [style.display]="enteredKeyword === 1 ? 'block' : 'none' ">
+
+        <mat-form-field class="col-8 mx-0 px-1" appearance="outline">
+          <mat-label>Course</mat-label>
+          <input type="text" readonly matInput formControlName="course" />
+        </mat-form-field>
+
+        <mat-form-field class="col-4 mx-0 px-1" appearance="outline">
+          <mat-label>Academic Year</mat-label>
+          <input type="text" readonly matInput formControlName="academicYear" />
+        </mat-form-field>
+
+      </div>
+
+      <div class="row px-1 mb-4">
+        <button [disabled]="keyword.invalid" (click)="getResults()" mat-raised-button color="primary" class="mx-2" type="button">View</button>
+      </div>
+
+      <div class="row px-1">
+        <div *ngIf="notFound" class="alert alert-warning col">No student or Module found</div>
+      </div>
+
+      <div id="view_results" style="margin: 15px -10px 0 -10px">
+
+        <p>View Results</p>
+
+        <div>
+
+          <div class="row mx-0 px-2">
+
+            <mat-form-field class="col-6 mx-0 px-1">
+              <mat-label>Filter By</mat-label>
+              <mat-select #filterBy>
+                <mat-option *ngFor="let col of displayedColumns | slice:1; let i = index" [value]="i + 1">{{ camelCaseToTitleCase(col) }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-6 mx-0 px-1">
+              <mat-label>{{ camelCaseToTitleCase(displayedColumns[filterBy.value]) }}</mat-label>
+              <input matInput (keyup)="applyFilter($event, filterBy.value)" #filter/>
+            </mat-form-field>
+
+          </div>
+
+          <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
+
+            <!-- # Column -->
+            <ng-container matColumnDef="no">
+              <th mat-header-cell *matHeaderCellDef> # </th>
+              <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}&nbsp;&nbsp;&nbsp;</td>
+            </ng-container>
+
+            <!-- # Module Code -->
+            <ng-container matColumnDef="moduleCode">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Module Code</th>
+              <td mat-cell *matCellDef="let element">{{ element.moduleCode }}</td>
+            </ng-container>
+
+            <!-- # Module Name -->
+            <ng-container matColumnDef="moduleName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Module Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.moduleName }}</td>
+            </ng-container>
+
+            <!-- # Module Name -->
+            <ng-container matColumnDef="studentIndex">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Student Index</th>
+              <td mat-cell *matCellDef="let element">{{ element.studentIndex }}</td>
+            </ng-container>
+
+            <!-- # Academic Year -->
+            <ng-container matColumnDef="academicYear">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Academic Year</th>
+              <td mat-cell *matCellDef="let element">{{ element.academicYear }}</td>
+            </ng-container>
+
+            <!-- # Date Held -->
+            <ng-container matColumnDef="dateHeld">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Held</th>
+              <td mat-cell *matCellDef="let element">{{ element.dateHeld | date: 'MMM dd, yyyy' }}</td>
+            </ng-container>
+
+            <!-- # Marks -->
+            <ng-container matColumnDef="mark">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Marks</th>
+              <td mat-cell *matCellDef="let element">{{ element.mark }}</td>
+            </ng-container>
+
+            <!-- # Grade -->
+            <ng-container matColumnDef="grade">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Grade</th>
+              <td mat-cell *matCellDef="let element">{{ element.grade }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          </table>
+
+          <div class="row mx-0" *ngIf="dataSource && dataSource.filteredData.length === 0">
+            <div class="alert alert-warning col-12">No data Found</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

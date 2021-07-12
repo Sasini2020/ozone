@@ -1,0 +1,106 @@
+<div class="row d-flex justify-content-start">
+
+  <div class="col">
+
+    <div class="card m-0 p-0">
+
+      <div class="card-header">
+        <h5>View Payments Details</h5>
+      </div>
+
+      <div class="card-body">
+
+        <form [formGroup]="paymentDetailsForm">
+
+          <h6>Depositor Details</h6>
+          <mat-divider style="margin-left: -20px; margin-right: -20px"></mat-divider>
+          <br />
+          <div formGroupName="paymentDetailsDepositor">
+            <div class="row mb-2">
+
+              <mat-form-field class="col-md-4 mx-0 px-1" appearance="outline">
+                <mat-label>Registration Number</mat-label>
+                <input type="text" matInput formControlName="registrationNumber" placeholder="Ex: 184183R" readonly>
+              </mat-form-field>
+
+              <mat-form-field class="col mx-0 px-1" appearance="outline">
+                <mat-label>Full Name</mat-label>
+                <input type="text" matInput formControlName="fullName" placeholder="full name" readonly>
+              </mat-form-field>
+
+            </div>
+
+            <div class="row mb-2">
+
+              <mat-form-field class="col mx-0 px-1" appearance="outline">
+                <mat-label>Course Name</mat-label>
+                <input type="text" matInput formControlName="courseId" placeholder="course name" readonly>
+              </mat-form-field>
+
+              <mat-form-field class="col-md-4 mx-0 px-1" appearance="outline">
+                <mat-label>Academic Year</mat-label>
+                <input type="text" matInput formControlName="academicYear" placeholder="academic year" readonly>
+              </mat-form-field>
+
+            </div>
+
+            <h6>Payment Details</h6>
+            <mat-divider style="margin-left: -20px; margin-right: -20px"></mat-divider>
+            <br />
+            <div class="row mb-2">
+              <mat-form-field class="col mx-0 px-1" appearance="outline">
+                <mat-label>Bank</mat-label>
+                <mat-select formControlName="bankName">
+                  <mat-option *ngFor="let bank of banks" [value]="bank.bankID">{{ bank.bankName }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="bankName.touched && bankName.errors?.required">This field is required</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="col mx-0 px-1" appearance="outline">
+                <mat-label>Slip Number</mat-label>
+                <input type="number" matInput formControlName="slipNumber" placeholder="slip number">
+              </mat-form-field>
+
+            </div>
+
+            <div class="row mb-3">
+
+              <mat-form-field class="col mx-0 px-1" appearance="outline">
+                <mat-label>Amount Paid (Rs.)</mat-label>
+                <input matInput type="number" class="example-right-align" formControlName="amountPaid" placeholder="Ex: 456,500.00">
+              </mat-form-field>
+
+              <mat-form-field class="col-4 mx-0 px-1" appearance="outline">
+                <mat-label>Date</mat-label>
+                <input matInput formControlName="paymentDate" [matDatepicker]="myDatePicker" [max]="maxDate" />
+                <mat-datepicker-toggle matSuffix [for]="myDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #myDatePicker></mat-datepicker>
+                <mat-error *ngIf="paymentDate.touched && paymentDate.errors?.required">This field is required</mat-error>
+              </mat-form-field>
+
+            </div>
+
+            <div class="row mb-3">
+              <button (click)="submitForm()" type="submit" mat-raised-button color="primary" class="mx-1" id="confirm-button">Confirm</button>
+              <button (click)="deletePayment()" type="button" mat-button color="warn" class="mx-1" id="delete-button">Delete</button>
+            </div>
+
+            <div class="row mb-3">
+              <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+            </div>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-6 mx-0 px-0" *ngIf="slip">
+    <img [src]="slip" alt="Slip" class="w-100"/>
+  </div>
+
+</div>

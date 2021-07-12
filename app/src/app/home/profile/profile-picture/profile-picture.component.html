@@ -1,0 +1,49 @@
+<div class="card" style="margin: -24px; position: relative">
+
+  <div class="card-header m-0 d-flex justify-content-between">
+
+    <div class="mt-2">
+      <h5>Upload Profile Picture</h5>
+    </div>
+
+    <div>
+      <a mat-icon-button mat-dialog-close style="position: absolute; top: 10px; right: 10px"><mat-icon>close</mat-icon></a>
+    </div>
+
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <img *ngIf="!imageChangedEvent" style="height: 100%; width: 100%" class="card-image p-0" src="../../../../assets/images/default_profile_picture.png" alt="profile Picture" />
+
+  <image-cropper *ngIf="imageChangedEvent" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1" format="png" (imageCropped)="imageCropped($event)" class="card-image p-0" ></image-cropper>
+
+  <div class="row mx-0 px-0" *ngIf="imageUploadProgress > 0 && imageUploadProgress < 100">
+    <mat-progress-bar style="width: calc(100% + 15px); margin: 0 -15px 0 -15px" mode="determinate" [value]="imageUploadProgress"></mat-progress-bar>
+  </div>
+
+  <div class="card-body p-0">
+
+    <div *ngIf="imageUploadProgress > 0 && imageUploadProgress <= 100" class="alert alert-secondary mt-2">Please wait while the image is being uploaded...</div>
+
+    <div *ngIf="error" class="alert alert-danger m-2">{{ error }}</div>
+
+    <div class="d-flex flex-row-reverse">
+
+      <input #fileUpload type="file" (change)="fileChangeEvent($event)" style="display: none"/>
+
+      <button *ngIf="!imageChangedEvent" mat-button type="button" class="my-2 mx-1" (click)="clickFileUpload()">Select an Image</button>
+
+      <button *ngIf="imageChangedEvent" mat-button type="button" class="my-2 mx-1" (click)="clickFileUpload()">Change Image</button>
+
+      <button *ngIf="imageChangedEvent" mat-raised-button color="primary" (click)="onFileSelected()" type="button" class="my-2 mx-1">
+        <span *ngIf="savingData" class="spinner-border spinner-border-sm mr-1"></span>
+        Save
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+

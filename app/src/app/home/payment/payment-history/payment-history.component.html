@@ -1,0 +1,81 @@
+<div id="accordion-payment">
+
+  <div *ngFor="let payment of payments" [attr.id]="'element' + payment.id" class="card mb-2" style="transition: box-shadow 2s">
+
+    <h5 [attr.id]="'heading' + payment.id"
+        [attr.data-target]="'#collapse' + payment.id"
+        [attr.aria-controls]="'collapse' + payment.id"
+        aria-expanded="false"
+        data-toggle="collapse"
+        class="card-header d-flex justify-content-between"
+        style="cursor: pointer"
+    >
+      <span>{{ payment.slipNo }}</span>
+      <span>{{ payment.paymentDate | date: 'MMM d, yyyy' }}</span>
+    </h5>
+
+    <div [attr.id]="'collapse' + payment.id"
+         [class.show]="payment.id === paymentID"
+         [attr.aria-labelledby]="'heading' + payment.id"
+         data-parent="#accordion-payment"
+         class="collapse">
+
+      <div class="card-body p-0">
+
+        <ul class="list-group list-group-flush">
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Payment Date</div>
+            <div class="w-75">{{ payment.paymentDate | date:'MMM d, y'}}</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Bank</div>
+            <div class="w-75">{{ payment.bank }}</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Slip No</div>
+            <div class="w-75">{{ payment.slipNo }}</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Description</div>
+            <div class="w-75">{{ payment.description ? payment.description : 'Not available' }}</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">External Note</div>
+            <div class="w-75">{{ payment.externalNote ? payment.externalNote : 'Not available'}}</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Amount</div>
+            <div class="w-75" style="font-weight: 550">Rs. {{ payment.amount }}/=</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Status</div>
+            <div class="w-75" style="font-weight: 550">
+              <mat-chip-list aria-label="Final Status">
+                <mat-chip class="bg-success text-white" *ngIf="payment.confirmStatus === 2">Approved</mat-chip>
+                <mat-chip class="bg-light" *ngIf="payment.confirmStatus === 1">Pending Approval</mat-chip>
+                <mat-chip class="bg-danger text-white" *ngIf="payment.confirmStatus === 0">Not Approved</mat-chip>
+              </mat-chip-list>
+            </div>
+          </li>
+
+        </ul>
+        <mat-divider></mat-divider>
+        <div *ngIf="payment.confirmStatus === 1" class="row mx-0 my-2 d-flex justify-content-end">
+          <button class="mx-1" mat-button color="warn">Delete</button>
+          <button class="ml-1 mr-2" mat-stroked-button color="primary" (click)="editPayment(payment.id)">Edit</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

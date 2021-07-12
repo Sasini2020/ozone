@@ -1,0 +1,99 @@
+.toolbar-spacer {
+ flex: 1 1 auto;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid lavender;
+}
+
+.avatar:hover {
+  opacity: 0.8;
+  box-shadow: 0 0 0 2px lightgray;
+  cursor: pointer;
+}
+
+.toolbar {
+  padding: 10px; height: 50px;
+  border-bottom: 1px solid lightgray;
+}
+
+.logo {
+  background-image: url('../../assets/images/logo.png');
+  background-size: cover;
+  border-radius: 50%;
+  overflow: hidden;
+  height: 40px;
+  width: 40px;
+  margin-top: 0;
+  margin-right: 5px;
+}
+
+.settings-menu-avatar {
+  border-radius: 50%;
+  overflow: hidden;
+  height: 120px;
+  width: 120px;
+  margin: 15px auto auto;
+}
+
+.settings-list-item {
+  font-size: 15px;
+}
+
+.sidenav-container {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidenav {
+  display: flex;
+  width: 250px;
+  background: white;
+}
+
+.notification-bar {
+  display: flex;
+  width: 350px;
+  background: white;
+}
+
+.selected {
+  background-color: rgb(220, 220, 240);
+  font-weight: bold;
+  color: rgb(100, 60, 180);
+}
+
+.custom-dialog-container {
+  padding: -20px !important
+}
+
+button:focus {
+  outline: none !important;
+}
+
+.composer {
+  height: 400px;
+  width: 350px;
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  transition: right 0.2s;
+}
+
+.sub-menu {
+  transition: height 300ms;
+  overflow: hidden;
+}
+
+.active {
+  background-color: rgb(100, 60, 180);
+  border: none;
+}
+

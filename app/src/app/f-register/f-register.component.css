@@ -1,0 +1,50 @@
+.login-container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.login-form-1{
+    padding-left: 0px;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-1 img{
+    height: 798px;
+    width: auto;
+}
+.login-form-2{
+    padding: 5%;
+    background: #fff;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-2 h3{
+    text-align: center;
+    color: #0A3C6E;
+}
+.login-container form{
+    padding: 10%;
+}
+
+.login-form-2 .ForgetPwd{
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+input, select{
+    margin-top: 13px;
+}
+button{
+    border: none;
+    margin-top: 38px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+button:hover{
+    color: #F1C40F;
+    background-color: #022549;
+    transition: 0.4 ease;
+}
+@media screen and (max-width:600px) {
+    .login-form-1 img{
+      width: 483px;
+      height: 598px;
+    }
+}

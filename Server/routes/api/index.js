@@ -1,7 +1,10 @@
 const router = require('express').Router();
-const user = require('./users');
+
+const authentication = require('./authentication');
+const user = require('./user');
 const attendance = require('./attendance');
 
+router.use('/authentication', authentication);
 router.use('/user', user);
 router.use('/attendance', attendance);
 

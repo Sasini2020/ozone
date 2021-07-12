@@ -1,0 +1,89 @@
+<div class="row px-3">
+  <div *ngIf="resultsError" class="alert alert-danger mt-1 col">{{ resultsError }}</div>
+</div>
+
+<div class="d-flex flex-row-reverse">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input type="search" matInput [formControl]="filter"/>
+    <button mat-button *ngIf="filter.value" matSuffix mat-icon-button aria-labelledby="Clear"
+            (click)="filter.setValue('')">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div *ngIf="!progress; else progressBlock" id="accordion">
+
+  <div *ngFor="let semester of filteredResults | keyvalue">
+
+    <div *ngIf="semester.value.length !== 0" class="mb-4">
+
+      <p class="h6">{{ semester.key }}</p>
+
+      <div [attr.id]="'accordion' + semester.value[0].moduleCode">
+
+        <div *ngFor="let result of semester.value" [attr.id]="result.moduleCode + result.academicYear" class="card mb-2"
+             style="transition: box-shadow 2s">
+
+          <h5 [attr.id]="'heading' + result.moduleCode + result.academicYear"
+              [attr.data-target]="'#collapse' + result.moduleCode + result.academicYear"
+              [attr.aria-controls]="'collapse' + result.moduleCode + result.academicYear"
+              aria-expanded="false"
+              data-toggle="collapse"
+              class="card-header d-flex justify-content-between"
+              style="cursor: pointer"
+          >
+            <span>{{ result.moduleName }} ({{ result.academicYear }})</span>
+            <span>{{ result.moduleCode }}</span>
+          </h5>
+
+          <div [attr.id]="'collapse' + result.moduleCode + result.academicYear"
+               [class.show]="result.moduleCode === moduleCode"
+               [attr.aria-labelledby]="'heading' + result.moduleCode + result.academicYear"
+               [attr.data-parent]="'#accordion' + semester.value[0].moduleCode"
+               class="collapse">
+
+            <div class="card-body p-0">
+
+              <ul class="list-group list-group-flush">
+
+                <li class="list-group-item list-group-item-action d-flex">
+                  <div class="text-secondary w-25">Date Held</div>
+                  <div class="w-75">{{ result.dateHeld | date:'MMM d, y'}}</div>
+                </li>
+
+                <li class="list-group-item list-group-item-action d-flex">
+                  <div class="text-secondary w-25">Grade</div>
+                  <div class="w-75">
+                    <mat-chip-list aria-label="attendance">
+                      <mat-chip [style.background-color]="getGradeColor(result.grade, true)"
+                                class="text-white">{{ result.grade }}</mat-chip>
+                    </mat-chip-list>
+                  </div>
+                </li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="!resultsFound && getRole !== 'Admin'" class="alert alert-dark mt-3 mb-0">
+    No modules found..!
+  </div>
+
+</div>
+
+<ng-template #progressBlock>
+  <mat-spinner style="margin: 100px auto"></mat-spinner>
+</ng-template>
+

@@ -1,0 +1,52 @@
+<mat-card class="authentication">
+
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-subtitle>Use credentials provided by the institute</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
+  <br/>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-card-content>
+
+      <div *ngIf="timeout" class="alert alert-danger mb-3">Your session has timed out. Pleas login.</div>
+
+      <mat-form-field appearance="outline" class="input-field">
+        <mat-label>Username</mat-label>
+        <input type="text" matInput formControlName="username" placeholder="Ex: 184061R" />
+        <mat-error *ngIf="username.touched && username.errors?.required">Username is required</mat-error>
+        <mat-error *ngIf="username.touched && username.errors?.pattern">Invalid Username</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-field">
+        <mat-label>Password</mat-label>
+        <input [type]="passwordVisible ? 'text' : 'password'" formControlName="password" matInput placeholder="Enter your password" />
+        <button type="button" matSuffix mat-icon-button aria-label="View" (click)="passwordVisible = !passwordVisible">
+          <mat-icon *ngIf="passwordVisible; else passwordHidden">visibility_off</mat-icon>
+          <ng-template #passwordHidden>
+            <mat-icon>visibility</mat-icon>
+          </ng-template>
+        </button>
+        <mat-error *ngIf='password.touched && password.invalid'>Please enter your password</mat-error>
+      </mat-form-field>
+
+      <mat-checkbox style="margin-left: 5px" color="primary">Remember me</mat-checkbox>
+      <a routerLink="/auth/forgot-password" style="float: right; margin-top: 2px">Forgot your password?</a>
+
+      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{ error }}</div>
+
+    </mat-card-content>
+
+    <mat-card-actions align="right" style="padding-right: 10px">
+
+      <button type="submit" mat-raised-button [disabled]="loginForm.invalid" color="primary">
+        <span *ngIf="progress" class="spinner-border spinner-border-sm mr-1"></span>
+        Login
+      </button>
+
+    </mat-card-actions>
+
+  </form>
+</mat-card>

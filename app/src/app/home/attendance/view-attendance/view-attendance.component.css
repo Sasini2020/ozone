@@ -1,0 +1,18 @@
+#view_attendance {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  transition: box-shadow 2s;
+}
+
+#view_attendance > p {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+#view_attendance > div {
+  overflow-y: scroll;
+}
+
+#view_attendance > div > ul > li > span {
+  color: rgb(104, 108, 112)
+}

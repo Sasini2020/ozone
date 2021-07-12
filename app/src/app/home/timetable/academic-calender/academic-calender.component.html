@@ -1,0 +1,31 @@
+<div class="row d-flex justify-content-end mx-1 mb-3 mt-1">
+  <button *ngIf="enableEdit" (click)="openDialog()" mat-flat-button class="mx-3">Add New Academic Year</button>
+  <button *ngIf="enableEdit" (click)="saveChanges(false)" mat-flat-button class="mx-1">Discard</button>
+  <button *ngIf="enableEdit" (click)="saveChanges(true)" mat-raised-button color="primary" class="mx-1">Save Changes</button>
+  <button *ngIf="!enableEdit && getRole === 'Admin'" (click)="enableEdit = !enableEdit" mat-raised-button color="primary"  class="mx-1">Edit</button>
+</div>
+
+<div class="row px-1 mt-2 mb-0 mx-1">
+  <div *ngIf="success" class="alert alert-success col">Academic calender updated successfully!</div>
+</div>
+
+<div class="row px-1 mt-2 mb-0 mx-1">
+  <div *ngIf="error" class="alert alert-warning col">{{ error }}</div>
+</div>
+
+<div *ngFor="let academicYear of academicCalenders">
+
+  <h6>Academic Year {{ academicYear.year }}</h6>
+
+  <ejs-gantt [id]="'ganttDefault' + academicYear.year"
+             [dataSource]="academicYear.data"
+             [taskFields]="taskSettings"
+             [toolbar]="enableEdit ? toolbar : []"
+             [editSettings]="enableEdit ? editSettings : null"
+             [timelineSettings]="timelineSettings"
+             [includeWeekend]="true"
+             style="min-height: 250px"
+  ></ejs-gantt>
+  <br />
+
+</div>

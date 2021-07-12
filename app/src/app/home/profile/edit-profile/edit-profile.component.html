@@ -1,0 +1,231 @@
+<div class="container-md" style="margin-left: 0; max-width: 1000px">
+
+  <div class="jumbotron">
+    <h3 style="margin-top: 0">Account Settings</h3>
+    <p>Change you account settings</p>
+  </div>
+
+  <mat-spinner [hidden]="!progress" style="  margin: 100px auto auto"></mat-spinner>
+
+  <div *ngIf="!progress && !error">
+
+    <div class="card mb-3">
+
+      <div class="card-header">
+        <h5>General Account Settings</h5>
+      </div>
+
+      <div class="card-body p-0 pt-3">
+
+        <form [formGroup]="editGeneralSettings">
+
+          <div class="input-group mb-3 col-12">
+            <div class="input-group-prepend w-25">
+              <span class="input-group-text w-100">Full Name</span>
+            </div>
+            <input class="form-control" style="cursor: not-allowed" formControlName="fullName" readonly />
+          </div>
+
+          <div class="input-group mb-3 col-12">
+            <div class="input-group-prepend w-25">
+              <span class="input-group-text w-100">Username</span>
+            </div>
+            <input class="form-control" style="cursor: not-allowed" formControlName="username" readonly />
+          </div>
+
+          <div class="input-group mb-3 col-12">
+            <div class="input-group-prepend w-25">
+              <span class="input-group-text w-100">Email</span>
+            </div>
+            <input class="form-control" style="cursor: not-allowed" formControlName="email" readonly />
+          </div>
+
+          <div class="input-group mb-3 mx-0 col-12">
+            <div class="input-group-prepend w-25">
+              <span class="input-group-text w-100">Telephone</span>
+            </div>
+            <input id="phone-input"
+                   [ngClass]="{'form-control': true, 'is-valid': isGeneralSettingsEdited.phone.success, 'is-invalid': isGeneralSettingsEdited.phone.error || (phone.touched && phone.errors?.pattern)}"
+                   type="text"
+                   formControlName="phone"
+                   [readOnly]="!isGeneralSettingsEdited.phone.updated"
+            />
+            <div class="input-group-append">
+              <button id="phone" class="btn btn-outline-secondary" (click)="saveGeneralSettingsChanges($event.target, phone.value)" [disabled]="isGeneralSettingsEdited.phone.progress || !phone.valid">
+                <span *ngIf="isGeneralSettingsEdited.phone.progress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                {{ isGeneralSettingsEdited.phone.updated ? 'Save' : 'Edit' }}
+              </button>
+            </div>
+            <div *ngIf="isGeneralSettingsEdited.phone.success" class="valid-feedback">Mobile number updated successfully</div>
+            <div *ngIf="isGeneralSettingsEdited.phone.error" class="invalid-feedback">{{ isGeneralSettingsEdited.phone.error }}</div>
+            <div *ngIf="phone.touched && (phone.errors?.required && phone.errors?.pattern)" class="invalid-feedback">Invalid mobile number</div>
+          </div>
+
+          <div class="input-group mb-3 mx-0 col-12" *ngIf="getRole === 'Student'">
+            <div class="input-group-prepend w-25">
+              <span class="input-group-text w-100">Contact Address</span>
+            </div>
+            <input id="address-input"
+                   [ngClass]="{'form-control': true, 'is-valid': isGeneralSettingsEdited.address.success, 'is-invalid': isGeneralSettingsEdited.address.error || (address.touched && address.errors?.required)}"
+                   type="text"
+                   formControlName="address"
+                   [readOnly]="!isGeneralSettingsEdited.address.updated"
+            />
+            <div class="input-group-append">
+              <button id="address" class="btn btn-outline-secondary" (click)="saveGeneralSettingsChanges($event.target, address.value)" [disabled]="isGeneralSettingsEdited.address.progress || !address.valid">
+                <span *ngIf="isGeneralSettingsEdited.address.progress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                {{ isGeneralSettingsEdited.address.updated ? 'Save' : 'Edit' }}
+              </button>
+            </div>
+            <div *ngIf="isGeneralSettingsEdited.address.success" class="valid-feedback">Address saved successfully</div>
+            <div *ngIf="isGeneralSettingsEdited.address.error" class="invalid-feedback">{{ isGeneralSettingsEdited.address.error }}</div>
+            <div *ngIf="address.touched && (address.errors?.required || address.errors?.minLength)" class="invalid-feedback">Invalid address</div>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+    <div class="card mb-3">
+
+      <div class="card-header">
+        <h5>Security Settings</h5>
+      </div>
+
+      <div class="card-body p-0 pt-3">
+
+        <div class="input-group mb-3 col-12">
+          <div class="input-group-prepend w-25">
+            <span class="input-group-text w-100">Recovery Email</span>
+          </div>
+          <input id="recovery-email-input"
+                 type="text"
+                 [ngClass]="{'form-control': true, 'is-valid': isRecoveryEmailEdited.success, 'is-invalid': isRecoveryEmailEdited.error || (recoveryEmail.touched && (recoveryEmail.errors?.pattern || recoveryEmail.errors?.email))}"
+                 [formControl]="recoveryEmail"
+                 [readOnly]="!isRecoveryEmailEdited.updated">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="editRecoveryEmail()" [disabled]="isRecoveryEmailEdited.progress || !recoveryEmail.valid">
+              <span *ngIf="isRecoveryEmailEdited.progress" class="spinner-border spinner-border-sm"></span>
+              {{ isRecoveryEmailEdited.updated ? 'Save' : 'Edit' }}
+            </button>
+          </div>
+          <div *ngIf="recoveryEmail.touched && recoveryEmail.errors?.required || recoveryEmail.errors?.email" class="invalid-feedback">Invalid email address</div>
+          <div *ngIf="isRecoveryEmailEdited.error" class="invalid-feedback">{{ isRecoveryEmailEdited.error }}</div>
+          <div *ngIf="isRecoveryEmailEdited.success" class="valid-feedback">Valid email address</div>
+        </div>
+
+        <div class="col-12 mb-2">
+          <p>You wil be redirected to verification page after you click save.</p>
+        </div>
+
+        <div class="col-12 mb-2">
+          <h6>Change Password</h6>
+          <mat-divider class="mat-divider"></mat-divider>
+        </div>
+
+        <form [formGroup]="editPasswordForm">
+
+          <div class="input-group mb-3 col-6">
+            <div class="input-group-prepend" style="width: 160px">
+              <span class="input-group-text w-100">Current Password</span>
+            </div>
+            <input id="current-password"
+                   [ngClass]="{'form-control': true, 'is-invalid': currentPassword.touched && !currentPassword.valid}"
+                   [type]="passwordVisible.currentPassword ? 'text' : 'password'"
+                   formControlName="currentPassword" />
+            <div class="input-group-append">
+              <button (click)="passwordVisible.currentPassword = !passwordVisible.currentPassword" class="btn btn-outline-secondary">
+                <i [ngClass]="{'fa': true, 'fa-eye-slash': passwordVisible.currentPassword, 'fa-eye': !passwordVisible.currentPassword}"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback" *ngIf="currentPassword.touched && currentPassword.errors?.required">This field is required</div>
+          </div>
+
+          <ejs-tooltip id='tooltip_1' content="tooltip content" target="#new-password-group" position="RightTop">
+            <ng-template #content>
+              <ul style="padding: 0; margin: 5px 10px 5px 10px; list-style-type: none; font-size: 13px">
+                <li>
+                  <i *ngIf="passwordConstraints.capitalLetters" class="fa fa-check text-success"></i>
+                  <i *ngIf="!passwordConstraints.capitalLetters" class="fa fa-times text-danger"></i> At least one capital letter
+                </li>
+                <li>
+                  <i *ngIf="passwordConstraints.numbers" class="fa fa-check text-success"></i>
+                  <i *ngIf="!passwordConstraints.numbers" class="fa fa-times text-danger"></i> At leas one number
+                </li>
+                <li>
+                  <i *ngIf="passwordConstraints.symbols" class="fa fa-check text-success"></i>
+                  <i *ngIf="!passwordConstraints.symbols" class="fa fa-times text-danger"></i> At least one symbol
+                </li>
+                <li>
+                  <i *ngIf="passwordConstraints.length" class="fa fa-check text-success"></i>
+                  <i *ngIf="!passwordConstraints.length" class="fa fa-times text-danger"></i> More than 8 characters
+                </li>
+              </ul>
+            </ng-template>
+            <div id="new-password-group" class="input-group mb-3 col-6">
+              <div class="input-group-append" style="width: 160px">
+                <span class="input-group-text w-100">New Password</span>
+              </div>
+                <input id="new-password"
+                       [ngClass]="{'form-control': true, 'is-invalid': password.touched && !password.valid, 'is-valid': password.touched && password.valid}"
+                       [type]="passwordVisible.password ? 'text' : 'password'"
+                       formControlName="password"
+                />
+              <div class="input-group-append">
+                <button (click)="passwordVisible.password = !passwordVisible.password" class="btn btn-outline-secondary">
+                  <i [ngClass]="{'fa': true, 'fa-eye-slash': passwordVisible.password, 'fa-eye': !passwordVisible.password}"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" *ngIf="password.touched && password.errors?.required">This field is required</div>
+              <div class="invalid-feedback" *ngIf="password.touched && !password.errors?.required && password.errors?.pattern">
+                Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character
+              </div>
+            </div>
+          </ejs-tooltip>
+
+          <div class="input-group mb-3 col-6">
+            <div class="input-group-prepend" style="width: 160px">
+              <div class="input-group-text w-100">Confirm Password</div>
+            </div>
+            <input id="confirm-password"
+                   [ngClass]="{'form-control': true, 'is-invalid': editPasswordForm.errors?.mismatch && confirmPassword.touched, 'is-valid': confirmPassword.touched && confirmPassword.valid && !editPasswordForm.errors?.mismatch}"
+                   [type]="passwordVisible.confirmPassword ? 'text' : 'password'"
+                   formControlName="confirmPassword" />
+            <div class="input-group-append">
+              <button (click)="passwordVisible.confirmPassword = !passwordVisible.confirmPassword" class="btn btn-outline-secondary">
+                <i [ngClass]="{'fa': true, 'fa-eye-slash': passwordVisible.confirmPassword, 'fa-eye': !passwordVisible.confirmPassword}"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback" *ngIf="password.touched && password.errors?.required">This field is required</div>
+            <div class="invalid-feedback" *ngIf="password.touched && !password.errors?.required && editPasswordForm.errors?.mismatch">Passwords do not match</div>
+          </div>
+
+          <div class="col-12 mb-3">
+            <button class="mr-2" type="button" mat-raised-button (click)="changePassword()" color="primary" [disabled]="editPasswordForm.invalid || passwordUpdateProgress">
+              <span *ngIf="passwordUpdateProgress" class="spinner-border spinner-border-sm"></span>
+              Change Password
+            </button>
+            <button type="button" mat-flat-button (click)="editPasswordForm.reset()">Reset</button>
+          </div>
+
+          <div *ngIf="success" class="my-3 mx-3 alert alert-success">Password updated successfully</div>
+
+          <div *ngIf="passwordUpdateError" class="my-3 mx-3 alert alert-danger">
+            {{ passwordUpdateError }}
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    Error retrieving data..!
+  </div>
+
+</div>

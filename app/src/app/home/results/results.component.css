@@ -1,0 +1,47 @@
+.nav-link {
+  color: black;
+}
+
+.nav {
+  margin-right: 10px;
+  width: 250px;
+  float: left;
+}
+
+.sub-header {
+  margin-bottom: 0;
+}
+
+.card-header {
+  cursor: pointer;
+}
+
+.card-header:hover {
+  background: #efefef;
+}
+
+.filter {
+  margin: 0 20px 0 10px;
+  width: 250px;
+}
+
+#upload_preview {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  transition: box-shadow 2s;
+}
+
+#upload_preview > p {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+#upload_preview > div {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+#upload_preview > div > ul > li > span {
+  color: rgb(104, 108, 112)
+}
+

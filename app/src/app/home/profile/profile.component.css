@@ -1,0 +1,15 @@
+.background {
+  background-image: url("src/assets/images/profile_cover_2.png");
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+}
+
+.btn-transparent {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.btn-transparent:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
