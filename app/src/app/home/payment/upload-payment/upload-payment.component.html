@@ -19,7 +19,7 @@
       <div formGroupName="depositor">
         <div class="row mb-2">
           <mat-form-field  class="col-md-4 mx-0 px-1" appearance="outline">
-            <mat-label>Registration Number</mat-label>
+            <mat-label>Class Registration Number</mat-label>
             <input *ngIf="getRole == 'Student'; "type="text" matInput
                    formControlName="registrationNumber" placeholder="Ex: 184183R" [readonly]="true">
             <input *ngIf="getRole == 'Admin';" (keyup)="term$.next($event.target.value)" (ngModelChange)="toggleProgress()" type="text" matInput
@@ -44,12 +44,12 @@
         <div class="row mb-2">
 
           <mat-form-field class="col mx-0 px-1" appearance="outline">
-            <mat-label>Course Name</mat-label>
+            <mat-label>Class Name</mat-label>
             <input type="text" matInput formControlName="course" placeholder="Course Name" [readonly]="true" />
           </mat-form-field>
 
           <mat-form-field class="col-md-4 mx-0 px-1" appearance="outline">
-            <mat-label>Academic Year</mat-label>
+            <mat-label>Exam Year</mat-label>
             <input type="text" matInput formControlName="academicYear" placeholder="Academic Year" [readonly]="true" />
           </mat-form-field>
 
@@ -146,7 +146,7 @@
           </div>
 
           <div class="row mt-3">
-            <button (click)="clickFileUpload()" type="button" mat-raised-button color="primary">Add</button>
+            <button (click)="clickFileUpload()" type="button" mat-raised-button style="background-color: #041c47;color: white;">Add</button>
           </div>
 
         </div>
@@ -156,7 +156,7 @@
         </div>
 
         <div class="d-flex flex-row-reverse my-0">
-          <button (click)="submitForm()" type="button" mat-raised-button color="primary" class="mx-1">{{ new ? 'Submit' : 'Update'}}</button>
+          <button (click)="submitForm()" type="button" mat-raised-button style="background-color: #041c47; color: white;" class="mx-1">{{ new ? 'Submit' : 'Update'}}</button>
           <button (click)="resetForm()" type="button" mat-button class="mr-1">Reset Form</button>
         </div>
 

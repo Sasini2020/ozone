@@ -1,4 +1,4 @@
-<div style="height: 100%; overflow-x: hidden">
+<!-- <div style="height: 100%; overflow-x: hidden">
 
   <div *ngIf="!notification.connected && notification.timeout > 0"  (click)="reconnect()" class="row bg-danger d-flex justify-content-center mx-0" style="font-size: 13px; cursor: pointer">
     <p class="text-white my-0">Connection failure.{{ notification.timeout !== 30 ? ' Reconnecting in ' + notification.timeout + 's.' : '' }} <u>Reconnect</u></p>
@@ -18,7 +18,6 @@
          class="message list-group-item list-group-item-action flex-column align-items-start"
          [ngClass]="{'bg-primary': !message.received && message.status === 'sent', 'text-white': (!message.received && message.status === 'sent') || message.status === 'failed', 'bg-danger': message.status === 'failed'}"
     >
-<!--      <pre>{{ message | json}}</pre>-->
       <button *ngIf="username === message.username || fullName === message.username" (click)="deleteMessage(i)" class="delete-button" style="position: absolute; top: 2px; right: 2px" mat-icon-button>
         <mat-icon [style.color]="message.status === 'sent' ? 'red': 'white'">
           delete_outline
@@ -44,4 +43,4 @@
   </div>
 
 </div>
-
+ -->

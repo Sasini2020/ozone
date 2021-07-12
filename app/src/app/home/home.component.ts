@@ -26,11 +26,11 @@ export class HomeComponent implements OnInit {
       component: 'CourseModuleComponent',
       route: 'course-modules',
       icon: 'grade',
-      label: 'Course Modules',
+      label: 'Classes',
       children: [{
         component: 'NewModuleComponent',
         route: 'new-module',
-        label: 'Add New Module'
+        label: 'Add New Class'
       }, {
         component: 'EnrollComponent',
         route: 'enroll',
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
       component: 'ResultsComponent',
       route: 'results',
       icon: 'assessment',
-      label: 'Exam Results',
+      label: 'Tests Results',
       children: [{
         component: 'ViewResultComponent',
         route: 'view-results',
@@ -84,11 +84,11 @@ export class HomeComponent implements OnInit {
       children: [{
         component: 'AcademicTimetableComponent',
         route: 'academic-timetable',
-        label: 'Academic Timetable'
+        label: 'Class Timetable'
       }, {
         component: 'AcademicCalenderComponent',
         route: 'academic-calender',
-        label: 'Academic Calender'
+        label: 'Class Calender'
       }]
     }, {
       component: 'PaymentComponent',
@@ -148,13 +148,13 @@ export class HomeComponent implements OnInit {
       component: 'CourseModuleComponent',
       route: 'course-modules',
       icon: 'grade',
-      label: 'Course Modules',
+      label: 'Classes',
       children: []
     }, {
       component: 'ResultsComponent',
       route: 'results',
       icon: 'assessment',
-      label: 'Exam Results',
+      label: 'Tests Results',
       children: []
     }, {
       component: 'AttendanceComponent',
@@ -170,11 +170,11 @@ export class HomeComponent implements OnInit {
       children: [{
         component: 'AcademicTimetableComponent',
         route: 'academic-timetable',
-        label: 'Academic Timetable'
+        label: 'Class Timetable'
       }, {
         component: 'AcademicCalenderComponent',
         route: 'academic-calender',
-        label: 'Academic Calender'
+        label: 'Class Calender'
       }]
     }, {
       component: 'PaymentComponent',
@@ -201,13 +201,13 @@ export class HomeComponent implements OnInit {
       component: 'CourseModuleComponent',
       route: 'course-modules',
       icon: 'grade',
-      label: 'Course Modules',
+      label: 'Classes',
       children: []
     }, {
       component: 'ResultsComponent',
       route: 'results',
       icon: 'assessment',
-      label: 'Exam Results',
+      label: 'Tests Results',
       children: [{
         component: 'ViewResultComponent',
         route: 'view-results',
@@ -231,11 +231,11 @@ export class HomeComponent implements OnInit {
       children: [{
         component: 'AcademicTimetableComponent',
         route: 'academic-timetable',
-        label: 'Academic Timetable'
+        label: 'Class Timetable'
       }, {
         component: 'AcademicCalenderComponent',
         route: 'academic-calender',
-        label: 'Academic Calender'
+        label: 'Class Calender'
       }]
     }]
   };

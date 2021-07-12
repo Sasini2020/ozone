@@ -6,7 +6,7 @@
 
   <div class="card-header">
     <h5>Enroll Students</h5>
-    <p class="mb-1">You can enroll students to any module.</p>
+    <p class="mb-1">You can enroll students to any class.</p>
   </div>
 
   <div class="card-body">
@@ -43,7 +43,7 @@
       <div class="row mb-2">
 
         <mat-form-field class="col-md-12 mx-0 px-1" appearance="outline">
-          <mat-label>Course</mat-label>
+          <mat-label>Class</mat-label>
           <input type="text" matInput formControlName="course" [readonly]="true"/>
         </mat-form-field>
 
@@ -79,7 +79,7 @@
       <div class="row mb-0" id="add-modules">
 
         <mat-form-field class="col-md-12 mx-0 px-1" appearance="fill">
-          <mat-label>Select Modules</mat-label>
+          <mat-label>Select Classes</mat-label>
           <mat-chip-list #chipList aria-label="Fruit selection">
             <mat-chip
               *ngFor="let module of modules"
@@ -108,7 +108,7 @@
       </div>
 
       <div class="row px-1 mt-0">
-        <p *ngIf="modules.length === 0" class="text-danger ml-2">Please add at least one module.</p>
+        <p *ngIf="modules.length === 0" class="text-danger ml-2">Please add at least one class.</p>
       </div>
 
       <div class="row px-1">

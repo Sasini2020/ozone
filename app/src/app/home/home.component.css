@@ -1,3 +1,9 @@
+mat-toolbar{
+  color:#041c47;
+  background-color:whitesmoke ;
+  height: 70px;
+  max-width: 100%;
+}
 .toolbar-spacer {
  flex: 1 1 auto;
 }
@@ -17,19 +23,18 @@
 }
 
 .toolbar {
-  padding: 10px; height: 50px;
+  padding: 20px; height: 70px;
   border-bottom: 1px solid lightgray;
 }
 
 .logo {
-  background-image: url('../../assets/images/logo.png');
-  background-size: cover;
-  border-radius: 50%;
-  overflow: hidden;
-  height: 40px;
-  width: 40px;
-  margin-top: 0;
-  margin-right: 5px;
+  height: 65px;
+  padding: 5px;
+  width: auto;
+  cursor: pointer;
+}
+.sideicon{
+  color:#f1c40f;
 }
 
 .settings-menu-avatar {
@@ -46,7 +51,7 @@
 
 .sidenav-container {
   position: absolute;
-  top: 50px;
+  top: 70px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -65,9 +70,10 @@
 }
 
 .selected {
-  background-color: rgb(220, 220, 240);
+  background-color: #041c47;
   font-weight: bold;
-  color: rgb(100, 60, 180);
+  color: white;
+  box-shadow: yellow;
 }
 
 .custom-dialog-container {
@@ -93,7 +99,7 @@ button:focus {
 }
 
 .active {
-  background-color: rgb(100, 60, 180);
+  background-color: #f1c40f;
   border: none;
 }
 
