@@ -162,7 +162,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     HttpClientModule,
     MatAutocompleteModule,
     ImageCropperModule,
-    FontAwesomeModule
+    FontAwesomeModule,
     Ng2SearchPipeModule,
   
   ],
