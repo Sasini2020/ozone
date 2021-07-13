@@ -74,11 +74,8 @@ import { FRegisterComponent } from './f-register/f-register.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { FAchievementComponent } from './f-achievement/f-achievement.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-
-//import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
-
 
 @NgModule({
   declarations: [
@@ -150,6 +147,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     NavbarComponent,
     FooterComponent,
     FAchievementComponent,
+  
    
   ],
   imports: [
@@ -164,6 +162,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     HttpClientModule,
     MatAutocompleteModule,
     ImageCropperModule,
+    FontAwesomeModule
     Ng2SearchPipeModule,
   
   ],
