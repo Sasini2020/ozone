@@ -74,8 +74,7 @@ import { FRegisterComponent } from './f-register/f-register.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { FAchievementComponent } from './f-achievement/f-achievement.component';
-
-//import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -149,6 +148,7 @@ import { FAchievementComponent } from './f-achievement/f-achievement.component';
     NavbarComponent,
     FooterComponent,
     FAchievementComponent,
+  
    
   ],
   imports: [
@@ -163,6 +163,7 @@ import { FAchievementComponent } from './f-achievement/f-achievement.component';
     HttpClientModule,
     MatAutocompleteModule,
     ImageCropperModule,
+    FontAwesomeModule
   
   ],
   providers: [

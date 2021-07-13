@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-//import { faCheck, faCaretRight, faAngleRight, faBookReader, faChalkboardTeacher, faSchool, faAward} from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCaretRight, faAngleRight, faBookReader, faChalkboardTeacher, faSchool, faAward} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-f-about',
@@ -12,14 +12,14 @@ export class FAboutComponent implements OnInit {
 
   ngOnInit(): void {
   }
-/*
+
   faCheck = faCheck;
   faCaretRight = faCaretRight;
   faAngleRight = faAngleRight;
   faBookReader = faBookReader;
   faChalkboardTeacher = faChalkboardTeacher;
   faSchool = faSchool;
-  faAward = faAward;*/
+  faAward = faAward;
 
 
   teachers= [
