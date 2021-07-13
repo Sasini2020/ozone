@@ -14,8 +14,8 @@ export interface Course {
 }
 
 export const COURSES: Course[] = [
-  {courseID: 1, courseName: 'MSC/PG DIPLOMA IN INFORMATION TECHNOLOGY'},
-  {courseID: 2, courseName: 'MSC/PG DIPLOMA IN MULTIMEDIA TECHNOLOGY'},
+  {courseID: 1, courseName: 'Combine Maths'},
+  {courseID: 2, courseName: 'Chemistry'},
 ];
 
 export interface PeriodicElement {

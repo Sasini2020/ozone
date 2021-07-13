@@ -2,8 +2,8 @@
   <form (ngSubmit)="onSubmit()">
 
     <mat-form-field style="width: 100%; margin-bottom: 15px">
-      <mat-label>Academic Year</mat-label>
-      <input type="text" matInput [formControl]="academicYear" placeholder="2020" />
+      <mat-label>New Year</mat-label>
+      <input type="text" matInput [formControl]="academicYear" placeholder="2021" />
       <mat-error *ngIf="academicYear.touched && academicYear.errors?.required">This field is required</mat-error>
       <mat-error *ngIf="academicYear.touched && !academicYear.errors?.required && academicYear.errors?.pattern">Invalid Entry</mat-error>
     </mat-form-field>

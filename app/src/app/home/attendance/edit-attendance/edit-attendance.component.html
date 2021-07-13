@@ -16,21 +16,21 @@
       <div class="row mb-1">
 
         <mat-form-field appearance="outline" class="col-4 mx-0 px-1">
-          <mat-label>Module Code</mat-label>
+          <mat-label>Subject Code</mat-label>
           <input (keyup)="term$.next($event.target.value)" (ngModelChange)="toggleProgress()" id="moduleCode"
                  type="text" matInput formControlName="moduleCode" placeholder="Ex: CM1100"/>
           <mat-error *ngIf="moduleCode.touched && moduleCode.errors?.required">This field is required</mat-error>
           <mat-error *ngIf="moduleCode.touched && !moduleCode.errors?.required && moduleCode.errors?.pattern">Invalid
-            module code
+            Subject code
           </mat-error>
           <mat-error
             *ngIf="moduleCode.touched && !moduleCode.errors?.required && !moduleCode.errors?.pattern && !moduleName">
-            Module does not exist
+            Subject does not exist
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-8 mx-0 px-1">
-          <mat-label>Module Name</mat-label>
+          <mat-label>Subject Name</mat-label>
           <input matInput type="text" formControlName="moduleName" readonly/>
         </mat-form-field>
 
@@ -39,7 +39,7 @@
       <div class="row mb-1">
 
         <mat-form-field appearance="outline" class="col-4 mx-0 px-1">
-          <mat-label>Lecture Hour</mat-label>
+          <mat-label>Class Hour</mat-label>
           <mat-select (selectionChange)="getBatch()" id="lectureHour" formControlName="lectureHour">
             <mat-option *ngFor="let lectureHour of lectureHours"
                         [value]="lectureHour.lectureHourID">{{ lectureHour.type }}</mat-option>
@@ -48,7 +48,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-4 mx-0 px-1">
-          <mat-label>Batch</mat-label>
+          <mat-label>Class name</mat-label>
           <mat-select (selectionChange)="getSession()" id="batch" formControlName="batch">
             <mat-option *ngFor="let year of academicYears" [value]="year">{{ year }}</mat-option>
           </mat-select>
@@ -73,11 +73,11 @@
       </div>
 
       <div *ngIf="!lectureHoursFound" class="row px-1">
-        <div class="alert alert-warning col">No lecture hours found for this module!</div>
+        <div class="alert alert-warning col">No Class hours found for this module!</div>
       </div>
 
       <div *ngIf="!sessionsFound" class="row px-1">
-        <div class="alert alert-warning col">No sessions found for this lecture hour!</div>
+        <div class="alert alert-warning col">No sessions found for this Class hour!</div>
       </div>
 
       <div id="attendance_preview" style="margin: 15px -10px 0 -10px">
