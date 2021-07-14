@@ -25,8 +25,8 @@ export class NewModuleComponent implements OnInit, AfterViewInit {
   savingError = '';
   error = '';
 
-  LECTURE_TYPES: string[] = ['Lecture', 'Lab Session', 'Tutorial'];
-  LECTURE_HALLS: string[] = ['New Auditorium', 'Phase 1 Auditorium', 'L1H01', 'L2H02', 'Lab 1', 'Lab 2', 'Lab 3'];
+  //LECTURE_TYPES: string[] = ['Lecture', 'Lab Session', 'Tutorial'];
+  //LECTURE_HALLS: string[] = ['New Auditorium', 'Phase 1 Auditorium', 'L1H01', 'L2H02', 'Lab 1', 'Lab 2', 'Lab 3'];
   routeParameter: string;
   teacherCtrl = new FormControl();
   filteredTeachers: Observable<Teacher[]>;

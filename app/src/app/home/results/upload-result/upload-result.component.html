@@ -16,7 +16,7 @@
       <div class="row mb-2">
 
         <mat-form-field appearance="outline" class="col-4 mx-0 px-1">
-          <mat-label>Module Code</mat-label>
+          <mat-label>Subject Code</mat-label>
           <input (keyup)="term$.next($event.target.value)" (ngModelChange)="toggleProgress()" id="upload_moduleCode"
                  type="text" matInput formControlName="moduleCode" placeholder="Ex CM1100"/>
           <mat-error *ngIf="moduleCode.touched && moduleCode.errors?.required">This field is required</mat-error>
@@ -30,7 +30,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-8 mx-0 px-1">
-          <mat-label>Module Name</mat-label>
+          <mat-label>Subject Name</mat-label>
           <input readonly type="text" matInput formControlName="moduleName"/>
         </mat-form-field>
 
@@ -43,7 +43,7 @@
       <div class="row pb-1">
 
         <mat-form-field appearance="outline" class="col mx-0 px-1">
-          <mat-label>Academic Year</mat-label>
+          <mat-label>AL Year</mat-label>
           <mat-select (selectionChange)="checkIfResultsExists()" formControlName="academicYear">
             <mat-option *ngFor="let year of academicYears" [value]="year">{{ year }}</mat-option>
           </mat-select>

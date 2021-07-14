@@ -40,7 +40,7 @@ export class ViewResultComponent implements OnInit {
   results: Result[] = [];
 
   displayedColumnsStudent = ['no', 'moduleCode', 'moduleName', 'dateHeld', 'academicYear', 'mark', 'grade'];
-  displayedColumnsModule = ['no', 'studentIndex', 'dateHeld', 'academicYear', 'mark', 'grade'];
+  displayedColumnsModule = ['no', 'studentIndex', 'dateHeld', 'AL year', 'mark', 'grade'];
   displayedColumns: string[] = this.displayedColumnsStudent;
   dataSource: MatTableDataSource<Result>;
 

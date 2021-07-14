@@ -1,4 +1,4 @@
-<div class="row" class="mx-0 mb-2 px-1" *ngIf="getRole === 'Admin'">
+<!--<div class="row" class="mx-0 mb-2 px-1" *ngIf="getRole === 'Admin'">
   <button mat-button color="primary" routerLink="../new-requests">
     <mat-icon>arrow_back_ios_new</mat-icon> Request List
   </button>
@@ -171,7 +171,7 @@
         <button *ngIf="requestID" (click)="deleteRequest()" [disabled]="deleteRequestProgress || uploadRequestProgress" type="button" mat-button color="warn" class="ml-1">
           <span *ngIf="deleteRequestProgress" class="spinner-border spinner-border-sm"></span> Delete
         </button> -->
-
+<!--
         <button (click)="submitForm()" [disabled]="uploadRequestProgress" type="submit" mat-raised-button style="background-color: #041c47; color: white;" class="ml-1">
           <span *ngIf="uploadRequestProgress" class="spinner-border spinner-border-sm"></span>
           {{ requestID ? 'Update' : 'Submit' }}
@@ -183,4 +183,4 @@
 
   </div>
 
-</div>
+</div>-->
