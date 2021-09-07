@@ -1,9 +1,0 @@
-.mat-form-field + .mat-form-field {
-  margin-left: 8px;
-}
-
-.mat-expansion-panel-header.mat-expanded,
-.mat-expansion-panel-header.mat-expanded:focus {
-  background: rgb(196, 145, 145);
-}
-
