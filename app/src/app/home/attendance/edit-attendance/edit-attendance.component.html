@@ -1,0 +1,120 @@
+<div class="card">
+
+  <div class="card-header">
+    <h5>Edit Attendance</h5>
+    <p class="sub-header">Edit attendance related to any session</p>
+  </div>
+
+  <div class="card-body p-0">
+
+    <div class="row mx-0" style="margin: 0; height: 5px">
+      <mat-progress-bar [hidden]="!editAttendanceProgress" mode="query"></mat-progress-bar>
+    </div>
+
+    <form [formGroup]="editAttendanceForm">
+
+      <div class="row mx-0 px-1 mt-4">
+
+        <mat-form-field class="col-6 mx-0 px-1" appearance="outline">
+          <mat-label>Class</mat-label>
+          <mat-select (selectionChange)="getSessions()" formControlName="_class">
+            <mat-option *ngFor="let _class of classes" [value]="_class.classID">{{ _class.moduleCode }} | {{ _class.moduleName }} | {{ _class.year }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="_class.touched && _class.errors?.required">This field is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col-6 mx-0 px-1" appearance="outline">
+          <mat-label>Session</mat-label>
+          <mat-select formControlName="session">
+            <mat-option *ngFor="let session of sessions" [value]="session.sessionID">{{ session.date | date: 'MMM d, y' }} | {{ session.time }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="session.touched && session.errors?.required">This field is required.</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="mx-1 mb-3 d-flex flex-row">
+        <button (click)="getAttendance()" mat-raised-button color="primary" class="mx-2" type="button">Add</button>
+      </div>
+
+      <div class="row mx-2" *ngIf="noSessionsFound">
+        <div class="alert alert-warning col-12">No sessions Found</div>
+      </div>
+
+      <div id="attendance_preview" class="m-2 p-1" style="margin: 15px -10px 0 -10px">
+
+        <p>Preview of the attendance</p>
+
+        <p *ngIf="attendance.length === 0; else attendanceBlock" style="color: #888888"><i>Attendance will appear here once selected the required inputs</i></p>
+
+        <ng-template #attendanceBlock>
+
+          <mat-form-field class="filter">
+            <mat-label>Filter</mat-label>
+            <input (keyup)="applyFilter($event)" matInput placeholder="Enter keyword" #input/>
+          </mat-form-field>
+
+          <div *ngIf="filteredAttendance.length === 0; else attendanceTable" style="color: darkgray"><i>No records
+            found!</i></div>
+
+          <ng-template #attendanceTable>
+
+            <table class="table table-sm">
+
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Index Number</th>
+                <th scope="col">Status</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr *ngFor="let record of filteredAttendance; let i = index" [attr.id]="'tr' + (i + 1)"
+                  [class.changed]="record.modified">
+                <td>{{ i + 1 }}</td>
+                <td>{{ record.studentID }}</td>
+                <td>
+                  <select [attr.id]="'sel' + (i + 1)" (change)="updateAttendanceRecord($event)">
+                    <option [selected]="record.status" value="0">Absent</option>
+                    <option [selected]="record.status" value="1">Present</option>
+                  </select>
+                </td>
+              </tr>
+              </tbody>
+
+            </table>
+
+          </ng-template>
+
+        </ng-template>
+
+        <div class="mb-1 d-flex flex-row" style="overflow: hidden">
+          <button [disabled]="!updated" (click)="resetAttendance()" mat-flat-button type="button" class="mx-1">Reset Changes</button>
+        </div>
+
+      </div>
+
+      <div *ngIf="successfullySaved" class="row mx-2">
+        <div class="alert alert-success col">Attendance saved successfully!</div>
+      </div>
+
+      <div *ngIf="error" class="row mx-2">
+        <div class="alert alert-warning col">{{ error }}</div>
+      </div>
+
+      <div class="mx-2 my-3 d-flex flex-row-reverse">
+        <button [disabled]="!updated" (click)="saveChanges()" mat-raised-button color="primary" type="button" class="ml-1">
+          <span *ngIf="buttonProgress" class="spinner-border spinner-border-sm mr-1"></span>
+          Save
+        </button>
+        <button mat-button color="worn" (click)="resetForm()">
+          Reset
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
