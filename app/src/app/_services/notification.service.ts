@@ -8,7 +8,7 @@ export interface Message {
 
 export interface MessageBody {
   notificationID: number;
-  recipients: string[];
+  recipients: number[];
   username: string;
   subject: string;
   message: string;
@@ -44,7 +44,7 @@ export class NotificationService implements OnDestroy {
   public openWebSocket() {
 
     clearTimeout(this.timeoutIDCountdown);
-    clearTimeout(this.timeoutIDReconnect)
+    clearTimeout(this.timeoutIDReconnect);
     this.connected = false;
     this.timeout = 0;
     this.displayConnectedMessage = 0;
@@ -64,8 +64,10 @@ export class NotificationService implements OnDestroy {
     this.webSocket.onmessage = (event) => {
       const message = JSON.parse(event.data);
       if (message.messageType === 'notification') {
-        message.messageBody.sent = true;
+        message.messageBody.status = 'sent';
+        message.messageBody.received = false;
         this.messages.unshift(message.messageBody);
+        console.log(message.messageBody);
         this.acknowledgement(message.messageBody.notificationID);
       } else if (message.messageType === 'acknowledgement') {
         setTimeout(
@@ -134,10 +136,10 @@ export class NotificationService implements OnDestroy {
     this.messages.unshift(message);
   }
 
-  private acknowledgement(messageID: number) {
+  private acknowledgement(notificationID: number) {
     const acknowledgement: Message = {
       messageType: 'acknowledgement',
-      messageBody: messageID
+      messageBody: notificationID
     };
     this.webSocket.send(JSON.stringify(acknowledgement));
   }

@@ -86,16 +86,16 @@ export class EditPaymentComponent implements OnInit {
   }
 
   getPaymentDetails(): void {
-    this.error = '';
-    this.success = false;
-    this.editPaymentProgress = true;
-    this.data.getStudentPaymentList(this.studentIDEntered).subscribe(
-      response => {
-        this.dataSource = response.results[0];
-        this.dataSource.forEach(item => item.studentID = this.studentIDEntered);
-      },
-      error => this.error = error
-    ).add(() => this.editPaymentProgress = false);
+    // this.error = '';
+    // this.success = false;
+    // this.editPaymentProgress = true;
+    // this.data.getStudentPaymentList(this.studentIDEntered).subscribe(
+    //   response => {
+    //     this.dataSource = response.results[0];
+    //     this.dataSource.forEach(item => item.studentID = this.studentIDEntered);
+    //   },
+    //   error => this.error = error
+    // ).add(() => this.editPaymentProgress = false);
   }
 
   toggleProgress() {

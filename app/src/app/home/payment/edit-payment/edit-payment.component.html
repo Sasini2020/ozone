@@ -59,9 +59,7 @@
             Installment {{dataSource.indexOf(item)+1}} Details {{panelOpenState ? 'open' : 'closed'}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div class="mt-3" style="margin-right: -20px; margin-left: -20px">
-          <app-view-payment-details [edit]="true" [position]="dataSource.indexOf(item)" [data]="item" (deleteSelectedPayment)="deleteSelectedPayment($event)"></app-view-payment-details>
-        </div>
+        <div class="mt-3" style="margin-right: -20px; margin-left: -20px"></div>
       </mat-expansion-panel>
     </div>
   </mat-accordion>

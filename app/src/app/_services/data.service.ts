@@ -9,57 +9,53 @@ import {Observable} from 'rxjs';
 })
 export class DataService {
 
+  classURL = 'http://localhost:3000/api/class/';
+  examURL = 'http://localhost:3000/api/exam/';
+  attendanceURL = 'http://localhost:3000/api/attendance/';
+  userURL = 'http://localhost:3000/api/user/';
+  paymentURL = 'http://localhost:3000/api/payment/';
+  requestURL = 'http://localhost:3000/api/request/';
+  notificationURL = 'http://localhost:3000/api/notification/';
+
   constructor(
     private http: HttpClient
   ) {
   }
 
-  getModules() {
-    return this.http.post<any>(`${environment.apiUrl}get-modules`, {});
+  getClasses() {
+    return this.http.post<any>(`${this.classURL}get-classes`, {});
   }
 
-  getModuleDetails(moduleCode: string) {
-    return this.http.post<any>(`${environment.adminUrl}get-module-details`, {moduleCode});
+  getClassDetails(classID: string) {
+    return this.http.post<any>(`${this.classURL}get-class-details`, {classID});
   }
 
   getAcademicYears(): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}get-academic-years`, {});
   }
 
-  getAssignments() {
-    return this.http.post<any>(`${environment.teacherUrl}get-assignments`, {});
+  getAttendance(sessionID: number) {
+    return this.http.post<any>(`${this.attendanceURL}get-attendance`, {sessionID});
   }
 
-  getAttendance() {
-    return this.http.post<any>(`${environment.apiUrl}get-attendance`, {});
+  getDetailedAttendance(classID: number) {
+    return this.http.post<any>(`${this.attendanceURL}get-detailed-attendance`, {classID});
   }
 
-  getDetailedAttendance(moduleCode: string, type: string, batch: number) {
-    return this.http.post<any>(`${environment.apiUrl}get-detailed-attendance`, {moduleCode, type, batch});
-  }
-
-  getLectureHours() {
-    return this.http.post<any>(`${environment.apiUrl}get-lecture-hours`, {});
-  }
-
-  getLectureHoursOfModule(moduleCode: string) {
-    return this.http.post<any>(`${environment.adminUrl}get-module-lecture-hours`, {moduleCode});
-  }
-
-  getSessions(lectureHourID, batch) {
-    return this.http.post<any>(`${environment.adminUrl}get-sessions`, {lectureHourID, batch});
+  getSessions(classID: string) {
+    return this.http.post<any>(`${this.attendanceURL}get-sessions`, {classID});
   }
 
   getTeachers() {
-    return this.http.post<any>(`${environment.adminUrl}get-teachers`, {});
+    return this.http.post<any>(`${this.classURL}get-teachers`, {});
   }
 
   checkIfModuleExists(value) {
-    return this.http.post<any>(`${environment.adminUrl}check-module`, {moduleCode: value});
+    return this.http.post<any>(`${this.classURL}check-module`, {moduleCode: value});
   }
 
-  editModule(data) {
-    return this.http.post<any>(`${environment.adminUrl}add-edit-module`, data);
+  editClass(data) {
+    return this.http.post<any>(`${this.classURL}add-edit-class`, data);
   }
 
   deleteModule(data) {
@@ -67,50 +63,42 @@ export class DataService {
   }
 
   uploadAttendance(data) {
-    return this.http.post<any>(`${environment.adminUrl}upload-attendance`, data);
+    return this.http.post<any>(`${this.attendanceURL}upload-attendance`, data);
   }
 
-  getAttendanceOfSession(data: number) {
-    return this.http.post<any>(`${environment.adminUrl}get-session-attendance`, {sessionID: data});
+  modifyAttendance(attendance: object, sessionID: number) {
+    return this.http.post<any>(`${this.attendanceURL}modify-attendance`, {sessionID, attendance});
   }
 
-  saveAttendanceChanges(data, sessionID: number) {
-    return this.http.post<any>(`${environment.adminUrl}save-attendance-changes`, {sessionID, attendance: data});
-  }
-
-  getExamsOfModule(moduleCode: string, batch: number) {
-    return this.http.post<any>(`${environment.adminUrl}get-module-exams`, {moduleCode, batch});
+  getExams(classID: number) {
+    return this.http.post<any>(`${this.examURL}get-exams`, {classID});
   }
 
   uploadExamResults(data) {
-    return this.http.post<any>(`${environment.adminUrl}upload-results`, data);
+    return this.http.post<any>(`${this.examURL}upload-results`, data);
   }
 
-  getExamResults() {
-    return this.http.post<any>(`${environment.apiUrl}get-results`, {});
-  }
-
-  getResultsOfModule(data: object) {
-    return this.http.post<any>(`${environment.adminUrl}get-module-results`, data);
+  getStudentResults() {
+    return this.http.post<any>(`${this.examURL}get-student-results`, {});
   }
 
   editResults(results) {
-    return this.http.post<any>(`${environment.adminUrl}edit-results`, {results});
+    return this.http.post<any>(`${this.examURL}modify-results`, results);
   }
 
-  deleteExam(data: object) {
-    return this.http.post<any>(`${environment.adminUrl}delete-exam`, data);
+  deleteExam(examID: string) {
+    return this.http.post<any>(`${this.examURL}delete-exam`, {examID});
   }
 
   uploadProfilePicture(profilePicture) {
-    return this.http.post<any>(`${environment.apiUrl}upload-profile-picture`, {profilePicture}, {
+    return this.http.post<any>(`${this.userURL}upload-profile-picture`, {profilePicture}, {
       reportProgress: true,
       observe: 'events'
     });
   }
 
   getProfilePicture() {
-    return this.http.post<any>(`${environment.apiUrl}get-profile-picture`, {});
+    return this.http.post<any>(`${this.userURL}get-profile-picture`, {});
   }
 
   registerStudent(studentDetails) {
@@ -118,27 +106,11 @@ export class DataService {
   }
 
   checkStudentID(studentID) {
-    return this.http.post<any>(`${environment.adminUrl}check-student-id`, {studentID});
-  }
-
-  getTimetable(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}get-timetable`, {responseType: 'text'});
+    return this.http.post<any>(`${this.userURL}get-student-details`, {studentID});
   }
 
   getStudents() {
     return this.http.post<any>(`${environment.teacherUrl}get-students`, {});
-  }
-
-  getNotifications() {
-    return this.http.post<any>(`${environment.apiUrl}get-notifications`, {});
-  }
-
-  updateNotificationStatus(received: string[]) {
-    return this.http.post<any>(`${environment.apiUrl}update-notification-status`, {received});
-  }
-
-  getStudentsOfBatch(batch: number) {
-    return this.http.post<any>(`${environment.adminUrl}get-students-of-batch`, {batch});
   }
 
   getModulesOfSemester(semester: number) {
@@ -146,30 +118,22 @@ export class DataService {
   }
 
   uploadRequest(requestForm: object): Observable<any> {
-    return this.http.post(`${environment.apiUrl}upload-request`, requestForm, {
+    return this.http.post(`${this.requestURL}upload-request`, requestForm, {
       reportProgress: true,
       observe: 'events'
     });
   }
 
-  getAllRequests(): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}get-all-requests`, {});
+  getRequests(): Observable<any> {
+    return this.http.post<any>(`${this.requestURL}get-requests`, {});
   }
 
   enrollStudent(enrollmentForm: object): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}enroll-student`, enrollmentForm);
+    return this.http.post<any>(`${this.classURL}enroll-student`, enrollmentForm);
   }
 
-  getResults(studentID: string): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}get-student-results`, {studentID});
-  }
-
-  getModuleResults(moduleCode: string): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}get-module-results-view`, {moduleCode});
-  }
-
-  checkIfResultsUploaded(data: object): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}check-if-results-uploaded`, data);
+  getResults(examID: string): Observable<any> {
+    return this.http.post<any>(`${this.examURL}get-results`, {examID});
   }
 
   getRequestTypes(): Observable<any> {
@@ -181,23 +145,31 @@ export class DataService {
   }
 
   getRequestDetails(requestID: number): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}get-request-details`, {requestID});
+    return this.http.post<any>(`${this.requestURL}get-request-details`, {requestID});
   }
 
-  updateRequestStatus(data: object): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}update-request-status`, data);
+  updateRequest(data: object): Observable<any> {
+    return this.http.post<any>(`${this.requestURL}update-request`, data);
   }
 
-  getRequests(): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}get-requests`, {});
+  getStudentRequests(studentIndex: string): Observable<any> {
+    return this.http.post<any>(`${this.requestURL}get-student-requests`, {studentIndex});
+  }
+
+  getSubmittedRequests(): Observable<any> {
+    return this.http.post<any>(`${this.requestURL}get-submitted-requests`, {});
+  }
+
+  deletePayments(paymentIDs: number[]): Observable<any> {
+    return this.http.post<any>(`${this.paymentURL}delete-payments`, {paymentIDs});
   }
 
   deleteRequests(requestIDs: number[]): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}delete-requests`, {requestIDs});
+    return this.http.post<any>(`${this.requestURL}delete-requests`, {requestIDs});
   }
 
-  getRequestDocuments(data: {}): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}get-request-documents`, data, {
+  getRequestDocuments(requestID: number): Observable<any> {
+    return this.http.post<any>(`${this.requestURL}get-request-documents`, {requestID}, {
       reportProgress: true,
       observe: 'events'
     });
@@ -211,16 +183,8 @@ export class DataService {
     return this.http.post<any>(`${environment.adminUrl}update-academic-calender`, data);
   }
 
-  checkKeyword(keyword: string) {
-    return this.http.post<any>(`${environment.adminUrl}check-keyword`, {keyword});
-  }
-
-  getStudentAttendance(studentID: string): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}get-student-attendance`, {studentID});
-  }
-
-  getModuleAttendance(moduleCode: string): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}get-module-attendance`, {moduleCode});
+  getStudentAttendance(): Observable<any> {
+    return this.http.post<any>(`${this.attendanceURL}get-student-attendance`, {});
   }
 
   getDetailedStudentAttendance(data: object): Observable<any> {
@@ -231,54 +195,38 @@ export class DataService {
     return this.http.post<any>(`${environment.adminUrl}get-detailed-module-attendance`, data);
   }
 
-  deleteMessage(messageID: number): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}delete-message`, {messageID});
+  deleteNotification(notificationID: number): Observable<any> {
+    return this.http.post<any>(`${this.notificationURL}delete-notification`, {notificationID});
   }
 
-  uploadPayment(paymentForm: {}): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}upload-payment`, paymentForm, {
+  uploadPayment(paymentForm: object): Observable<any> {
+    return this.http.post<any>(`${this.paymentURL}upload-payment`, paymentForm, {
       reportProgress: true,
       observe: 'events'
     });
   }
 
   getPayments(): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}get-payments`, {});
+    return this.http.post<any>(`${this.paymentURL}get-payments`, {});
   }
 
   getPaymentSlip(data: {}): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}get-payment-slip`, data, {
+    return this.http.post<any>(`${this.paymentURL}get-payment-slip`, data, {
       reportProgress: true,
       observe: 'events'
     });
   }
 
   getPaymentDetails(paymentID: number): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}get-payment-details-payment-id`, {paymentID});
-  }
-
-  getPaymentList(data: any): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}get-payment-list`, data);
-  }
-
-  getPrintList(data: any): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}get-print-list`, data);
-  }
-
-  getStudentPaymentDetails(slipNo): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}get-payment-details`, {slipNo});
+    return this.http.post<any>(`${this.paymentURL}get-payment-details`, {paymentID});
   }
 
   getStudentPaymentTot(studentID: any) {
     return this.http.post<any>(`${environment.adminUrl}get-student-payment-tot`, {studentID});
   }
 
-  getStudentPaymentList(studentID: any): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}get-student-payment-details`, {studentID});
-  }
-
-  getStudentPaymentLists(): Observable<any> {
-    return this.http.post<any>(`${environment.studentUrl}get-students-payment-details`, {});
+  getStudentPayments(): Observable<any> {
+    return this.http.post<any>(`${this.paymentURL}get-student-payments`, {});
   }
 
   deletePayment(data): Observable<any> {
@@ -293,12 +241,20 @@ export class DataService {
     return this.http.post<any>(`${environment.adminUrl}get-registered-users`, data);
   }
 
-  getEnrollments(data: object): Observable<any> {
-    return this.http.post<any>(`${environment.adminUrl}get-enrollments`, data);
+  getEnrollments(): Observable<any> {
+    return this.http.post<any>(`${this.classURL}get-enrollments`, {});
   }
 
   deleteEnrollments(enrollmentIDs: number[]): Observable<any> {
     return this.http.post<any>(`${environment.adminUrl}delete-enrollments`, {enrollmentIDs});
+  }
+
+  getNotifications(): Observable<any> {
+    return this.http.post<any>(`${this.notificationURL}get-notifications`, {});
+  }
+
+  updateNotificationStatus(received: string[]): Observable<any> {
+    return this.http.post<any>(`${this.notificationURL}update-notification-status`, {received});
   }
 
 }

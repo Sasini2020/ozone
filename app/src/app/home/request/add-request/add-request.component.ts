@@ -79,28 +79,21 @@ export class AddRequestComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
     this.requestForm = this.formBuilder.group({
-      studentID: ['', [Validators.required, Validators.pattern(/^[0-9]{6}[A-Za-z]/)]],
-      studentName: ['', [Validators.required]],
-      course: ['', [Validators.required]],
-      submissionDate: ['', [Validators.required]],
-      request: ['', [Validators.required]],
-      reasons: this.formBuilder.array([new FormControl('', [Validators.required])]),
-      remarks: ['', [Validators.required]]
+      studentID: ['', [Validators.required, Validators.pattern(/^[A-Z][0-9]{6}$/)]],
+      studentName: ['', Validators.required],
+      year: ['', Validators.required],
+      submissionDate: ['', Validators.required],
+      request: ['', Validators.required],
+      reason: ['', Validators.required],
+      remarks: ['', Validators.required]
     });
-
-    this.data.getRequestTypes().subscribe(
-      response => {
-        this.requestTypes = response.requestTypes;
-      },
-      error => this.error = error
-    );
 
     if (this.getRole === 'Student') {
       this.userData.getUserDetails().subscribe(
         response => {
-          this.studentName.setValue(response.details.fullName);
-          this.course.setValue(response.details.courseName);
-          this.studentID.setValue(response.details.username);
+          this.studentID.setValue(response.studentDetails.studentIndex);
+          this.studentName.setValue(response.studentDetails.studentName);
+          this.year.setValue(response.studentDetails.year);
         }, error => {
           this.error = error;
         }
@@ -118,10 +111,6 @@ export class AddRequestComponent implements OnInit, AfterViewInit {
             this.submissionDate.setValue(response.request[0].date);
             this.remarks.setValue(response.request[0].remarks);
             this.request.setValue(response.requestsMade.map(type => type.requestTypeID));
-            this.reasons.controls = [];
-            for (const reason of response.reasons) {
-              this.reasons.push(new FormControl(reason.reason, [Validators.required]));
-            }
             this.downloadDocuments();
           } else {
             this.requestID = null;
@@ -137,11 +126,7 @@ export class AddRequestComponent implements OnInit, AfterViewInit {
     this.documentDownloadProgress = 0;
     this.error = '';
     this.documents = [];
-    const data = {
-      requestID: this.requestID,
-      studentID: this.studentID.value
-    };
-    this.data.getRequestDocuments(data).subscribe(
+    this.data.getRequestDocuments(this.requestID).subscribe(
       response => {
         if (response.type === HttpEventType.DownloadProgress) {
           this.documentDownloadProgress = Math.round(100 * response.loaded / response.total);
@@ -163,11 +148,11 @@ export class AddRequestComponent implements OnInit, AfterViewInit {
       this.data.checkStudentID(studentID).subscribe(
         response => {
           if (response.status) {
-            this.studentName.setValue(response.name);
-            this.course.setValue(response.course);
+            this.studentName.setValue(response.studentDetails.studentName);
+            this.year.setValue(response.studentDetails.year);
           } else {
             this.studentName.reset();
-            this.course.reset();
+            this.year.reset();
             this.studentIDNotFound = true;
           }
         },
@@ -291,14 +276,6 @@ export class AddRequestComponent implements OnInit, AfterViewInit {
     this.uploadRequestProgress = true;
   }
 
-  addReason(): void {
-    this.reasons.push(new FormControl('', [Validators.required]));
-  }
-
-  removeReason(i: number): void {
-    this.reasons.controls.splice(i, i + 1);
-  }
-
   get getRole(): string {
     return this.authentication.details.role;
   }
@@ -311,8 +288,8 @@ export class AddRequestComponent implements OnInit, AfterViewInit {
     return this.requestForm.get('studentName');
   }
 
-  get course(): AbstractControl {
-    return this.requestForm.get('course');
+  get year(): AbstractControl {
+    return this.requestForm.get('year');
   }
 
   get submissionDate(): AbstractControl {
@@ -327,8 +304,8 @@ export class AddRequestComponent implements OnInit, AfterViewInit {
     return this.requestForm.get('request');
   }
 
-  get reasons(): FormArray {
-    return this.requestForm.get('reasons') as FormArray;
+  get reason(): AbstractControl {
+    return this.requestForm.get('reason');
   }
 
 }

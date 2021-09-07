@@ -82,12 +82,12 @@ export class AuthenticationService {
 
   logout() {
     localStorage.removeItem('currentUser');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   timeout() {
     localStorage.removeItem('currentUser');
-    this.router.navigate(['/auth/login', {timeout: true}]);
+    this.router.navigate(['/login', {timeout: true}]);
   }
 
   loggedIn() {

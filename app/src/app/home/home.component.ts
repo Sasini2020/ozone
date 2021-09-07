@@ -103,17 +103,13 @@ export class HomeComponent implements OnInit {
         component: 'UploadPaymentComponent',
         route: 'upload-payment',
         label: 'Upload Payment'
-      }, {
-        component: 'EditPaymentComponent',
-        route: 'edit-payment',
-        label: 'Edit Payment'
       }]
     }, {
       component: 'RequestComponent',
       route: 'request',
       icon: 'description',
       label: 'Requests',
-      children: [ {
+      children: [{
         component: 'NewRequestsComponent',
         route: 'new-requests',
         label: 'New Requests'
@@ -162,41 +158,43 @@ export class HomeComponent implements OnInit {
       icon: 'assignment_turned_in',
       label: 'Attendance',
       children: []
-    }, {
-      component: 'TimetableComponent',
-      route: 'timetable',
-      icon: 'watch_later',
-      label: 'Timetable',
-      children: [{
-        component: 'AcademicTimetableComponent',
-        route: 'academic-timetable',
-        label: 'Class Timetable'
+    },
+      //   {
+      //   component: 'TimetableComponent',
+      //   route: 'timetable',
+      //   icon: 'watch_later',
+      //   label: 'Timetable',
+      //   children: [{
+      //     component: 'AcademicTimetableComponent',
+      //     route: 'academic-timetable',
+      //     label: 'Class Timetable'
+      //   }, {
+      //     component: 'AcademicCalenderComponent',
+      //     route: 'academic-calender',
+      //     label: 'Class Calender'
+      //   }]
+      // },
+      {
+        component: 'PaymentComponent',
+        route: 'payment',
+        icon: 'monetization_on',
+        label: 'Payments',
+        children: [{
+          component: 'UploadPaymentComponent',
+          route: 'upload-payment',
+          label: 'Upload Payment'
+        }]
       }, {
-        component: 'AcademicCalenderComponent',
-        route: 'academic-calender',
-        label: 'Class Calender'
-      }]
-    }, {
-      component: 'PaymentComponent',
-      route: 'payment',
-      icon: 'monetization_on',
-      label: 'Payments',
-      children: [{
-        component: 'UploadPaymentComponent',
-        route: 'upload-payment',
-        label: 'Upload Payment'
-      }]
-    }, {
-      component: 'RequestComponent',
-      route: 'request',
-      icon: 'description',
-      label: 'Requests',
-      children: [{
-        component: 'AddRequestComponent',
-        route: 'add-request',
-        label: 'Add Request'
-      }]
-    }],
+        component: 'RequestComponent',
+        route: 'request',
+        icon: 'description',
+        label: 'Requests',
+        children: [{
+          component: 'AddRequestComponent',
+          route: 'add-request',
+          label: 'Add Request'
+        }]
+      }],
     Teacher: [{
       component: 'CourseModuleComponent',
       route: 'course-modules',
@@ -278,13 +276,10 @@ export class HomeComponent implements OnInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(ProfilePictureComponent, {
+    this.dialog.open(ProfilePictureComponent, {
       panelClass: 'custom-dialog-container',
       width: '500px',
       disableClose: true
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
     });
   }
 

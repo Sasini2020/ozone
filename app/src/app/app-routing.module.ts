@@ -246,6 +246,11 @@ const routes: Routes = [
               {
                 path: 'view-payments',
                 component: ViewPaymentsComponent,
+              },
+              {
+                path: '',
+                redirectTo: 'view-payments',
+                pathMatch: 'full'
               }
             ]
           },
@@ -320,45 +325,45 @@ const routes: Routes = [
     component: VerificationComponent,
     canActivate: [AuthenticationGuard]
   },
-  {
-    path: 'auth',
-    component: AuthComponent,
-    children: [
-      {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'forgot-password',
-        component: ForgotPasswordComponent
-      },
-      {
-        path: 'reset-password',
-        component: ResetPasswordComponent
-      },
-      {
-        path: 'reset-password/:token',
-        component: ResetPasswordComponent
-      },
-      {
-        path: 'verification',
-        component: VerificationComponent
-      },
-      {
-        path: 'verification/:email',
-        component: VerificationComponent
-      },
-      {
-        path: 'change-recovery-email',
-        component: ChangeRecoveryEmailComponent
-      },
-      {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-      }
-    ]
-  },
+  // {
+  //   path: 'auth',
+  //   component: AuthComponent,
+  //   children: [
+  //     {
+  //       path: 'login',
+  //       component: LoginComponent
+  //     },
+  //     {
+  //       path: 'forgot-password',
+  //       component: ForgotPasswordComponent
+  //     },
+  //     {
+  //       path: 'reset-password',
+  //       component: ResetPasswordComponent
+  //     },
+  //     {
+  //       path: 'reset-password/:token',
+  //       component: ResetPasswordComponent
+  //     },
+  //     {
+  //       path: 'verification',
+  //       component: VerificationComponent
+  //     },
+  //     {
+  //       path: 'verification/:email',
+  //       component: VerificationComponent
+  //     },
+  //     {
+  //       path: 'change-recovery-email',
+  //       component: ChangeRecoveryEmailComponent
+  //     },
+  //     {
+  //       path: '',
+  //       redirectTo: 'login',
+  //       pathMatch: 'full'
+  //     }
+  //   ]
+  // },
   {
     path: '**',
     redirectTo: ''

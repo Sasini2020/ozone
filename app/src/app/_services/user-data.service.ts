@@ -14,6 +14,8 @@ export class UserDataService {
   private profilePictureChange: Subject<string> = new Subject<string>();
   private composerToggle: Subject<boolean> = new Subject<boolean>();
 
+  userURL = 'http://localhost:3000/api/user/';
+
   constructor(
     private http: HttpClient
   ) {
@@ -31,7 +33,7 @@ export class UserDataService {
   }
 
   getUserDetails(): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}get-user-details`, {});
+    return this.http.post<any>(`${this.userURL}get-user-details`, {});
   }
 
   updateUserData(data: object): Observable<any> {

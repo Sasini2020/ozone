@@ -7,6 +7,8 @@ import {EMPTY, Subject, Subscription} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {Session} from '../attendance.component';
 import {glow} from '../../../_services/shared.service';
+import {Attendance} from '../view-attendance/view-attendance.component';
+import {Class} from '../../course-module/new-module/new-module.component';
 
 export interface ModifiedAttendance {
   index: number;
@@ -20,27 +22,22 @@ export interface ModifiedAttendance {
   templateUrl: './edit-attendance.component.html',
   styleUrls: ['./edit-attendance.component.css', '../attendance.component.css']
 })
-export class EditAttendanceComponent implements OnInit, OnDestroy {
+export class EditAttendanceComponent implements OnInit {
 
-  academicYears = [2016, 2017, 2018, 2019, 2020];
-
-  lectureHours = [];
-  attendance = [];
+  classes: Class[] = [];
+  sessions: Session[] = [];
+  attendance: Attendance[] = [];
   modifiedAttendance: ModifiedAttendance[] = [];
   filteredAttendance: ModifiedAttendance[] = [];
-  sessions: Session[];
-  previousModuleCode: string;
+
   sessionID: number;
   error = '';
 
   editAttendanceForm: FormGroup;
-  term$ = new Subject<string>();
-  private searchSubscription: Subscription;
 
   editAttendanceProgress = false;
   buttonProgress = false;
-  sessionsFound = true;
-  lectureHoursFound = true;
+  noSessionsFound = false;
   successfullySaved = false;
   updated = false;
 
@@ -51,133 +48,61 @@ export class EditAttendanceComponent implements OnInit, OnDestroy {
     private authentication: AuthenticationService,
     private elementRef: ElementRef
   ) {
-    this.searchSubscription = this.term$.pipe(
-      debounceTime(1000),
-      distinctUntilChanged(),
-      switchMap(moduleCode => {
-        this.getLectureHours(moduleCode);
-        return EMPTY;
-      })
-    ).subscribe();
   }
 
   ngOnInit(): void {
 
     this.editAttendanceForm = this.formBuilder.group({
-      moduleCode: ['', [Validators.required, Validators.pattern(/^[A-Za-z]{2}[0-9]{4}/)]],
-      moduleName: [],
-      lectureHour: [{value: '', disabled: true}, [Validators.required]],
-      batch: [{value: '', disabled: true}, [Validators.required]],
-      session: [{value: '', disabled: true}, [Validators.required]]
+      _class: ['', Validators.required],
+      session: ['', Validators.required]
     });
 
     this.editAttendanceProgress = true;
-    this.data.getAcademicYears().subscribe(
-      response => this.academicYears = response.academicYears,
-        error => this.error = error
+    this.data.getClasses().subscribe(
+      response => this.classes = response.classes,
+      error => this.error = error
     ).add(() => this.editAttendanceProgress = false);
 
   }
 
-  ngOnDestroy() {
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
-      this.searchSubscription = null;
-    }
-  }
-
-  getLectureHours(moduleCode: string) {
+  getSessions() {
     this.successfullySaved = false;
-    this.sessionsFound = true;
-    this.lectureHoursFound = true;
+    this.noSessionsFound = false;
     this.error = '';
-    this.lectureHour.disable();
-    this.batch.disable();
-    this.session.disable();
-    if (moduleCode && moduleCode !== this.previousModuleCode) {
-      this.editAttendanceProgress = true;
-      this.data.getLectureHoursOfModule(moduleCode).subscribe(
-        response => {
-          if (response.status) {
-            this.moduleName.setValue(response.moduleName);
-            this.lectureHours = response.lectureHours;
-            this.lectureHoursFound = (this.lectureHours.length !== 0);
-            this.lectureHour.reset();
-            if (this.lectureHoursFound) {
-              this.lectureHour.enable();
-              this.elementRef.nativeElement.querySelector('#lectureHour').focus();
-            } else {
-              this.lectureHour.disable();
-            }
-          } else {
-            this.lectureHour.disable();
-            this.moduleCode.markAsDirty();
-            this.moduleCode.setErrors({incorrect: false});
-            this.moduleName.reset();
-          }
-        },
-        error => {
-          this.lectureHour.disable();
-        }
-      ).add(() => {
-        this.session.disable();
-        this.session.reset();
-        this.editAttendanceProgress = false;
-        this.previousModuleCode = moduleCode;
-      });
-    }
-  }
-
-  getBatch() {
-    this.session.disable();
-    this.batch.enable();
-    this.elementRef.nativeElement.querySelector('#batch').focus();
-    this.batch.reset();
-  }
-
-  getSession() {
-    this.error = '';
-    this.editAttendanceProgress = true;
-    this.session.disable();
-    this.data.getSessions(this.lectureHour.value, this.batch.value).subscribe(
+    this.data.getSessions(this._class.value).subscribe(
       response => {
-        console.log(response);
         this.sessions = response.sessions;
-        this.sessions.sort((date1, date2) => date1 > date2 ? 1 : -1);
-        this.sessionsFound = this.sessions.length !== 0;
-        if (this.sessionsFound) {
-          this.batch.enable();
-          this.session.enable();
-          this.session.reset();
-          this.elementRef.nativeElement.querySelector('#session').focus();
-        }
+        this.noSessionsFound = this.sessions.length === 0;
       },
-      error => console.error(error)
-    ).add(() => this.editAttendanceProgress = false);
+      error => {
+        this.error = error;
+      }
+    ).add(() => {
+      this.editAttendanceProgress = false;
+    });
   }
 
   getAttendance() {
     this.error = '';
     this.successfullySaved = false;
+
     let res = true;
-    if (this.updated && this.attendance.length !== 0) {
+    if (this.modifiedAttendance.length !== 0) {
       res = confirm('Are you sure you want to discard changes made?');
     }
 
     if (res) {
-      this.sessionID = this.session.value;
       this.editAttendanceProgress = true;
-      this.updated = false;
       this.modifiedAttendance = [];
-      this.error = '';
-      this.data.getAttendanceOfSession(this.session.value).subscribe(
+      this.data.getAttendance(this.session.value).subscribe(
         response => {
           this.attendance = response.attendance;
+          console.log(this.attendance);
           this.attendance.forEach((record, i) => {
             this.modifiedAttendance.push({
               index: i,
-              studentID: record.StudentID,
-              status: record.status === 'Present',
+              studentID: record.studentIndex,
+              status: record.status,
               modified: false
             });
             this.filteredAttendance = this.modifiedAttendance;
@@ -231,7 +156,7 @@ export class EditAttendanceComponent implements OnInit, OnDestroy {
           status: record.status
         });
       });
-      this.data.saveAttendanceChanges(updatedAttendance, this.sessionID).subscribe(
+      this.data.modifyAttendance(updatedAttendance, this.session.value).subscribe(
         response => {
           this.successfullySaved = true;
           this.modifiedAttendance.forEach(record => record.modified = false);
@@ -257,31 +182,15 @@ export class EditAttendanceComponent implements OnInit, OnDestroy {
   }
 
   toggleProgress() {
-    this.editAttendanceProgress = this.moduleCode.value !== '';
+    this.editAttendanceProgress = this._class.value !== '';
   }
 
-  get moduleCode() {
-    return this.editAttendanceForm.get('moduleCode');
-  }
-
-  get moduleName(): AbstractControl {
-    return this.editAttendanceForm.get('moduleName');
-  }
-
-  get lectureHour() {
-    return this.editAttendanceForm.get('lectureHour');
-  }
-
-  get batch() {
-    return this.editAttendanceForm.get('batch');
+  get _class() {
+    return this.editAttendanceForm.get('_class');
   }
 
   get session() {
     return this.editAttendanceForm.get('session');
-  }
-
-  get studentID() {
-    return this.editAttendanceForm.get('studentID');
   }
 
 }

@@ -4,7 +4,7 @@
     <mat-icon>menu</mat-icon>
   </button>
 
-  <div class="logo"><img routerLink="/" class="logo" src="../../assets/logo.png"></div>
+  <div class="logo"><img routerLink="/" class="logo" src="../../assets/logo.png" alt="logo"></div>
 
   <span class="toolbar-spacer"></span>
 
@@ -14,7 +14,7 @@
 
   <a [matMenuTriggerFor]="settings" style="cursor: pointer">
     <span class="mr-3 h6" style="color: #041c47;">{{ user.firstName + ' ' + user.lastName }}</span>
-    <img [src]="userData.profilePicture || '../../assets/images/default_profile_picture.png'" class="avatar" />
+    <img [src]="userData.profilePicture || '../../assets/images/default_profile_picture.png'" alt="avatar" class="avatar" />
   </a>
 
   <button mat-icon-button [hidden]="!widthNotification" (click)="notifications.toggle()">
@@ -23,7 +23,6 @@
 
 </mat-toolbar>
 
-<!--*ngIf="userData.openComposer"-->
 <div *ngIf="getRole !== 'Student' && userData.openComposer" [style.right]="!widthSidenav || notifications.opened ? '370px' : '20px'" class="composer" >
   <app-composer></app-composer>
 </div>
@@ -33,11 +32,6 @@
   <mat-sidenav #sidenav [mode]="widthSidenav ? 'over' : 'side'" [opened]="!widthSidenav" class="sidenav">
 
     <mat-selection-list [multiple]="false" class="accordion" id="accordionCourseModule" style="cursor: pointer">
-     
-      <mat-list-option routerLink="/">
-        <mat-icon class="sideicon" mat-list-icon>home</mat-icon>
-        <div mat-line>Website</div>
-      </mat-list-option>
 
       <div *ngFor="let route of ROUTS[getRole]">
 
@@ -72,12 +66,12 @@
 
 <mat-menu #settings="matMenu">
 
-  <div style="width: 230px">
+  <div style="width: 225px">
 
     <div class="d-flex justify-content-center m-auto" style="height: 180px; width: 180px; position: relative">
 
       <div>
-        <img [src]="userData.profilePicture || '../../assets/images/default_profile_picture.png'" class="rounded-circle img-thumbnail" />
+        <img [src]="userData.profilePicture || '../../assets/images/default_profile_picture.png'" alt="profile picture" class="rounded-circle img-thumbnail" />
       </div>
 
       <div style="position: absolute; right: 0; bottom: 0">
@@ -90,7 +84,7 @@
 
     <div class="row m-2">
       <div class="col-12 h5 mb-0 d-flex justify-content-center">{{ user.firstName }} {{ user.lastName }}</div>
-      <div class="col-12 text-secondary d-flex justify-content-center">{{ user.email }}</div>
+      <div class="col-12 text-secondary d-flex justify-content-center" style="font-size: 13px">{{ user.email }}</div>
     </div>
 
     <mat-divider></mat-divider>
