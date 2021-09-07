@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+<div class="container login-container">
+
+  <div class="row">
+
+    <div class="col-md-6 login-form-1">
+      <img src="../../assets/young girl.jpg" alt="">
+    </div>
+
+    <div class="col-md-6 login-form-2">
+
+      <h3>Log In</h3>
+
+      <form [formGroup]="loginForm">
+
+        <div class="form-group">
+
+          <input type="text" formControlName="username" class="form-control" placeholder="Email" required/>
+
+          <input type="password" formControlName="password" class="form-control" placeholder="Password " required/>
+
+          <div *ngIf="loginError" class="w-100 mx-0 mb-0 mt-3 alert alert-danger">
+            {{ loginError }}
+          </div>
+
+          <button type="button" class="btn btn-warning mt-3" (click)="login()" [disabled]="loginForm.invalid || loginProgress">
+            <span *ngIf="loginProgress" class="spinner-border spinner-border-sm mr-1" role="status"></span>
+            Log In
+          </button>
+
+          <!-- <a href="#" class="ForgetPwd" value="Login">Forget Password?</a> -->
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+<app-footer></app-footer>
