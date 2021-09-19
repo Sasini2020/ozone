@@ -1,0 +1,161 @@
+<div class="card">
+
+  <div class="card-header">
+    <h5>{{ data.new ? 'Add new class' : 'Edit class details' }}</h5>
+    <p class="mb-1">Edit required fields and click save</p>
+  </div>
+
+  <div class="card-body p-0">
+
+    <div class="row mx-0">
+      <mat-progress-bar [hidden]="!editModuleProgress" mode="query"></mat-progress-bar>
+    </div>
+
+    <form [formGroup]="editClassForm">
+
+      <div class="row mx-0 px-1 mt-4">
+
+        <mat-form-field appearance="outline" class="col-4 mx-0 px-1" id="form">
+          <mat-label>Subject Code</mat-label>
+          <input [readonly]="!data.new" (keyup)="term$.next($event.target.value)" (ngModelChange)="toggleProgress()" type="text" matInput formControlName="moduleCode" placeholder="Ex: S0001">
+          <mat-error *ngIf="moduleCode.touched && moduleCode.errors?.required">Required</mat-error>
+          <mat-error *ngIf="moduleCode.touched && moduleCode.errors?.pattern">Invalid format</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-8 mx-0 px-1">
+          <mat-label>Subject Name</mat-label>
+          <input readonly type="text" matInput formControlName="moduleName" placeholder="Ex: Combined Maths">
+          <mat-error *ngIf="moduleName.touched && moduleName.errors?.required">This field is required</mat-error>
+          <mat-error *ngIf="moduleName.touched && moduleName.errors?.minLength">Class name must be more than six
+            characters long
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div *ngIf="data.new && !moduleExists" class="row mx-1 px-1">
+        <div class="alert alert-warning col">
+          Subject does not exist!
+        </div>
+      </div>
+
+      <div class="row mx-0 px-1">
+
+        <mat-form-field appearance="outline" class="col-12 mx-0 px-1">
+          <mat-label>Class Description</mat-label>
+          <textarea style="overflow: hidden !important; resize: none !important; height: 105px" matInput formControlName="description" placeholder="Add a description to this class"></textarea>
+          <mat-error *ngIf="description.touched && description.errors?.required">This field is required</mat-error>
+          <mat-error *ngIf="description.touched && description.errors?.minLength">Class description must be more than six characters long</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="row mx-0 px-1">
+
+        <mat-form-field appearance="outline" class="col-3 mx-0 px-1">
+          <mat-label>Year</mat-label>
+          <mat-select formControlName="year">
+            <mat-option value="2021">2021</mat-option>
+            <mat-option value="2022">2022</mat-option>
+            <mat-option value="2023">2023</mat-option>
+          </mat-select>
+          <mat-error *ngIf="year.touched && year.errors?.required">This field is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-3 mx-0 px-1">
+          <mat-label>Day</mat-label>
+          <mat-select formControlName="day">
+            <mat-option value="1">Sunday</mat-option>
+            <mat-option value="2">Monday</mat-option>
+            <mat-option value="3">Tuesday</mat-option>
+            <mat-option value="4">Wednesday</mat-option>
+            <mat-option value="5">Thursday</mat-option>
+            <mat-option value="6">Friday</mat-option>
+            <mat-option value="7">Saturday</mat-option>
+          </mat-select>
+          <mat-error *ngIf="day.touched && day.errors?.required">This field is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-3 mx-0 px-1">
+          <mat-label>Time</mat-label>
+          <input type="time" matInput formControlName="time">
+          <mat-error *ngIf="time.touched && time.errors?.required">This field is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-3 mx-0 px-1">
+          <mat-label>Duration (h)</mat-label>
+          <input type="number" matInput formControlName="duration" placeholder="Hours">
+          <mat-error *ngIf="duration.touched && duration.errors?.required">This field is required</mat-error>
+          <mat-error *ngIf="duration.touched && !duration.errors?.required && duration.errors?.pattern">This field is required</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="input-box mx-2 mb-3 p-2" id="teachers">
+
+        <div class="row mx-0">
+
+          <div style="width: 100%">
+            <p class="input-group-header">Add Teachers</p>
+          </div>
+
+          <p *ngIf="teachers.length === 0">
+            Enter teachers ID number or name to assign the to this class <br/>
+            <span class="text-danger">You must add at least one teacher</span>
+          </p>
+
+          <mat-chip-list style="margin-bottom: 15px" #teacherList aria-label="Teacher Selection">
+            <mat-chip *ngFor="let teacher of teachers" [selectable]="selectable" [removable]="removable" (removed)="removeTeacher(teacher)" class="mat-chip-edit-details">
+              {{ teacher.username }} | {{ teacher.firstName + ' ' + teacher.lastName }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+
+        </div>
+
+        <div class="row mx-0">
+
+          <div class="col-11 mx-0 px-0">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Teacher ID</mat-label>
+              <input id="selectTeacher" matInput placeholder="Ex: T0003" type="text" formControlName="teacher" [matAutocomplete]="auto"/>
+              <mat-error *ngIf="teacher.errors?.incorrect">Invalid teacher id</mat-error>
+              <mat-autocomplete #auto='matAutocomplete'>
+                <mat-option *ngFor="let teacher of filteredTeachers | async" [value]="teacher.username">
+                  <span>{{ teacher.username }}</span> |
+                  <small>{{ teacher.firstName + ' ' + teacher.lastName }}</small>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-1 d-flex justify-content-center">
+            <button mat-icon-button mat-stroked-button type="button" color="primary" style="margin-top: 12px" (click)="addTeacher()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div *ngIf="savingError" class="row mx-0 px-2 mt-3 mb-0">
+        <div class="alert alert-danger col">Error saving data. {{ savingError }}.</div>
+      </div>
+
+      <div class="mx-0 px-1 my-3 d-flex flex-row-reverse my-0">
+        <button [disabled]="editModuleProgress" mat-raised-button style="background:#041c47;color: #ffffff;" class="mx-1" (click)="submitForm()">
+          <span *ngIf="editModuleProgress" class="spinner-border spinner-border-sm mr-1"></span>
+          Save
+        </button>
+        <button [disabled]="editModuleProgress" mat-flat-button routerLink="../module-details" class="mx-1">
+          Cancel
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
