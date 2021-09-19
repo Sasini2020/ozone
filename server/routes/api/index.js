@@ -8,6 +8,7 @@ const exam = require('./exam');
 const payment = require('./payment');
 const request = require('./request');
 const notification = require('./notification').router;
+const timetable = require('./timetable');
 
 router.use('/authentication', authentication);
 router.use('/user', user);
@@ -17,5 +18,6 @@ router.use('/exam', exam);
 router.use('/payment', payment);
 router.use('/request', request);
 router.use('/notification', notification);
+router.use('/timetable', timetable);
 
 module.exports = router;
