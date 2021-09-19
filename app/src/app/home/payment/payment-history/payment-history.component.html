@@ -1,0 +1,98 @@
+<div class="d-flex flex-row-reverse">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input type="search" matInput [formControl]="filter"/>
+    <button mat-button *ngIf="filter.value" matSuffix mat-icon-button aria-labelledby="Clear"
+            (click)="filter.setValue('')">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div id="accordion-payment">
+
+  <div *ngFor="let payment of filteredPayments" [attr.id]="'element' + payment.paymentID" class="card mb-2" style="transition: box-shadow 2s">
+
+    <h5 [attr.id]="'heading' + payment.paymentID"
+        [attr.data-target]="'#collapse' + payment.paymentID"
+        [attr.aria-controls]="'collapse' + payment.paymentID"
+        aria-expanded="false"
+        data-toggle="collapse"
+        class="card-header d-flex justify-content-between"
+        style="cursor: pointer"
+    >
+      <span>{{ payment.slipNo }}</span>
+      <span>{{ payment.paymentDate | date: 'MMM d, yyyy' }}</span>
+    </h5>
+
+    <div [attr.id]="'collapse' + payment.paymentID"
+         [class.show]="payment.paymentID == paymentID"
+         [attr.aria-labelledby]="'heading' + payment.paymentID"
+         data-parent="#accordion-payment"
+         class="collapse">
+
+      <div class="card-body p-0">
+
+        <ul class="list-group list-group-flush">
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Payment Date</div>
+            <div class="w-75">{{ payment.paymentDate | date:'MMM d, y'}}</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Classes</div>
+            <div class="w-75">
+              <span *ngFor="let i of  payment.classes">{{ i._class }}<br /></span>
+            </div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Bank</div>
+            <div class="w-75">{{ payment.bank }}</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Slip No</div>
+            <div class="w-75">{{ payment.slipNo }}</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Description</div>
+            <div class="w-75">{{ payment.externalNote ? payment.externalNote : 'Not available' }}</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">External Note</div>
+            <div class="w-75">{{ payment.externalNote ? payment.externalNote : 'Not available'}}</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Amount</div>
+            <div class="w-75" style="font-weight: 550">Rs. {{ payment.amount }}/=</div>
+          </li>
+
+          <li class="list-group-item list-group-item-action d-flex">
+            <div class="text-secondary w-25">Status</div>
+            <div class="w-75" style="font-weight: 550">
+              <mat-chip-list aria-label="Status">
+                <mat-chip class="bg-success text-white" *ngIf="payment.status">Approved</mat-chip>
+                <mat-chip class="bg-light" *ngIf="!payment.status">Pending Approval</mat-chip>
+              </mat-chip-list>
+            </div>
+          </li>
+
+        </ul>
+        <mat-divider></mat-divider>
+        <div *ngIf="!payment.status" class="m-2 d-flex flex-row-reverse">
+          <button class="mx-1" mat-button color="warn" (click)="deletePayment(payment.paymentID)">Delete</button>
+          <button class="ml-1 mr-2" mat-stroked-button color="primary" (click)="editPayment(payment.paymentID)">Edit</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
