@@ -33,8 +33,8 @@ export class NotificationService implements OnDestroy {
   retries = 0;
   displayConnectedMessage = 0;
 
-  timeoutIDCountdown: number;
-  timeoutIDReconnect: number;
+  timeoutIDCountdown: any;
+  timeoutIDReconnect: any;
 
   constructor(
     private authentication: AuthenticationService
