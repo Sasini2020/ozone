@@ -26,9 +26,9 @@ app.get('/', (request, response) => {
   response.status(200).send('<h1>Hello from the server</h1>');
 });
 
-const wsServer = new ws.Server({server: app});
+const wsServer = new ws.Server({server: app});       //create web socket object
 wsServer.on('connection', socket=> {
-  onConnection(socket, wsServer);
+  onConnection(socket, wsServer);             //call to the onConnection
 });
 
 console.clear();
