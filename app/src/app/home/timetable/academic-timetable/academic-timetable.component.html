@@ -1,0 +1,19 @@
+<div class="container-md">
+
+    <div class="jumbotron">
+      <h3 style="margin-top: 0">Time Table</h3>
+    </div>
+  
+    <ejs-schedule style="width: 100%; margin-bottom: 20px"
+                  [workDays]="workWeek"
+                  [showHeaderBar]="false"
+                  [readonly]="true"
+                  [selectedDate]="selectedDate"
+                  [eventSettings]="eventSettings"
+                  (dataBinding)="onDataBinding($event)">
+      <e-views>
+        <e-view option="WorkWeek" startHour="08:00" endHour="18:00"></e-view>
+      </e-views>
+    </ejs-schedule>
+  
+  </div>
