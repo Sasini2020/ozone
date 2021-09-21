@@ -150,6 +150,76 @@ router.post('/upload-profile-picture', VerifyToken, (request, response) => {
 
 });
 
+router.post('/register-teacher', (request, response) => {
+
+  const teacherData = request.body;
+
+  console.log(teacherData);
+
+  hashPassword(teacherData.mobile, (error, password) => {
+
+    if (error) {
+      return response.status(500).send('Server error!');
+    }
+
+    pool.getConnection((error, connection) => {
+
+      if (error) {
+        response.status(500).send({error: 'Server error!'});
+        return;
+      }
+
+      const studentIDQuery = `SELECT teacherIndex FROM teacher ORDER BY TeacherIndex DESC LIMIT 1`;
+
+      connection.query(studentIDQuery, (error, result) => {
+
+        if (error) {
+          return response.status(500).send({message: 'Server error!'});
+        }
+
+        let index = result[0] ? parseInt(result[0].teacherIndex.substring(1), 10) + 1 : 1;
+        let length = Math.round(Math.log10(index)) + 1;
+        let zeros = '';
+        while (length++ < 6) {
+          zeros += '0'
+        }
+        const teacherIndex = `S${zeros}${index}`;
+
+        console.log(teacherIndex);
+
+        const query = `
+          INSERT INTO user (userid, password, firstname, lastname, email, mobilenumber, role)
+          VALUES (?, ?, ?, ?, ?, ?, 2);
+          INSERT INTO teacher (TeacherID, TeacherIndex, education, institute)
+          VALUES (?, ?, ?, ?);
+      `;
+
+        connection.query(query, [teacherData.email, password, teacherData.firstName, teacherData.lastName, teacherData.email, teacherData.mobile, teacherData.email, teacherIndex, teacherData.education, teacherData.institute], (error, results) => {
+          connection.release();
+
+          if (error) {
+            if (error.errno === 1062) {
+              return response.status(401).send({message: 'This email address is already registered!'});
+            }
+            return response.status(500).send({message: 'Server error!'});
+          }
+
+          response.status(200).send({
+            status: true,
+            message: 'Registration Successful!',
+            email: teacherData.email
+          });
+
+        });
+
+      });
+
+    });
+
+  });
+
+});
+
 router.post('/get-profile-picture', VerifyToken, async (request, response) => {
 
   try {
