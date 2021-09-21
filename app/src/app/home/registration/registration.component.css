@@ -1,0 +1,102 @@
+.container-md {
+  margin-left: 0;
+  max-width: 1000px;
+}
+
+.filter {
+  margin: 0 20px 0 10px;
+  width: 250px;
+}
+
+.details-button {
+  font-size: 14px;
+}
+
+.danger {
+  background-color: red;
+  color: white;
+}
+
+.success {
+  background-color: green;
+  color: white;
+}
+
+.card-content:hover {
+  background: #e3e3e3;
+}
+
+.container {
+  width: 25%;
+  color: rgb(104, 108, 112);
+}
+
+.attendance-success {
+  background: #00aa00;
+  color: white;
+}
+
+.attendance-danger {
+  background: #aa0000;
+  color: white;
+}
+
+.secondary-nav {
+  width: 250px;
+  float: left;
+}
+
+.nav-link {
+  color: black;
+}
+
+.sub-header {
+  margin-bottom: 0;
+}
+
+.input-field {
+  font-size: 15px;
+}
+
+#upload-attendance > .card {
+  width: calc(100% - 260px);
+  margin: auto;
+  float: right
+}
+
+#attendance_preview {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  transition: box-shadow 2s;
+}
+
+#attendance_preview > p {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+#attendance_preview > div {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+#attendance_preview > div > ul > li > span {
+  color: rgb(104, 108, 112)
+}
+
+#submit-button {
+  margin: 20px 10px 10px;
+}
+
+#reset-button {
+  margin-top: 20px;
+}
+
+#add-button {
+  margin-bottom: 10px;
+}
+
+mat-spinner {
+  margin: 100px auto auto;
+}
+
