@@ -1,0 +1,17 @@
+table {
+  width: 100%;
+  overflow: auto;
+}
+
+td.mat-column-star {
+  width: 20px;
+  padding-right: 8px;
+}
+
+th.mat-column-position, td.mat-column-position {
+  padding-left: 8px;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
