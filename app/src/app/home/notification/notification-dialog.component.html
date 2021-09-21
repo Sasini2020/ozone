@@ -1,0 +1,25 @@
+<button mat-icon-button class="close-button" (click)="onNoClick()">
+  <mat-icon>close</mat-icon>
+</button>
+
+<div style="margin: -10px">
+
+  <div class="mb-3">
+    <h5 style="display: inline">Notification</h5> - <h6 style="display: inline">{{ data.subject }}</h6>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <p class="my-3">{{ data.message }}</p>
+
+  <mat-divider></mat-divider>
+
+  <p class="mt-3">Recipients: </p>
+
+  <mat-chip-list aria-label="Recipients">
+    <mat-chip *ngFor="let recipient of data.recipients">
+      {{ recipient }}
+    </mat-chip>
+  </mat-chip-list>
+
+</div>
