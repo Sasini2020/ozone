@@ -1,0 +1,91 @@
+<button mat-icon-button class="close-button" (click)="onNoClick()">
+  <mat-icon>close</mat-icon>
+</button>
+
+<mat-spinner *ngIf="progress" class="my-4 mx-auto"></mat-spinner>
+
+<div *ngIf="studentDetails && !progress">
+
+  <h1 mat-dialog-title
+      style="margin-bottom: 0">{{studentDetails.firstName + ' ' + studentDetails.lastName }}</h1>
+  <p>{{ studentDetails.email }}</p>
+
+  <ul class="list-group list-group-flush">
+
+    <li class="list-group-item list-group-item-action d-flex">
+      <div class="text-secondary w-25">NAME</div>
+      <div class="w-75">
+        {{ studentDetails.firstName + ' ' + studentDetails.lastName }}
+      </div>
+    </li>
+
+    <li class="list-group-item list-group-item-action d-flex">
+      <div class="text-secondary w-25">
+        INDEX
+      </div>
+      <div class="w-75">
+        {{ studentDetails.studentIndex }}
+      </div>
+    </li>
+
+    <li class="list-group-item list-group-item-action d-flex">
+      <div class="text-secondary w-25">
+        EMAIL
+      </div>
+      <div class="w-75">
+        {{ studentDetails.email }}
+      </div>
+    </li>
+
+    <li class="list-group-item list-group-item-action d-flex">
+      <div class="text-secondary w-25">
+        PHONE
+      </div>
+      <div class="w-75">
+        {{ studentDetails.phone }}
+      </div>
+    </li>
+
+    <li class="list-group-item list-group-item-action d-flex">
+      <div class="text-secondary w-25">
+        STREAM
+      </div>
+      <div class="w-75">
+        {{ studentDetails.stream }}
+      </div>
+    </li>
+
+    <li class="list-group-item list-group-item-action d-flex">
+      <div class="text-secondary w-25">
+        YEAR
+      </div>
+      <div class="w-75">
+        {{ studentDetails.year }}
+      </div>
+    </li>
+
+    <li class="list-group-item list-group-item-action d-flex">
+      <div class="text-secondary w-25">
+        SCHOOL
+      </div>
+      <div class="w-75">
+        {{ studentDetails.school }}
+      </div>
+    </li>
+
+    <li class="list-group-item list-group-item-action d-flex">
+      <div class="text-secondary w-25">
+        DISTRICT
+      </div>
+      <div class="w-75">
+        {{ studentDetails.district }}
+      </div>
+    </li>
+
+  </ul>
+
+  <button (click)="onApprove()" *ngIf="!studentDetails.approved" style="background: rgb(19, 25, 104);color: #fff;" mat-raised-button class="mx-0 my-3">Approve</button>
+
+</div>
+
+<div *ngIf="error && !progress" class="alert alert-danger mt-3 mb-0">Error retrieving the data..!</div>
