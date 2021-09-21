@@ -130,4 +130,27 @@ export class ComposerComponent implements OnInit {
     return this.authentication.details.role;
   }
 
+  // submitForm() {
+  //   this.registerStudentProgress = true;
+  //   this.error = '';
+  //   if (this.registrationForm.valid) {
+  //     this.data.registerTeacher(this.registrationForm.value).subscribe(
+  //       response => {
+  //         if (response.status) {
+  //           this.openDialog();
+  //         }
+  //         this.resetForm();
+  //       },
+  //       error => {
+  //         this.success = false;
+  //         this.error = error;
+  //       }
+  //     ).add(() => this.registerStudentProgress = false);
+  //   } else {
+  //     this.registerStudentProgress = false;
+  //     this.scrollToFirstInvalidControl();
+  //   }
+
+  // }
+
 }
