@@ -1,0 +1,33 @@
+.mat-chip-recipient {
+  font-size: 12px;
+  min-height: 25px !important;
+}
+
+.composer-input {
+  border: none;
+  padding: 0;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.composer-message {
+  border: none !important;
+  padding: 0;
+  resize: none;
+}
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus
+{
+  outline:0 !important;
+  -webkit-appearance:none;
+  box-shadow: none !important;
+}
+
+::placeholder {
+  color: #858585;
+  opacity: 1; /* Firefox */
+}
