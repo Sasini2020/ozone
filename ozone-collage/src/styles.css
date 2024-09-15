@@ -1,0 +1,31 @@
+/* style sheet */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,300;1,400;1,500&display=swap');
+
+*{
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    outline: none;
+    
+}
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+.heading{
+    font-size: 3.5rem;
+    color:rgb(30, 156, 165) ;
+    text-align: center;
+    padding: 0 1rem;
+    padding-top: 5rem;
+    letter-spacing: .6rem;
+
+}
+.title{
+    padding: 0 1rem;
+    font-size: 1.6rem;
+    text-align: center;
+    font-weight: 400;
+    color: rgb(255, 217, 0);
+}
